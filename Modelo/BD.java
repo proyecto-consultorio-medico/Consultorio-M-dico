@@ -17,35 +17,41 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class BD{
     private static Connection conexion;
-    private PreparedStatement sentencia;
+    public PreparedStatement sentencia;
     private ResultSet datos;
     private static String ip;
     private static String usuario;
     private static String pass;
+    private static String bd;
     private ArchivosIniL ini;
     private ArchivoIniC iniCrear;
-    
 
-    public String getIp() {
+    public static String getBd() {
+        return bd;
+    }
+    
+    
+    public static String getIp() {
         return ip;
     }
 
-    public String getUsuario() {
+    public static String getUsuario() {
         return usuario;
     }
 
-    public String getPass() {
+    public static String getPass() {
         return pass;
     }
 
-    public BD(String ip, String usuario, String pass) {
+    public BD(String ip, String usuario, String pass,String bd) {
         this.ip = ip;
         this.usuario = usuario;
         this.pass = pass;
+        this.bd=bd;
         this.conectar();
     }
     
@@ -63,10 +69,11 @@ public class BD{
              try {
             ini = new ArchivosIniL();
             ini.leerArchivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
-                 System.out.println(ini.getProperties().getProperty("IP","default value")+ini.getProperties().getProperty("Usuario","default value")+ini.getProperties().getProperty("Pass","default value"));
-                 
             Class.forName("com.mysql.jdbc.Driver");
-            this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+"/java?useServerPrepStmts=true",ini.getProperties().getProperty("Usuario","default value"),ini.getProperties().getProperty("Pass","default value"));
+            this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+
+                    "/"+ini.getProperties().getProperty("BD","default value")+"?useServerPrepStmts=true",
+                    ini.getProperties().getProperty("Usuario","default value"),
+                    ini.getProperties().getProperty("Pass","default value"));
             return true;
         } catch (ClassNotFoundException ex) {
            System.out.println("Driver no cargado");
@@ -130,19 +137,21 @@ public class BD{
          return this.ejectuar();
     }
     
-     public void conectarBase(String ip,String usuario,String pass){
+     public boolean conectarBase(String ip,String usuario,String pass,String bd){
              iniCrear= new ArchivoIniC();
              iniCrear.limpiar();
              this.ip=ip;
              this.usuario=usuario;
              this.pass=pass;
+             this.bd=bd;
              iniCrear.escribir("[Configuracion]");
+              iniCrear.escribir("BD="+bd);
               iniCrear.escribir("IP="+ip);
                iniCrear.escribir("Usuario="+usuario);
                 iniCrear.escribir("Pass="+pass);
                 iniCrear.guardar();
                 iniCrear.cerrar();
-                this.conectar();   
+                return this.conectar();   
      }
      
       public boolean apagarservidor(){

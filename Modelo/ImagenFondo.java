@@ -9,6 +9,10 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.border.Border;
  
+/**
+ *
+ * @author Jose,Marco,Yuliana,Elver
+ */
 
 public class ImagenFondo implements Border{
     public BufferedImage back;
