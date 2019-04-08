@@ -20,6 +20,29 @@ public class Medicos {
            private String especialidad;
             private String codigo;
              private double salario;
+            
+    public double SalarioNeto;
+
+    public Medicos(double Salario) {
+        this.salario = Salario;
+        this.SalarioNeto = 0;
+    }
+
+    public Medicos() {
+        this.salario = 0;
+        this.SalarioNeto = 0;
+    }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        if (salario > 0.0) {
+            this.salario = salario;
+        }
+    }
+
 
     public String getNombre() {
         return nombre;
@@ -49,8 +72,7 @@ public class Medicos {
         return pass;
     }
 
-    public Medicos() {
-    }
+  
 
     public String getEspecialidad() {
         return especialidad;
@@ -60,9 +82,6 @@ public class Medicos {
         return codigo;
     }
 
-    public Double getSalario() {
-        return salario;
-    }
     public Medicos(String nombre, String cedula, String fecha, String correo, String telefono, String usuario, String pass, String especialidad, String codigo, double salario) {
         this.nombre = nombre;
         this.cedula = cedula;
@@ -75,6 +94,49 @@ public class Medicos {
         this.codigo = codigo;
         this.salario = salario;
     }
+
+    public Medicos(String nombre, String cedula, String fecha, String correo, String telefono, String usuario, String pass, String codigo, double salario) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.fecha = fecha;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.usuario = usuario;
+        this.pass = pass;
+        this.especialidad="Medico general";
+        this.codigo = codigo;
+        this.salario = salario;
+    }
     
-    
+       
+    public void calcularSalarioNeto() {
+        if (this.salario < 817000) {
+            this.deducionesDelSalario();
+            System.out.println("Su salario es: " + this.salario + " y su salario neto es: " + this.SalarioNeto);
+
+        }
+        if (this.salario > 817001 && this.salario < 1226000) {
+            double ImpuestosDeRenta10 = (this.salario * 10) / 100;
+            this.deducionesDelSalario();
+            this.SalarioNeto = this.SalarioNeto - ImpuestosDeRenta10;
+            System.out.println("Su salario es: " + this.salario + " y su salario neto es: " + this.SalarioNeto);
+
+        }
+        if (this.salario > 1226001) {
+            double ImpuestosDeRenta15 = (this.salario * 15) / 100;
+            this.deducionesDelSalario();
+            this.SalarioNeto = this.SalarioNeto - ImpuestosDeRenta15;
+            System.out.println("Su salario es: " + this.salario + " y su salario neto es: " + this.SalarioNeto);
+        }
+    }
+
+    public void deducionesDelSalario() {//Se calculan todas las deduciones y se le aplican de una vez al salario neto
+        double EnfermadYMaternidad = (this.salario * 5.5) / 100;
+        double InvalidezYMuerte = (this.salario * 3.64) / 100;
+        double AporteDelTrabajador = (this.salario * 1) / 100;
+        double AportaALaAsociaciónSolidarista = (this.salario * 3.3) / 100;
+        double total = EnfermadYMaternidad + InvalidezYMuerte + AporteDelTrabajador + AportaALaAsociaciónSolidarista;
+        this.SalarioNeto = this.salario - total;
+    }
+
 }

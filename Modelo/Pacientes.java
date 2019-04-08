@@ -80,7 +80,7 @@ public class Pacientes {
     }
 
     public String calcularedad(String fecha) {
-        if (fecha != "") {
+        if (!"".equals(fecha)) {
             DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaNac = LocalDate.parse(fecha, calendario);
             LocalDate ahora = LocalDate.now();

@@ -63,14 +63,15 @@ public class Usuarios extends javax.swing.JInternalFrame {
    
     public Usuarios() {
         initComponents();
-        cusuarios= new ControladorUsuarios(this);
-         String[] tipoUsuario = {
+      cusuarios= new ControladorUsuarios(this);
+             String[] tipoUsuario = {
             "Medico","Secretaria"  
         };
       
       String resp = (String) JOptionPane.showInputDialog(null, "Seleccione el tipo de usuario", "Tipo de usuario", JOptionPane.DEFAULT_OPTION, null, tipoUsuario, tipoUsuario[0]);
       txtTipo.setText(resp);
-      if (!"Secretaria".equals(txtTipo.getText())) {
+        try {
+             if (!"Secretaria".equals(txtTipo.getText())) {
         this.txtCondigo.setVisible(true);
         this.txtEspecialidad.setVisible(true);
         this.txtSalario.setVisible(true);
@@ -79,8 +80,17 @@ public class Usuarios extends javax.swing.JInternalFrame {
         this.txtEspecialidad.setVisible(false);
         this.txtSalario.setVisible(false);
       }
+            if (resp.isEmpty()) {
+                                     
+            }
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "No se ingreso el tipo de usuario");
+        this.txtCondigo.setVisible(false);
+        this.txtEspecialidad.setVisible(false);
+        this.txtSalario.setVisible(false);
+        }
+         
         
-     
     }
 
     /**
@@ -93,7 +103,6 @@ public class Usuarios extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtcontra = new javax.swing.JTextField();
         txtusuario = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -106,6 +115,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
         txtEspecialidad = new javax.swing.JTextField();
         txtCondigo = new javax.swing.JTextField();
         txtSalario = new javax.swing.JTextField();
+        txtcontra = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(153, 255, 255));
         setBorder(null);
@@ -115,12 +125,11 @@ public class Usuarios extends javax.swing.JInternalFrame {
         setTitle("Usuarios");
 
         jPanel1.setBackground(new java.awt.Color(85, 151, 248));
-
-        txtcontra.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        txtcontra.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Contraseña", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtusuario.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtusuario.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Nombre de usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 210, 274, 50));
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Icon-merge.png"))); // NOI18N
@@ -129,6 +138,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 266, -1, 56));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Metro-Save-Blue-256.png"))); // NOI18N
@@ -137,113 +147,69 @@ public class Usuarios extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 266, -1, 56));
 
         txtcorreo.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtcorreo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Correo electronico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtcorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 140, 274, 50));
 
         txtfecha.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtfecha.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 72, 274, 50));
 
         txtTelefono.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtTelefono.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Numero de telefono", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 72, 274, 50));
 
         txtcedula.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtcedula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Numero de cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 6, 274, 50));
 
         txtnombre.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Nombre completo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 274, 50));
 
+        txtTipo.setEditable(false);
         txtTipo.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtTipo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tipo de usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTipoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 140, 274, 50));
 
+        txtEspecialidad.setEditable(false);
         txtEspecialidad.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtEspecialidad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Especialidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtEspecialidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtEspecialidadMouseClicked(evt);
+            }
+        });
+        jPanel1.add(txtEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 316, 274, -1));
 
         txtCondigo.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtCondigo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Condigo de colegio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtCondigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 266, 274, -1));
 
         txtSalario.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtSalario.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Salario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        jPanel1.add(txtSalario, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 366, 274, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(12, 12, 12)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtCondigo, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                                .addComponent(txtcontra)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(12, 12, 12)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton1)
-                            .addGap(6, 6, 6)
-                            .addComponent(jButton2)
-                            .addGap(124, 124, 124)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtEspecialidad)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCondigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        txtcontra.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Contraseña", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtcontra.setPreferredSize(new java.awt.Dimension(12, 44));
+        jPanel1.add(txtcontra, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 210, 274, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
         );
 
         pack();
@@ -264,6 +230,57 @@ public class Usuarios extends javax.swing.JInternalFrame {
         cusuarios.agregar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void txtTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTipoMouseClicked
+
+      String[] tipoUsuario = {
+            "Medico","Secretaria"  
+        };
+      
+      String resp = (String) JOptionPane.showInputDialog(null, "Seleccione el tipo de usuario", "Tipo de usuario", JOptionPane.DEFAULT_OPTION, null, tipoUsuario, tipoUsuario[0]);
+      txtTipo.setText(resp);
+        try {
+             if (!"Secretaria".equals(txtTipo.getText())) {
+        this.txtCondigo.setVisible(true);
+        this.txtEspecialidad.setVisible(true);
+        this.txtSalario.setVisible(true);
+        }else{
+       this.txtCondigo.setVisible(false);
+        this.txtEspecialidad.setVisible(false);
+        this.txtSalario.setVisible(false);
+      }
+            if (resp.isEmpty()) {
+                                     
+            }
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "No se ingreso el tipo de usuario");
+        this.txtCondigo.setVisible(false);
+        this.txtEspecialidad.setVisible(false);
+        this.txtSalario.setVisible(false);
+        }
+         
+        
+    }//GEN-LAST:event_txtTipoMouseClicked
+
+    private void txtEspecialidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEspecialidadMouseClicked
+     
+   
+      
+        try {
+              String[] especialidad = {
+           "Medico General","Análisis Clínicos","Aparato Digestivo","Alergología","Cardiología","Cirugía Vascular","Cirugía General","Dermatología Clínica" 
+        };
+             String resp = (String) JOptionPane.showInputDialog(null, "Seleccione el tipo de usuario", "Tipo de usuario", JOptionPane.DEFAULT_OPTION, null, especialidad, especialidad[0]);
+      txtEspecialidad.setText(resp);
+            if (resp.isEmpty()) {
+                
+            }
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "No se ingreso la especialidad y se le asignara Medico General");
+            txtEspecialidad.setText("Medico general"); 
+        }
+     
+    }//GEN-LAST:event_txtEspecialidadMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -275,7 +292,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTipo;
     private javax.swing.JTextField txtcedula;
-    private javax.swing.JTextField txtcontra;
+    private javax.swing.JPasswordField txtcontra;
     private javax.swing.JTextField txtcorreo;
     private javax.swing.JTextField txtfecha;
     private javax.swing.JTextField txtnombre;

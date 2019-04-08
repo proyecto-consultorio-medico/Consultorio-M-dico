@@ -30,7 +30,7 @@ public class ControladorPacientes {
     }
 
     public boolean guardarPaciente() {
-        if ("" != frmpacientes.getTxtcedula().getText()) {
+        if (!"".equals(frmpacientes.getTxtcedula().getText())) {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
@@ -94,7 +94,7 @@ public class ControladorPacientes {
     }
 
     public boolean eliminar() {
-        if (frmpacientes.getTxtBuscar().getText() != "") {
+        if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
             pacientes = new Pacientes(frmpacientes.getTxtBuscar().getText());
             BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
             bd.ejectuar(new Object[]{pacientes.getCedula()});
