@@ -96,10 +96,7 @@ public class BD{
             return false;
         }
     }
-    public void ingresarCliente(){
-    
-    }
-    
+  
     public boolean setParametros(Object parametro[]){
         for (int i = 0; i < parametro.length; i++) {
             if (parametro[i] instanceof java.lang.String) {
@@ -116,10 +113,20 @@ public class BD{
                 } catch (SQLException ex) {
                     Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
                             return false;
-                }                
+                }      
+   
         }
+            if (parametro[i] instanceof java.lang.Double) {
+                try {
+                    this.sentencia.setDouble(i+1, Double.parseDouble(parametro[i].toString()));
+                } catch (SQLException ex) {
+                    Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+                            return false;
+                }     
+    }   
+        
     }
-        return true;
+   return true;
     }
     
    public boolean ejectuar(){

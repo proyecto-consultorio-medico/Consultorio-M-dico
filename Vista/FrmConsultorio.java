@@ -18,7 +18,7 @@ public class FrmConsultorio extends javax.swing.JFrame {
      */
     public FrmConsultorio() {
         initComponents();
-      Escritorio.setBorder(new ImagenFondo());
+        Escritorio.setBorder(new ImagenFondo());
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.Expendientes.setEnabled(false);
         this.RegistroCitas.setEnabled(false);
@@ -57,6 +57,10 @@ public class FrmConsultorio extends javax.swing.JFrame {
 
         btnestado.setBackground(new java.awt.Color(255, 255, 255));
         btnestado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png"))); // NOI18N
+        btnestado.setContentAreaFilled(false);
+        btnestado.setDefaultCapable(false);
+        btnestado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png"))); // NOI18N
+        btnestado.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -65,19 +69,19 @@ public class FrmConsultorio extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(12, 12, 12)
-                .addComponent(btnestado)
-                .addGap(0, 610, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnestado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 638, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnestado))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(16, 16, 16))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnestado, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         Escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -91,10 +95,11 @@ public class FrmConsultorio extends javax.swing.JFrame {
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                .addGap(0, 484, Short.MAX_VALUE)
+                .addGap(0, 479, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/iconos-01.png"))); // NOI18N
         jMenu1.setText("Opciones");
 
         conectar.setText("Conectar al servidor");
@@ -105,7 +110,7 @@ public class FrmConsultorio extends javax.swing.JFrame {
         });
         jMenu1.add(conectar);
 
-        RegistroUsu.setText("Registro de usuarios");
+        RegistroUsu.setText("Usuarios");
         RegistroUsu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegistroUsuActionPerformed(evt);
@@ -113,7 +118,8 @@ public class FrmConsultorio extends javax.swing.JFrame {
         });
         jMenu1.add(RegistroUsu);
 
-        RegistroPaci.setText("Registro de pacientes");
+        RegistroPaci.setText("Pacientes");
+        RegistroPaci.setOpaque(true);
         RegistroPaci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegistroPaciActionPerformed(evt);
@@ -146,9 +152,9 @@ public class FrmConsultorio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void RegistroPaciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroPaciActionPerformed
-       FrmPacientes pacientes = new FrmPacientes();
-       Escritorio.add(pacientes);
-       pacientes.show();
+        FrmPacientes pacientes = new FrmPacientes();
+        Escritorio.add(pacientes);
+        pacientes.show();
     }//GEN-LAST:event_RegistroPaciActionPerformed
 
     private void RegistroUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroUsuActionPerformed

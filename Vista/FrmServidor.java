@@ -162,12 +162,11 @@ public class FrmServidor extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (conexion.comprobar()==true) {
-            FrmConsultorio.btnestado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
+            FrmConsultorio.btnestado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
             FrmConsultorio.Expendientes.setEnabled(true);
             FrmConsultorio.RegistroUsu.setEnabled(true);
             FrmConsultorio.RegistroPaci.setEnabled(true);
             FrmConsultorio.RegistroCitas.setEnabled(true);
-
         }else{
             JOptionPane.showMessageDialog(null, "No hay conexion a la Base de Datos");
         }
@@ -175,8 +174,8 @@ public class FrmServidor extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (this.conexion.conectar()==true) {
-             FrmConsultorio.btnestado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
-               FrmConsultorio.Expendientes.setEnabled(true);
+            FrmConsultorio.btnestado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
+            FrmConsultorio.Expendientes.setEnabled(true);
             FrmConsultorio.RegistroUsu.setEnabled(true);
             FrmConsultorio.RegistroPaci.setEnabled(true);
             FrmConsultorio.RegistroCitas.setEnabled(true);
@@ -185,11 +184,11 @@ public class FrmServidor extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (conexion.desconectar()==true) {
-           FrmConsultorio.btnestado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png")));
-             FrmConsultorio.Expendientes.setEnabled(false);
-            FrmConsultorio.RegistroUsu.setEnabled(false);
-            FrmConsultorio.RegistroPaci.setEnabled(false);
-            FrmConsultorio.RegistroCitas.setEnabled(false);
+           FrmConsultorio.btnestado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png")));
+           FrmConsultorio.Expendientes.setEnabled(false);
+           FrmConsultorio.RegistroUsu.setEnabled(false);
+           FrmConsultorio.RegistroPaci.setEnabled(false);
+           FrmConsultorio.RegistroCitas.setEnabled(false);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

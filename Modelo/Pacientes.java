@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class Pacientes {
     private String cedula;
@@ -42,7 +42,6 @@ public class Pacientes {
     public String getCorreo() {
         return correo;
     }
-   
 
     public Pacientes(String cedula, String nombreCompleto, String fecha, String telefono, String correo) {
         this.cedula = cedula;
@@ -57,32 +56,37 @@ public class Pacientes {
         this.nombreCompleto = nombreCompleto;
         this.fecha = fecha;
         this.telefono = telefono;
-        this.correo=null;
+        this.correo = null;
     }
 
-    
     public Pacientes(String cedula, String nombreCompleto, String fecha) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.fecha = fecha;
-        this.telefono=null;
-        this.correo=null;
+        this.telefono = null;
+        this.correo = null;
     }
 
     public Pacientes(String cedula, String nombreCompleto) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
-        this.fecha=null;
-        this.telefono=null;
-        this.correo=null;
+        this.fecha = null;
+        this.telefono = null;
+        this.correo = null;
     }
-    
-    public String calcularedad(String fecha){
-     DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-     LocalDate fechaNac = LocalDate.parse(fecha, calendario);
-     LocalDate ahora = LocalDate.now();
-     Period periodo = Period.between(fechaNac, ahora);
-     return periodo.getYears()+" y "+  periodo.getMonths();
+
+    public Pacientes(String cedula) {
+        this.cedula = cedula;
     }
-    
+
+    public String calcularedad(String fecha) {
+        if (fecha != "") {
+            DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fechaNac = LocalDate.parse(fecha, calendario);
+            LocalDate ahora = LocalDate.now();
+            Period periodo = Period.between(fechaNac, ahora);
+            return periodo.getYears() + " años y  " + periodo.getMonths() + " meses";
+        }
+        return null;
+    }
 }

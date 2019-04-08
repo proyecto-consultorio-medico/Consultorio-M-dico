@@ -13,33 +13,36 @@ import Vista.FrmServidor;
  * @author Jose,Marco,Yuliana,Elver
  */
 public class ControladorConexion {
+
     FrmServidor servidor;
 
     public ControladorConexion(FrmServidor servidor) {
         this.servidor = servidor;
     }
-    
-    public boolean comprobar(){
-        BD bd= new BD();
-        if (bd.comprobar()=="Encendido") {
+
+    public boolean comprobar() {
+        BD bd = new BD();
+        if (bd.comprobar() == "Encendido") {
             return true;
         }
         return false;
     }
-    
-    public boolean conectar(){
-     BD bd= new BD(this.servidor.getTxtIP().getText(),this.servidor.getTxtUsu().getText(),this.servidor.getTxtPass().getText(),this.servidor.getTxtbd().getText());
-    return bd.conectarBase(bd.getIp(), bd.getUsuario(), bd.getPass(),bd.getBd());
+
+    public boolean conectar() {
+        BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(), this.servidor.getTxtbd().getText());
+        return bd.conectarBase(bd.getIp(), bd.getUsuario(), bd.getPass(), bd.getBd());
     }
-    
-    public boolean desconectar(){
-    BD bd= new BD();
-        return bd.apagarservidor()==true;
+
+    public boolean desconectar() {
+        BD bd = new BD();
+        return bd.apagarservidor() == true;
     }
-    
-    public void cambiar(){
+
+    public void cambiar() {
         BD bd = new BD();
         bd.reiniciarBase();
-    
+
     }
+
+ 
 }
