@@ -5,6 +5,11 @@
  */
 package Modelo;
 
+import Controlador.ControladorPacientes;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jose,Marco,Yuliana,Elver
@@ -57,7 +62,7 @@ public class Secretaria {
         this.usuario= usuario;
         this.pass= pass;
     }
-        
-        
+
+           
     
 }

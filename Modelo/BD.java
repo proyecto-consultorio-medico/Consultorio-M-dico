@@ -29,6 +29,11 @@ public class BD{
     private static String bd;
     private ArchivosIniL ini;
     private ArchivoIniC iniCrear;
+    protected String mesaje;
+
+    public String getMesaje() {
+        return mesaje;
+    }
 
     public static String getBd() {
         return bd;
@@ -134,7 +139,7 @@ public class BD{
             this.sentencia.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+           this.mesaje= ex.getMessage();
         }
         return false;
    }
