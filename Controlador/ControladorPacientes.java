@@ -28,6 +28,50 @@ public class ControladorPacientes {
         this.frmpacientes = frmpacientes;
         pacientes = null;
     }
+    
+        public boolean actualizarPaciente() {
+        if (!"".equals(frmpacientes.getTxtcedula().getText())) {
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
+                    && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
+                    && !"".equals(frmpacientes.getTxtcorreo().getText())) {
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE INTO pacientes VALUES (?,?,?,?,?)");
+                bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
+                    && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE INTO pacientes VALUES (?,?,?,?,?)");
+                bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
+                    && !"".equals(frmpacientes.getTxtfecha().getText())) {
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE INTO pacientes VALUES (?,?,?,?,?)");
+                bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE INTO pacientes VALUES (?,?,?,?,?)");
+                bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+        }
+
+        return false;
+
+    }
 
     public boolean guardarPaciente() {
         if (!"".equals(frmpacientes.getTxtcedula().getText())) {

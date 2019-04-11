@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelo.BD;
 import Modelo.Medicos;
+import Modelo.Pacientes;
 import Modelo.Secretaria;
 import Modelo.Usuario;
 import Vista.Usuarios;
@@ -66,4 +67,9 @@ public class ControladorUsuarios {
         return false;
         
     }
+    public boolean eliminar() {
+            BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
+            bd.ejectuar(new Object[]{frmUsuarios.getTxtcedula()});
+            return true;
+        }
 }
