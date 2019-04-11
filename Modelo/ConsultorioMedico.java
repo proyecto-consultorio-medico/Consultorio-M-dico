@@ -9,7 +9,7 @@ package Modelo;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class ConsultorioMedico {
 

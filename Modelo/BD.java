@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -96,7 +97,7 @@ public class BD{
             this.sentencia=this.conexion.prepareStatement(sql);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
         }finally{
             return false;
         }
@@ -108,7 +109,7 @@ public class BD{
                 try {
                     this.sentencia.setString(i+1, parametro[i].toString());
                 } catch (SQLException ex) {
-                    Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;
                 }                    
             }
@@ -116,7 +117,7 @@ public class BD{
                 try {
                     this.sentencia.setInt(i+1, Integer.parseInt(parametro[i].toString()));
                 } catch (SQLException ex) {
-                    Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;
                 }      
    
@@ -125,7 +126,7 @@ public class BD{
                 try {
                     this.sentencia.setDouble(i+1, Double.parseDouble(parametro[i].toString()));
                 } catch (SQLException ex) {
-                    Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;
                 }     
     }   
@@ -139,7 +140,7 @@ public class BD{
             this.sentencia.execute();
             return true;
         } catch (SQLException ex) {
-           this.mesaje= ex.getMessage();
+          JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
         }
         return false;
    }
@@ -171,7 +172,7 @@ public class BD{
             conexion.close();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
         }
         return false;
       }
@@ -191,7 +192,7 @@ public class BD{
                    iniCrear.borrar();
                    return true;
                } catch (SQLException ex) {
-                   Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                }
            }else{
             return false;   

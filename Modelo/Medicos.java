@@ -5,6 +5,13 @@
  */
 package Modelo;
 
+import Controlador.ControladorPacientes;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.input.KeyCode;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jose,Marco,Yuliana,Elver
@@ -95,19 +102,44 @@ public class Medicos {
         this.salario = salario;
     }
 
-    public Medicos(String nombre, String cedula, String fecha, String correo, String telefono, String usuario, String pass, String codigo, double salario) {
-        this.nombre = nombre;
-        this.cedula = cedula;
-        this.fecha = fecha;
-        this.correo = correo;
-        this.telefono = telefono;
+    public Medicos(String usuario) {
         this.usuario = usuario;
-        this.pass = pass;
-        this.especialidad="Medico general";
-        this.codigo = codigo;
-        this.salario = salario;
     }
+
+
     
+    public boolean comprobarUsuario(){
+ 
+BD bd = new BD("SELECT * FROM `medicos` WHERE `Usuario`=?");
+      
+        if (  bd.ejectuar(new Object []{this.usuario})==true) {
+          try {
+              while (bd.sentencia.getResultSet().next()) {
+                 if (bd.sentencia.getResultSet().getString(9).equals(this.usuario)) {
+                  return false;
+              }    
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        return true;
+ }
+    public boolean comprobarCedula(){
+        BD bd = new BD("SELECT * FROM medicos WHERE Cedula=?");
+      
+        if (  bd.ejectuar(new Object []{this.cedula})==true) {
+          try {
+              bd.sentencia.getResultSet().next();
+              if (bd.sentencia.getResultSet().getString(1).equals(this.cedula)) {
+                  return false;
+              }    
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        return true;
+    }
        
     public void calcularSalarioNeto() {
         if (this.salario < 817000) {

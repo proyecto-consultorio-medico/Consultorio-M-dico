@@ -7,9 +7,7 @@ package Controlador;
 
 import Modelo.BD;
 import Modelo.Medicos;
-import Modelo.Pacientes;
 import Modelo.Secretaria;
-import Modelo.Usuario;
 import Vista.Usuarios;
 import javax.swing.JOptionPane;
 
@@ -29,13 +27,14 @@ public class ControladorUsuarios {
     }
     
     public boolean agregar(){
-        if ("Secretaria".equals(frmUsuarios.getTxtTipo())) {
+        if (!"".equals(frmUsuarios.getTxtcedula().getText())) {
+             if ("Secretaria".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
             this.secretaria= new Secretaria(frmUsuarios.getTxtnombre().getText(),
                     frmUsuarios.getTxtcedula().getText(),frmUsuarios.getTxtfecha().getText(),frmUsuarios.getTxtcorreo().getText(),
                     frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),frmUsuarios.getTxtcontra().getText());
-            BD bd=new BD("INSERT INTO secretarias VALUES (?,?,?,?,?,?,?)");
-            if ( bd.ejectuar(new Object[]{secretaria.getCedula(),secretaria.getNombre(),secretaria.getFecha(),
-                secretaria.getCorreo(),secretaria.getTelefono(),secretaria.getUsuario(),secretaria.getPass()})==false) {
+            if (secretaria.comprobarCedula()==true) {
+                BD bd=new BD("INSERT INTO secretarias VALUES (?,?,?,?,?,?,?)");
+            if (secretaria.comprobarUsuario()==false) {
                 frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
                  bd.ejectuar(new Object[]{secretaria.getCedula(),secretaria.getNombre(),secretaria.getFecha(),
@@ -43,18 +42,21 @@ public class ControladorUsuarios {
                  frmUsuarios.setTxtmensaje("");
                   return true;
             }
+            }else{
+            frmUsuarios.setTxtMensajeC("La cedula ya existe");
+            }
+            
         }
         
-        if ("Medico".equals(frmUsuarios.getTxtTipo())) {
+        if ("Medico".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
         
             this.medico= new Medicos(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),frmUsuarios.getTxtfecha().getText(),
                     frmUsuarios.getTxtcorreo().getText(),frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),
-                    frmUsuarios.getTxtcontra().getText(), (String) frmUsuarios.getTxtespe(),frmUsuarios.getTxtCondigo().getText(),
+                    frmUsuarios.getTxtcontra().getText(), (String) frmUsuarios.getComboespe().getSelectedItem(),frmUsuarios.getTxtCondigo().getText(),
                     Double.parseDouble(frmUsuarios.getTxtSalario().getText()));
-            BD bd=new BD("INSERT INTO medicos VALUES (?,?,?,?,?,?,?,?,?,?)");
-            if (bd.ejectuar(new Object[]{medico.getCedula(),medico.getNombre(),medico.getFecha()
-                    ,medico.getCorreo(),medico.getCodigo(),medico.getTelefono(),medico.getEspecialidad()
-                    ,medico.getSalario(),medico.getUsuario(),medico.getPass()})==false) {
+                   if ( medico.comprobarCedula()==false) {
+                BD bd=new BD("INSERT INTO medicos VALUES (?,?,?,?,?,?,?,?,?,?)");
+            if (this.medico.comprobarUsuario()==false) {
                     frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
             bd.ejectuar(new Object[]{medico.getCedula(),medico.getNombre(),medico.getFecha()
@@ -63,13 +65,33 @@ public class ControladorUsuarios {
                     frmUsuarios.setTxtmensaje("");
               return true;
             }
+            }else{
+                   frmUsuarios.setTxtMensajeC("La cedula ya existe");
+                   }
+            
         }
         return false;
-        
-    }
-    public boolean eliminar() {
-            BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
-            bd.ejectuar(new Object[]{frmUsuarios.getTxtcedula()});
-            return true;
         }
+         return false;
+    }
+    
+    public boolean comprobarUs(){
+        if ("Secretaria".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
+              this.secretaria= new Secretaria(frmUsuarios.getTxtusuario().getText());
+              if (secretaria.comprobarUsuario()==false) {
+                frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
+                return false;
+                    }
+        }
+        if ("Medico".equals(frmUsuarios.getCombotipo().getSelectedItem())){
+        this.medico= new Medicos(frmUsuarios.getTxtusuario().getText());
+            if (medico.comprobarUsuario()==false) {
+                 frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
+                 return false;
+            }
+        } 
+            
+            frmUsuarios.setTxtmensaje("El usuario esta disponible");
+        return true;
+    }
 }

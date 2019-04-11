@@ -52,6 +52,10 @@ public class Secretaria {
         return pass;
     }
 
+    public Secretaria(String usuario) {
+        this.usuario = usuario;
+    }
+
     
     public Secretaria(String nombre, String cedula, String fecha, String correo, String telefono,String usuario,String pass) {
         this.nombre = nombre;
@@ -62,7 +66,37 @@ public class Secretaria {
         this.usuario= usuario;
         this.pass= pass;
     }
-
-           
-    
+ public boolean comprobarCedula(){
+        BD bd = new BD("SELECT * FROM secretarias WHERE Cedula=?");
+      
+        if (  bd.ejectuar(new Object []{this.cedula})==true) {
+          try {
+              bd.sentencia.getResultSet().next();
+              if (bd.sentencia.getResultSet().getString(1).equals(this.cedula)) {
+                  return false;
+              }    
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        return true;
+ }     
+ 
+ public boolean comprobarUsuario(){
+BD bd = new BD("SELECT * FROM `secretarias` WHERE `Usuario`=?");
+      
+        if (  bd.ejectuar(new Object []{this.usuario})==true) {
+          try {
+              while (bd.sentencia.getResultSet().next()) {
+                 if (bd.sentencia.getResultSet().getString(6).equals(this.usuario)) {
+                  return false;
+              }    
+            }
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        return true;
+ }
 }
