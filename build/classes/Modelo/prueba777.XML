@@ -1,0 +1,7 @@
+<xml>
+    <conexion>
+        <Usuario>java</Usuario>
+        <Pass>123</Pass>
+        <Ip>127.0.0.1</Ip>
+    </conexion>
+</xml>
