@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class BD{
     private static Connection conexion;
-    public PreparedStatement sentencia;
+    private PreparedStatement sentencia;
     private ResultSet datos;
     private static String ip;
     private static String usuario;
@@ -70,7 +71,8 @@ public class BD{
     this.setSentencia(sql);
     }
     
-    private boolean conectar(){
+    private String conectar(){
+         
         if (this.conexion==null) {
              try {
             ini = new ArchivosIniL();
@@ -80,16 +82,17 @@ public class BD{
                     "/"+ini.getProperties().getProperty("BD","default value")+"?useServerPrepStmts=true",
                     ini.getProperties().getProperty("Usuario","default value"),
                     ini.getProperties().getProperty("Pass","default value"));
-            return true;
+            return "Conecto";
         } catch (ClassNotFoundException ex) {
            System.out.println("Driver no cargado");
-           return false;
+            return "Fallo";
         } catch (SQLException ex) {
              System.out.println("Error al conectar");
-             return false;
+             return "Fallo";
+          
         }
         }
-       return true;
+       return "Existe";
     }
     
     public boolean setSentencia(String sql){
@@ -134,42 +137,52 @@ public class BD{
     }
    return true;
     }
+
     
-   public boolean ejectuar(){
+     
+       public Object[] getObject(){
         try {
-            this.sentencia.execute();
+            if (this.datos.next()) {
+                ArrayList<Object> obj= new ArrayList();
+                for (int i = 1; i <=this.datos.getMetaData().getColumnCount(); i++) {
+                    obj.add(this.datos.getObject(i));
+                }
+                return obj.toArray();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+  
+    
+     public boolean ejectuar(Object [] parametro){
+         this.setParametros(parametro);
+         return this.ejectuar();
+    }
+      public boolean ejectuar(){
+        try {
+            if (this.sentencia.execute()) {
+                this.datos=this.sentencia.getResultSet();
+            }
             return true;
         } catch (SQLException ex) {
           JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
         }
         return false;
    }
-   
-     public boolean ejectuar(Object [] parametro){
-         this.setParametros(parametro);
-         return this.ejectuar();
-    }
-    
-     public boolean conectarBase(String ip,String usuario,String pass,String bd){
-             iniCrear= new ArchivoIniC();
-             iniCrear.limpiar();
-             this.ip=ip;
-             this.usuario=usuario;
-             this.pass=pass;
-             this.bd=bd;
-             iniCrear.escribir("[Configuracion]");
-              iniCrear.escribir("BD="+bd);
-              iniCrear.escribir("IP="+ip);
-               iniCrear.escribir("Usuario="+usuario);
-                iniCrear.escribir("Pass="+pass);
-                iniCrear.guardar();
-                iniCrear.cerrar();
-                return this.conectar();   
-     }
-     
-      public boolean apagarservidor(){
+      
+      public String comprobar(){
+            if (this.conectar()=="Existe") {
+                return "Encendido";
+            }     
+         return "Apagado";
+      }
+      
+     public boolean apagarservidor(){
         try {
             conexion.close();
+            this.conexion=null;
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
@@ -177,27 +190,22 @@ public class BD{
         return false;
       }
       
-      public String comprobar(){
-            if (this.conectar()==false) {
-                 return "Apagado";
-            }     
-        return "Encendido";
-      }
-      
-       public boolean reiniciarBase(){
-           if (this.conectar()==true) {
-               try {
-                   this.conexion.close();
-                   iniCrear= new ArchivoIniC();
-                   iniCrear.borrar();
-                   return true;
-               } catch (SQLException ex) {
-                   JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
-               }
-           }else{
-            return false;   
-               
-           }
-    return false;
-}
+     public Boolean encender(){
+         this.iniCrear = new ArchivoIniC();
+         this.iniCrear.limpiar();
+         this.iniCrear.escribir("[Configuracion]");
+          this.iniCrear.escribir("BD="+this.bd);
+           this.iniCrear.escribir("IP="+this.ip);
+            this.iniCrear.escribir("Usuario="+this.usuario);
+             this.iniCrear.escribir("Pass="+this.pass);
+             this.iniCrear.guardar();
+             this.iniCrear.cerrar();
+             this.conexion=null;
+             if (this.conectar()=="Conecto") {
+             return true;
+         }
+             return false;
+     }
+     
+    
 }

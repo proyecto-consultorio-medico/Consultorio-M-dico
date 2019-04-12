@@ -52,8 +52,42 @@ public class Secretaria {
         return pass;
     }
 
-    public Secretaria(String usuario) {
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public Secretaria() {
+         this.nombre = null;
+        this.cedula = null;
+        this.fecha = null;
+        this.correo = null;
+        this.telefono = null;
+        this.usuario= null;
+        this.pass= null;
     }
 
     
@@ -66,37 +100,5 @@ public class Secretaria {
         this.usuario= usuario;
         this.pass= pass;
     }
- public boolean comprobarCedula(){
-        BD bd = new BD("SELECT * FROM secretarias WHERE Cedula=?");
-      
-        if (  bd.ejectuar(new Object []{this.cedula})==true) {
-          try {
-              bd.sentencia.getResultSet().next();
-              if (bd.sentencia.getResultSet().getString(1).equals(this.cedula)) {
-                  return false;
-              }    
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        return true;
- }     
  
- public boolean comprobarUsuario(){
-BD bd = new BD("SELECT * FROM `secretarias` WHERE `Usuario`=?");
-      
-        if (  bd.ejectuar(new Object []{this.usuario})==true) {
-          try {
-              while (bd.sentencia.getResultSet().next()) {
-                 if (bd.sentencia.getResultSet().getString(6).equals(this.usuario)) {
-                  return false;
-              }    
-            }
-             
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        return true;
- }
 }

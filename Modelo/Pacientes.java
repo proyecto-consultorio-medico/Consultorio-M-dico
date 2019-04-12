@@ -17,13 +17,42 @@ import java.time.format.DateTimeFormatter;
  * @author Jose,Marco,Yuliana,Elver
  */
 public class Pacientes {
-    private String cedula;
+    private int cedula;
     private String nombreCompleto;
     private String fecha;
     private String telefono;
     private String correo;
 
-    public String getCedula() {
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
+        this.telefono = null;
+        this.correo = null;
+           this.fecha = null;
+           this.nombreCompleto=null;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    
+    public Pacientes() {
+       this.cedula=0;
+    }
+
+    public int getCedula() {
         return cedula;
     }
 
@@ -43,7 +72,7 @@ public class Pacientes {
         return correo;
     }
 
-    public Pacientes(String cedula, String nombreCompleto, String fecha, String telefono, String correo) {
+    public Pacientes(int cedula, String nombreCompleto, String fecha, String telefono, String correo) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.fecha = fecha;
@@ -51,7 +80,7 @@ public class Pacientes {
         this.correo = correo;
     }
 
-    public Pacientes(String cedula, String nombreCompleto, String fecha, String telefono) {
+    public Pacientes(int cedula, String nombreCompleto, String fecha, String telefono) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.fecha = fecha;
@@ -59,7 +88,7 @@ public class Pacientes {
         this.correo = null;
     }
 
-    public Pacientes(String cedula, String nombreCompleto, String fecha) {
+    public Pacientes(int cedula, String nombreCompleto, String  fecha) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.fecha = fecha;
@@ -67,7 +96,7 @@ public class Pacientes {
         this.correo = null;
     }
 
-    public Pacientes(String cedula, String nombreCompleto) {
+    public Pacientes(int cedula, String nombreCompleto) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.fecha = null;
@@ -75,9 +104,6 @@ public class Pacientes {
         this.correo = null;
     }
 
-    public Pacientes(String cedula) {
-        this.cedula = cedula;
-    }
 
     public String calcularedad(String fecha) {
         if (!"".equals(fecha)) {
@@ -89,4 +115,11 @@ public class Pacientes {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Pacientes{" + "cedula=" + cedula + ", nombreCompleto=" + nombreCompleto + ", fecha=" + fecha + ", telefono=" + telefono + ", correo=" + correo + '}';
+    }
+    
+    
 }

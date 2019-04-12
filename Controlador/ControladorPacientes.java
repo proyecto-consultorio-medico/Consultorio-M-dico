@@ -10,9 +10,11 @@ import Modelo.Pacientes;
 import Vista.BuscaPaciente;
 import Vista.FrmPacientes;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,8 +36,8 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
-                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
+                       frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -43,7 +45,7 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
-                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
@@ -52,15 +54,15 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText())) {
-                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
+                       frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
                 return true;
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
-                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
@@ -73,20 +75,19 @@ public class ControladorPacientes {
 
     }
 
-    public String buscarpaciente() {
-        pacientes = new Pacientes(frmpacientes.getTxtBuscar().getText());
-        BD bd = new BD("SELECT * FROM pacientes WHERE Cedula=?");
-        bd.ejectuar(new Object[]{pacientes.getCedula()});
-        try {
-            while (bd.sentencia.getResultSet().next()) {
-                return bd.sentencia.getResultSet().getString(1) + "|" + bd.sentencia.getResultSet().getString(2) + "|"
-                        + bd.sentencia.getResultSet().getString(3) + "|"
-                        + bd.sentencia.getResultSet().getString(4) + "|" + bd.sentencia.getResultSet().getString(5);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
+    public void buscarpaciente() {
+        if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
+            pacientes = new Pacientes();
+        pacientes.setCedula(Integer.parseInt(frmpacientes.getTxtBuscar().getText()));
+        BD bd = new BD("SELECT * FROM `pacientes` WHERE Cedula=?");
+        bd.ejectuar(new Object[]{pacientes.getCedula()});  
+                 
+                  DefaultTableModel modelo= (DefaultTableModel)frmpacientes.getTablaPacientes().getModel();        
+                modelo.addRow(bd.getObject());
+                
         }
-        return null;
+        
+                  
     }
 
     public String edad() {
@@ -95,7 +96,8 @@ public class ControladorPacientes {
 
     public boolean eliminar() {
         if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
-            pacientes = new Pacientes(frmpacientes.getTxtBuscar().getText());
+            pacientes = new Pacientes();
+            pacientes.setCedula(Integer.parseInt(frmpacientes.getTxtBuscar().getText()));
             BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
             bd.ejectuar(new Object[]{pacientes.getCedula()});
             return true;

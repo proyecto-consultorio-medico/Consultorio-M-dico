@@ -7,7 +7,7 @@ package Controlador;
 
 /**
  *
- * @author Jose,Marco,Yuliana,Elver
+ * @author kille
  */
 public class ControladorCitas {
     

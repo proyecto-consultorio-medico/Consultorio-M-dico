@@ -5,25 +5,29 @@
  */
 package Vista;
 
+import Controlador.ControladorConexion;
 import Modelo.ImagenFondo;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jose,Marco,Yuliana,Elver
  */
 public class FrmConsultorio extends javax.swing.JFrame {
-
+private ControladorConexion conexion;
     /**
      * Creates new form FrmConsultorio
      */
     public FrmConsultorio() {
         initComponents();
+
         Escritorio.setBorder(new ImagenFondo());
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.Expendientes.setEnabled(false);
         this.RegistroCitas.setEnabled(false);
         this.RegistroPaci.setEnabled(false);
         this.RegistroUsu.setEnabled(false);
+        
     }
 
     /**

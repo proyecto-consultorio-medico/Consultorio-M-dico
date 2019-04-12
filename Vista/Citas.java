@@ -7,7 +7,7 @@ package Vista;
 
 /**
  *
- * @author Jose,Marco,Yuliana,Elver
+ * @author kille
  */
 public class Citas extends javax.swing.JInternalFrame {
 

@@ -9,7 +9,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 /**
  *
- * @author Jose,Marco,Yuliana,Elver
+ * @author kille
  */
 public class BuscaPaciente extends javax.swing.JDialog {
 

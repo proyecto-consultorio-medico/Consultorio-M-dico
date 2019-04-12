@@ -79,6 +79,46 @@ public class Medicos {
         return pass;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setSalarioNeto(double SalarioNeto) {
+        this.SalarioNeto = SalarioNeto;
+    }
+
   
 
     public String getEspecialidad() {
@@ -108,38 +148,7 @@ public class Medicos {
 
 
     
-    public boolean comprobarUsuario(){
- 
-BD bd = new BD("SELECT * FROM `medicos` WHERE `Usuario`=?");
-      
-        if (  bd.ejectuar(new Object []{this.usuario})==true) {
-          try {
-              while (bd.sentencia.getResultSet().next()) {
-                 if (bd.sentencia.getResultSet().getString(9).equals(this.usuario)) {
-                  return false;
-              }    
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        return true;
- }
-    public boolean comprobarCedula(){
-        BD bd = new BD("SELECT * FROM medicos WHERE Cedula=?");
-      
-        if (  bd.ejectuar(new Object []{this.cedula})==true) {
-          try {
-              bd.sentencia.getResultSet().next();
-              if (bd.sentencia.getResultSet().getString(1).equals(this.cedula)) {
-                  return false;
-              }    
-        } catch (SQLException ex) {
-            Logger.getLogger(ControladorPacientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        return true;
-    }
+    
        
     public void calcularSalarioNeto() {
         if (this.salario < 817000) {

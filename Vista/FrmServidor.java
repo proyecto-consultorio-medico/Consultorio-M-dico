@@ -16,7 +16,7 @@ import javax.swing.JTextField;
  * @author Jose,Marco,Yuliana,Elver
  */
 public class FrmServidor extends javax.swing.JInternalFrame {
-    ControladorConexion conexion;
+    private ControladorConexion conexion;
 
     public JTextField getTxtIP() {
         return txtIP;
@@ -35,10 +35,6 @@ public class FrmServidor extends javax.swing.JInternalFrame {
     }
 
 
-    
-    
-     
-    
     public FrmServidor() {
         initComponents();
             ArchivosIniL ini= new ArchivosIniL();
@@ -48,6 +44,7 @@ public class FrmServidor extends javax.swing.JInternalFrame {
            txtPass.setText(ini.getProperties().getProperty("Pass","default value"));
            txtUsu.setText(ini.getProperties().getProperty("Usuario","default value"));
            txtbd.setText(ini.getProperties().getProperty("BD","default value"));
+           
     }
 
     /**
@@ -152,13 +149,17 @@ public class FrmServidor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         if (this.conexion.conectar()==true) {
             FrmConsultorio.estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
             FrmConsultorio.Expendientes.setEnabled(true);
             FrmConsultorio.RegistroUsu.setEnabled(true);
             FrmConsultorio.RegistroPaci.setEnabled(true);
             FrmConsultorio.RegistroCitas.setEnabled(true);
+        }else{
+            FrmConsultorio.estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png")));
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

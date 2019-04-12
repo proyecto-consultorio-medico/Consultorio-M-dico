@@ -29,8 +29,12 @@ public class ControladorConexion {
     }
 
     public boolean conectar() {
-        BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(), this.servidor.getTxtbd().getText());
-        return bd.conectarBase(bd.getIp(), bd.getUsuario(), bd.getPass(), bd.getBd());
+       BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(), this.servidor.getTxtbd().getText());
+     
+       if (bd.encender()==false) {
+            return false;
+        }
+        return true;
     }
 
     public boolean desconectar() {
@@ -38,11 +42,5 @@ public class ControladorConexion {
         return bd.apagarservidor() == true;
     }
 
-    public void cambiar() {
-        BD bd = new BD();
-        bd.reiniciarBase();
 
-    }
-
- 
 }
