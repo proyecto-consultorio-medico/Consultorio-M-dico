@@ -36,8 +36,10 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                       frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                    String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -45,8 +47,10 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -54,16 +58,20 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                       frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
                 return true;
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                 String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -109,8 +117,10 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                 String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                 pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono(),this.pacientes.getCedula()});
@@ -118,8 +128,10 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                 pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -127,16 +139,20 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                 pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
                 return true;
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
-                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+            String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});

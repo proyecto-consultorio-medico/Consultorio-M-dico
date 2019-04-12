@@ -12,7 +12,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -128,6 +131,14 @@ public class BD{
             if (parametro[i] instanceof java.lang.Double) {
                 try {
                     this.sentencia.setDouble(i+1, Double.parseDouble(parametro[i].toString()));
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
+                            return false;
+                }     
+    }   
+            if (parametro[i] instanceof java.util.Date) {
+                try {
+                    this.sentencia.setDate(i+1, (java.sql.Date) parametro[i]);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;

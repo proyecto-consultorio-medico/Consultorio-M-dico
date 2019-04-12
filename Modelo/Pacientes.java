@@ -19,23 +19,22 @@ import java.time.format.DateTimeFormatter;
 public class Pacientes {
     private int cedula;
     private String nombreCompleto;
-    private String fecha;
+    private Date fecha;
     private String telefono;
     private String correo;
-
+    private int año;
+    private int mes;
+    private int dia;
+    
     public void setCedula(int cedula) {
         this.cedula = cedula;
-        this.telefono = null;
-        this.correo = null;
-           this.fecha = null;
-           this.nombreCompleto=null;
     }
 
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -60,7 +59,7 @@ public class Pacientes {
         return nombreCompleto;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -72,43 +71,77 @@ public class Pacientes {
         return correo;
     }
 
-    public Pacientes(int cedula, String nombreCompleto, String fecha, String telefono, String correo) {
+    public int getAño() {
+        return año;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+    
+    
+    public Pacientes(int cedula, String nombreCompleto, String telefono, String correo, int año, int mes, int dia) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
-        this.fecha = fecha;
         this.telefono = telefono;
         this.correo = correo;
+        this.año = año;
+        this.mes = mes;
+        this.dia = dia;
+        this.fecha=null;
     }
 
-    public Pacientes(int cedula, String nombreCompleto, String fecha, String telefono) {
+    public Pacientes(int cedula, String nombreCompleto, String telefono, int año, int mes, int dia) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
-        this.fecha = fecha;
         this.telefono = telefono;
-        this.correo = null;
+        this.año = año;
+        this.mes = mes;
+        this.dia = dia;
+          this.fecha=null;
     }
 
-    public Pacientes(int cedula, String nombreCompleto, String  fecha) {
+    public Pacientes(int cedula, String nombreCompleto, int año, int mes, int dia) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
-        this.fecha = fecha;
-        this.telefono = null;
-        this.correo = null;
+        this.año = año;
+        this.mes = mes;
+        this.dia = dia;
+          this.fecha=null;
     }
 
     public Pacientes(int cedula, String nombreCompleto) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
-        this.fecha = null;
-        this.telefono = null;
-        this.correo = null;
+          this.fecha=null;
+          this.año=0;
+          this.mes=1;
+          this.dia=0;
     }
 
+    
+    public void validarFecha(int año,int mes,int dia){
+        año=año-1900;
+        mes=mes-1;
+        this.fecha= new Date(año,mes,dia);
+        System.out.println(fecha);
+    }
 
     public String calcularedad(String fecha) {
         if (!"".equals(fecha)) {
+              String fechas;
+            if (mes<10) {
+              fechas=this.dia+"/"+"0"+this.mes+"/"+this.año;
+            }else{
+            fechas=this.dia+"/"+this.mes+"/"+this.año;
+            }
+            
             DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate fechaNac = LocalDate.parse(fecha, calendario);
+            LocalDate fechaNac = LocalDate.parse(fechas, calendario);
             LocalDate ahora = LocalDate.now();
             Period periodo = Period.between(fechaNac, ahora);
             return periodo.getYears() + " años y  " + periodo.getMonths() + " meses";

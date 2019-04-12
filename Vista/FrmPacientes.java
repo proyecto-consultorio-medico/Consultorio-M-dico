@@ -273,7 +273,7 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (cpacientes.guardarPaciente()==true ) {
             if (!"".equals(this.txtfecha.getText())) {
-                txtedad.setText(cpacientes.edad());
+       txtedad.setText(cpacientes.edad());
             }
             JOptionPane.showMessageDialog(null, "Se agrego paciente a la base de datos");
         }else{
