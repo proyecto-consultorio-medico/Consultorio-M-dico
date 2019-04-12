@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class Secretaria {
     private String nombre;
-     private String cedula;
+     private int cedula;
       private String fecha;
        private String correo;
         private String telefono;
@@ -28,7 +28,7 @@ public class Secretaria {
         return nombre;
     }
 
-    public String getCedula() {
+    public int getCedula() {
         return cedula;
     }
 
@@ -56,7 +56,7 @@ public class Secretaria {
         this.nombre = nombre;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(int cedula) {
         this.cedula = cedula;
     }
 
@@ -82,7 +82,7 @@ public class Secretaria {
 
     public Secretaria() {
          this.nombre = null;
-        this.cedula = null;
+        this.cedula = 0;
         this.fecha = null;
         this.correo = null;
         this.telefono = null;
@@ -91,7 +91,7 @@ public class Secretaria {
     }
 
     
-    public Secretaria(String nombre, String cedula, String fecha, String correo, String telefono,String usuario,String pass) {
+    public Secretaria(String nombre, int cedula, String fecha, String correo, String telefono,String usuario,String pass) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.fecha = fecha;

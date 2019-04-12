@@ -78,6 +78,7 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         jButton5 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPacientes = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         jMenuItem1.setText("jMenuItem1");
@@ -167,6 +168,13 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tablaPacientes);
 
+        jButton6.setText("Actualizar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -201,8 +209,10 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)))
+                .addContainerGap(15, Short.MAX_VALUE))
             .addComponent(jScrollPane2)
         );
         jPanel1Layout.setVerticalGroup(
@@ -225,11 +235,12 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
         );
@@ -275,7 +286,21 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        if (tablaPacientes.getSelectedColumn()==0) {
+            txtcedula.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 0)));
+        }
+        if (tablaPacientes.getSelectedColumn()==1) {
+            txtnombre.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 1)));
+        }
+        if (tablaPacientes.getSelectedColumn()==2) {
+            txtfecha.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 2)));
+        }
+        if (tablaPacientes.getSelectedColumn()==3) {
+            txtcorreo.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 3)));
+        }
+        if (tablaPacientes.getSelectedColumn()==4) {
+            txtTelefono.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 4)));
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -284,6 +309,10 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        cpacientes.actualizarPaciente();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -291,6 +320,7 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;

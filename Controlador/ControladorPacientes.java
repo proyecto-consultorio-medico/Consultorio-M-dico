@@ -7,8 +7,8 @@ package Controlador;
 
 import Modelo.BD;
 import Modelo.Pacientes;
-import Vista.BuscaPaciente;
 import Vista.FrmPacientes;
+import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -79,12 +79,12 @@ public class ControladorPacientes {
         if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
             pacientes = new Pacientes();
         pacientes.setCedula(Integer.parseInt(frmpacientes.getTxtBuscar().getText()));
-        BD bd = new BD("SELECT * FROM `pacientes` WHERE Cedula=?");
+        BD bd = new BD("SELECT *  FROM `pacientes` WHERE Cedula=?");
         bd.ejectuar(new Object[]{pacientes.getCedula()});  
                  
-                  DefaultTableModel modelo= (DefaultTableModel)frmpacientes.getTablaPacientes().getModel();        
-                modelo.addRow(bd.getObject());
-                
+                  DefaultTableModel modelo= (DefaultTableModel)frmpacientes.getTablaPacientes().getModel();   
+              
+                    modelo.addRow(bd.getObject());
         }
         
                   
@@ -103,5 +103,48 @@ public class ControladorPacientes {
             return true;
         }
         return false;
+    }
+     public boolean actualizarPaciente() {
+        if (!"".equals(frmpacientes.getTxtcedula().getText())) {
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
+                    && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
+                    && !"".equals(frmpacientes.getTxtcorreo().getText())) {
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
+                bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono(),this.pacientes.getCedula()});
+                return true;
+            }
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
+                    && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
+                bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
+                    && !"".equals(frmpacientes.getTxtfecha().getText())) {
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
+                bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+            if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
+                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()), frmpacientes.getTxtnombre().getText(),
+                        frmpacientes.getTxtfecha().getText(), frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText());
+                BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
+                bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                return true;
+            }
+        }
+
+        return false;
+
     }
 }
