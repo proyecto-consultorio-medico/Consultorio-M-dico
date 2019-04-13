@@ -21,6 +21,7 @@ public class ControladorUsuarios {
     private Secretaria secretaria;
     private Medicos medico;
     private Usuarios frmUsuarios;
+    private  Object obj[];
 
     public ControladorUsuarios(Usuarios frmUsuarios) {
         this.frmUsuarios = frmUsuarios;
@@ -99,37 +100,69 @@ public class ControladorUsuarios {
         return true;
     }
     public boolean comprobarUsuarioSecre(){
+       this.secretaria= new Secretaria();
+       secretaria.setUsuario(frmUsuarios.getTxtusuario().getText());
         BD bd= new BD("SELECT `Usuario` FROM `secretarias` WHERE Usuario=?");
+        System.out.println(this.secretaria.getUsuario());
         bd.ejectuar(new Object[]{this.secretaria.getUsuario()});
-        if (bd.getObject()[0].equals(this.secretaria.getUsuario())) {
-             return false;
+       obj=bd.getObject();
+        System.out.println(obj);
+        System.out.println(this.secretaria.getUsuario());
+        if (obj==null) {
+            return true;
+        }else{
+         if (obj[0].equals(this.secretaria.getUsuario())) {
+          return false;
          }
-         return true;
+        }
+        return true;
+        
     }
     
     public boolean comprobarUsuarioMedic(){
     BD bd= new BD("SELECT `Usuario` FROM `medicos` WHERE Usuario=?");
     bd.ejectuar(new Object[]{this.medico.getUsuario()});
-    if (bd.getObject()[0].equals(this.medico.getUsuario())) {
-             return false;
+    obj=bd.getObject();
+        System.out.println(obj);
+        System.out.println(this.medico.getUsuario());
+        if (obj==null) {
+            return true;
+        }else{
+         if (obj[0].equals(this.medico.getUsuario())) {
+          return false;
          }
-         return true;
+        }
+        return true;
     }
    public boolean comprobarCedulaSecre(){
     BD bd= new BD("SELECT `Cedula` FROM `secretarias` WHERE Cedula=?");
     bd.ejectuar(new Object[]{this.secretaria.getCedula()});
-    if (bd.getObject()[0].equals(this.secretaria.getCedula())) {
-             return false;
+    obj=bd.getObject();
+        System.out.println(obj);
+        System.out.println(this.secretaria.getCedula());
+        if (obj==null) {
+            return true;
+        }else{
+         if (obj[0].equals(this.secretaria.getCedula())) {
+          return false;
          }
-         return true;
+        }
+        return true;
     }
      public boolean comprobarCedulaMedic(){
        BD bd= new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?");
        bd.ejectuar(new Object[]{this.medico.getCedula()});
-         if (bd.getObject()[0].equals(this.medico.getCedula())) {
-             return false;
+        obj=bd.getObject();
+        System.out.println(obj);
+        System.out.println(this.medico.getUsuario());
+        if (obj==null) {
+            return true;
+        }else{
+         if (obj[0].equals(this.medico.getUsuario())) {
+          return false;
          }
-         return true;
+        }
+        return true;
     }
      
       public boolean eliminar() {

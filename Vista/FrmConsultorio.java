@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.ControladorConexion;
+import Modelo.BD;
 import Modelo.ImagenFondo;
 import javax.swing.JOptionPane;
 
@@ -27,6 +28,16 @@ private ControladorConexion conexion;
         this.RegistroCitas.setEnabled(false);
         this.RegistroPaci.setEnabled(false);
         this.RegistroUsu.setEnabled(false);
+        BD bd=new BD();
+        if (bd.comprobar().equals("Encendido")) {
+        estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
+            FrmConsultorio.Expendientes.setEnabled(true);
+            FrmConsultorio.RegistroUsu.setEnabled(true);
+            FrmConsultorio.RegistroPaci.setEnabled(true);
+            FrmConsultorio.RegistroCitas.setEnabled(true);
+        }else{
+        estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png")));
+        }
         
     }
 
@@ -43,9 +54,13 @@ private ControladorConexion conexion;
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         conectar = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         RegistroUsu = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         RegistroPaci = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         RegistroCitas = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
         Expendientes = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         estado = new javax.swing.JMenu();
@@ -73,6 +88,7 @@ private ControladorConexion conexion;
             }
         });
         jMenu1.add(conectar);
+        jMenu1.add(jSeparator1);
 
         RegistroUsu.setText("Usuarios");
         RegistroUsu.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +97,7 @@ private ControladorConexion conexion;
             }
         });
         jMenu1.add(RegistroUsu);
+        jMenu1.add(jSeparator2);
 
         RegistroPaci.setText("Pacientes");
         RegistroPaci.setOpaque(true);
@@ -90,9 +107,11 @@ private ControladorConexion conexion;
             }
         });
         jMenu1.add(RegistroPaci);
+        jMenu1.add(jSeparator3);
 
         RegistroCitas.setText("Registro de citas");
         jMenu1.add(RegistroCitas);
+        jMenu1.add(jSeparator6);
 
         Expendientes.setText("Expedientes");
         jMenu1.add(Expendientes);
@@ -191,5 +210,9 @@ private ControladorConexion conexion;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }

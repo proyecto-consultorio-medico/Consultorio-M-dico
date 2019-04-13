@@ -27,6 +27,8 @@ public class Medicos {
            private String especialidad;
             private String codigo;
              private double salario;
+               private int año;
+                private int mes;
             
     public double SalarioNeto;
 
