@@ -6,6 +6,7 @@
 package Vista;
 
 import Modelo.ModeloCitas;
+import java.awt.Color;
 
 /**
  *
@@ -19,6 +20,7 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
      */
     public ExpedienteSensillo() {
         initComponents();
+              this.getContentPane().setBackground(new Color(85,151,248));
         c=new ModeloCitas();
     }
 
@@ -35,6 +37,8 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
         lblExpediente1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(85, 151, 248));
 
         jLabel1.setBackground(new java.awt.Color(0, 51, 255));
         jLabel1.setFont(new java.awt.Font("Lucida Calligraphy", 0, 24)); // NOI18N

@@ -79,7 +79,7 @@ public class BD{
         if (this.conexion==null) {
              try {
             ini = new ArchivosIniL();
-            ini.leerArchivo("C:\\Users\\kille\\Desktop\\Configuracion.ini");
+            ini.leerArchivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+
                     "/"+ini.getProperties().getProperty("BD","default value")+"?useServerPrepStmts=true",
