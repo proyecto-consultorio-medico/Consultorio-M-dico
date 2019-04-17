@@ -29,7 +29,8 @@ public class ControladorConexion {
     }
 
     public boolean conectar() {
-       BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(), this.servidor.getTxtbd().getText());
+       BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(),
+               this.servidor.getTxtbd().getText());
      
        if (bd.encender()==false) {
             return false;

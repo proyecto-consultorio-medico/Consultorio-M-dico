@@ -206,4 +206,13 @@ public boolean contarDigitostel(){
         }
             return true;
     }
+
+public void ponerMayusculas(){
+        String nombreConLasMayusculas = "";
+        for (String palabra : this.nombre.split(" ")) {
+            nombreConLasMayusculas += palabra.substring(0, 1).toUpperCase() + palabra.substring(1, palabra.length()).toLowerCase() + " ";
+        }
+        nombreConLasMayusculas = nombreConLasMayusculas.trim();
+        System.out.println(nombreConLasMayusculas);
+        }
 }

@@ -168,6 +168,14 @@ public boolean contarDigitostel(){
         }
             return true;
     }
+public void ponerMayusculas(){
+        String nombreConLasMayusculas = "";
+        for (String palabra : this.nombreCompleto.split(" ")) {
+            nombreConLasMayusculas += palabra.substring(0, 1).toUpperCase() + palabra.substring(1, palabra.length()).toLowerCase() + " ";
+        }
+        nombreConLasMayusculas = nombreConLasMayusculas.trim();
+        System.out.println(nombreConLasMayusculas);
+        }
     @Override
     public String toString() {
         return "Pacientes{" + "cedula=" + cedula + ", nombreCompleto=" + nombreCompleto + ", fecha=" + fecha + ", telefono=" + telefono + ", correo=" + correo + '}';

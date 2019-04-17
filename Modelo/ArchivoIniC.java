@@ -73,44 +73,19 @@ public class ArchivoIniC {
             lector = new BufferedReader(new FileReader(archivo));
             escritor= new BufferedWriter(new FileWriter(archivo,true));
             escribir("[Configuracion]");
+            escribir("BD=");
             escribir("IP=");
             escribir("Usuario=");
             escribir("Pass=");
+            this.guardar();
         }
           lector = new BufferedReader(new FileReader(archivo));
-            escritor= new BufferedWriter(new FileWriter(archivo,true));
-            
+            escritor= new BufferedWriter(new FileWriter(archivo,true));   
         } catch (Exception e) {
             e.printStackTrace();
         }
         
     }
-//    public void abrir(){
-//        try {
-//            archivo= new File(this.ruta+"\\"+this.nombre+this.tipo);
-//        if (!existe()) {
-//            this.crear();
-//              lector = new BufferedReader(new FileReader(archivo));
-//            escritor= new BufferedWriter(new FileWriter(archivo,true));
-//             escribir("<Caracteristicas>");
-//            escribir("<Tamanio>"+"12"+"</Tamanio>");
-//            escribir("<Colorletra>"+"0,0,0"+"</Colorletra>");
-//             escribir("<ColorFondo>"+"255,255,255"+"</ColorFondo>");
-//            escribir("<Fuente>"+"sansserift"+"</Fuente>");
-//            escribir("<Texto>"+""+"</Texto>");
-//            escribir("</Caracteristicas>");
-//            guardar();     
-//        }
-//         this.ruta=this.ruta+"\\"+this.nombre+this.tipo;
-//          abrirXML();
-//       
-//         
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 
    public void cerrar(){
         try {

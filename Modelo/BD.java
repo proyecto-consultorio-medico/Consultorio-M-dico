@@ -166,20 +166,6 @@ public class BD{
         return null;
     }
   
-    public String getObject2(){
-        try {
-            if (this.datos.next()) {
-                String res=null;
-                for (int i = 1; i <this.datos.getMetaData().getColumnCount(); i++) {
-                    res=this.datos.getString(i);
-                }
-                return res;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
      public boolean ejectuar(Object [] parametro){
          this.setParametros(parametro);
          return this.ejectuar();
@@ -215,7 +201,7 @@ public class BD{
       }
       
      public Boolean encender(){
-         this.iniCrear = new ArchivoIniC();
+        this.iniCrear = new ArchivoIniC();
          this.iniCrear.limpiar();
          this.iniCrear.escribir("[Configuracion]");
           this.iniCrear.escribir("BD="+this.bd);
