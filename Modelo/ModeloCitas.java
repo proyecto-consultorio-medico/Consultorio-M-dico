@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 package Modelo;
-
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class ModeloCitas {
     private String hora;

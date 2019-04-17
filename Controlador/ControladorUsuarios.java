@@ -37,8 +37,6 @@ public class ControladorUsuarios {
                      JOptionPane.showMessageDialog(null, "La cedula es invalida");
                      return false;
                  }
-            System.out.println(secretaria.getCedula()+" "+secretaria.getNombre()+secretaria.getFecha()+
-                " "+secretaria.getCorreo()+" "+secretaria.getTelefono()+" "+secretaria.getUsuario()+" "+secretaria.getPass());   
             if (comprobarCedulaSecre()==true) {
              
             if (comprobarUsuarioSecre()==false) {
@@ -47,6 +45,7 @@ public class ControladorUsuarios {
                 this.secretaria= new Secretaria(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),
                     frmUsuarios.getTxtcorreo().getText(),frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),
                     frmUsuarios.getTxtcontra().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
+                this.secretaria.ponerMayusculas();
                 if (secretaria.contarDigitostel()==false) {
                      JOptionPane.showMessageDialog(null, "El numero de telefono es invalido");
                      return false;
@@ -78,12 +77,18 @@ public class ControladorUsuarios {
             if (comprobarUsuarioMedic()==false) {
                     frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
-                 BD bd=new BD("INSERT INTO medicos VALUES (?,?,?,?,?,?,?,?,?,?)");
+                
                   this.medico= new Medicos(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),
                     frmUsuarios.getTxtcorreo().getText(),frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),
                     frmUsuarios.getTxtcontra().getText(), (String) frmUsuarios.getComboespe().getSelectedItem(),frmUsuarios.getTxtCondigo().getText(),
                     Double.parseDouble(frmUsuarios.getTxtSalario().getText()),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
-                   this.secretaria.validarFecha(this.secretaria.getAño(), this.secretaria.getMes(), this.secretaria.getDia());
+                   this.medico.ponerMayusculas();
+                  if (medico.contarDigitostel()==false) {
+                     JOptionPane.showMessageDialog(null, "El numero de telefono es invalido");
+                     return false;
+                 }
+                    BD bd=new BD("INSERT INTO medicos VALUES (?,?,?,?,?,?,?,?,?,?)");
+                   this.medico.validarFecha(this.medico.getAño(), this.medico.getMes(), this.medico.getDia());
             bd.ejectuar(new Object[]{medico.getCedula(),medico.getNombre(),medico.getFecha()
                     ,medico.getCorreo(),medico.getCodigo(),medico.getTelefono(),medico.getEspecialidad()
                     ,medico.getSalario(),medico.getUsuario(),medico.getPass()});

@@ -119,6 +119,7 @@ public void ponerMayusculas(){
             nombreConLasMayusculas += palabra.substring(0, 1).toUpperCase() + palabra.substring(1, palabra.length()).toLowerCase() + " ";
         }
         nombreConLasMayusculas = nombreConLasMayusculas.trim();
-        System.out.println(nombreConLasMayusculas);
+        this.nombre=nombreConLasMayusculas;
+  
         }
 }

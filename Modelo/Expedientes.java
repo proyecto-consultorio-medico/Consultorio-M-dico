@@ -23,8 +23,9 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author Personal
+ * @author Jose,Marco,Yuliana,Elver
  */
+
 public class Expedientes {
 
     private String nombrepaciente, nombredoctor, horacita;

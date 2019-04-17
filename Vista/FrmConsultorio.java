@@ -8,7 +8,6 @@ package Vista;
 import Controlador.ControladorConexion;
 import Modelo.BD;
 import Modelo.ImagenFondo;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +28,7 @@ private ControladorConexion conexion;
         this.RegistroPaci.setEnabled(false);
         this.RegistroUsu.setEnabled(false);
         BD bd=new BD();
+        bd.setRuta("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
         if (bd.comprobar().equals("Encendido")) {
         estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
             FrmConsultorio.Expendientes.setEnabled(true);

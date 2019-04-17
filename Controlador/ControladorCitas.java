@@ -10,12 +10,12 @@ import Modelo.Medicos;
 import Modelo.MoCitas;
 import Modelo.Pacientes;
 import Vista.Citas;
-import java.sql.Date;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
+
 public class ControladorCitas {
     private Medicos medico;
     private Pacientes paciente;
@@ -81,18 +81,7 @@ public class ControladorCitas {
        return false;
     }
      public void limitarCitas(){
-     int cont=0;
-     medico= new Medicos();
-     medico.setCedula(frmcitas.getTxtCedulaMedic().getText());
-     BD bd= new BD("Select Medico FROM citas where Medico=?");
-     bd.ejectuar(new Object[]{medico.getCedula()});
-     obj=bd.getObject();
-     cont++;
-     if(obj[0]==cont){
-     
-     }else{
-     this.guardarCita();
-     }
+   
    
 }
 }

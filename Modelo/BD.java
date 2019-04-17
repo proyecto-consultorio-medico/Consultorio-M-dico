@@ -12,10 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -35,6 +32,13 @@ public class BD{
     private ArchivosIniL ini;
     private ArchivoIniC iniCrear;
     protected String mesaje;
+    private String ruta;
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+    
+    
 
     public String getMesaje() {
         return mesaje;
@@ -66,6 +70,7 @@ public class BD{
     }
     
     public BD(){
+        this.ruta="C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico";
     this.conectar();
     }
     
@@ -79,7 +84,8 @@ public class BD{
         if (this.conexion==null) {
              try {
             ini = new ArchivosIniL();
-            ini.leerArchivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
+            ini.leerArchivo(ruta+"\\Configuracion.ini");
+            
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+
                     "/"+ini.getProperties().getProperty("BD","default value")+"?useServerPrepStmts=true",
@@ -201,13 +207,14 @@ public class BD{
       }
       
      public Boolean encender(){
-        this.iniCrear = new ArchivoIniC();
+        this.iniCrear = new ArchivoIniC(this.ruta);
          this.iniCrear.limpiar();
          this.iniCrear.escribir("[Configuracion]");
           this.iniCrear.escribir("BD="+this.bd);
            this.iniCrear.escribir("IP="+this.ip);
             this.iniCrear.escribir("Usuario="+this.usuario);
              this.iniCrear.escribir("Pass="+this.pass);
+             this.iniCrear.escribir("ruta="+this.ruta);
              this.iniCrear.guardar();
              this.iniCrear.cerrar();
              this.conexion=null;

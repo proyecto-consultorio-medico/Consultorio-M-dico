@@ -6,7 +6,6 @@
 package Modelo;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -174,7 +173,8 @@ public void ponerMayusculas(){
             nombreConLasMayusculas += palabra.substring(0, 1).toUpperCase() + palabra.substring(1, palabra.length()).toLowerCase() + " ";
         }
         nombreConLasMayusculas = nombreConLasMayusculas.trim();
-        System.out.println(nombreConLasMayusculas);
+        this.nombreCompleto=nombreConLasMayusculas;
+       
         }
     @Override
     public String toString() {

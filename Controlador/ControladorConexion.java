@@ -12,9 +12,10 @@ import Vista.FrmServidor;
  *
  * @author Jose,Marco,Yuliana,Elver
  */
+
 public class ControladorConexion {
 
-    FrmServidor servidor;
+    private FrmServidor servidor;
 
     public ControladorConexion(FrmServidor servidor) {
         this.servidor = servidor;
@@ -31,7 +32,7 @@ public class ControladorConexion {
     public boolean conectar() {
        BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(),
                this.servidor.getTxtbd().getText());
-     
+       bd.setRuta(this.servidor.getTxtRuta().getText());
        if (bd.encender()==false) {
             return false;
         }

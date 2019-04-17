@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class ArchivoIniC {
     private String nombre;
@@ -51,19 +51,13 @@ public class ArchivoIniC {
         this.tipo = tipo;
     }
    
-       public ArchivoIniC(){
+       public ArchivoIniC(String ruta){
          this.nombre="Configuracion";
-         this.ruta=System.getProperty("user.dir");
+         this.ruta=ruta;
          this.tipo=".ini";
           this.abrirIni();
        }
-       public ArchivoIniC(String nombre) {
-       this.nombre=nombre;
-       this.ruta=System.getProperty("user.dir");
-       this.tipo=".ini";
-        this.abrirIni();
-        
-    }
+     
    
        public void abrirIni(){
         try {
@@ -77,6 +71,7 @@ public class ArchivoIniC {
             escribir("IP=");
             escribir("Usuario=");
             escribir("Pass=");
+            escribir("ruta=");
             this.guardar();
         }
           lector = new BufferedReader(new FileReader(archivo));
@@ -140,18 +135,6 @@ public void borrar(){
     archivo.delete();
 }
 
-//public void guardarComo(String nombre,String ruta,String tipo,String lectura,int tamanio,String color,String color2,String fuente){
-//   Archivo archivo= new Archivo(nombre,ruta,tipo);
-//   archivo.limpiar();
-//   archivo.escribir("<Caracteristicas>");
-//   archivo.escribir("<Tamanio>"+tamanio+"</Tamanio>");
-//   archivo.escribir("<Colorletra>"+color+"</Colorletra>");
-//   archivo.escribir("<ColorFondo>"+color2+"</ColorFondo>");
-//   archivo.escribir("<Fuente>"+fuente+"</Fuente>");
-//   archivo.escribir("<Texto>"+lectura+"</Texto>");
-//   archivo.escribir("</Caracteristicas>");
-//   archivo.guardar();
-//}
 
 public void cambiarNombre(String nombre){
 File nuevoArchivo=new File(nombre);

@@ -10,7 +10,7 @@ import java.awt.Color;
 
 /**
  *
- * @author Elver
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class ExpedienteSensillo extends javax.swing.JInternalFrame {
         ModeloCitas c;

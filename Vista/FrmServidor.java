@@ -8,6 +8,8 @@ package Vista;
 import Controlador.ControladorConexion;
 import Modelo.ArchivosIniL;
 import java.awt.Color;
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -34,6 +36,10 @@ public class FrmServidor extends javax.swing.JInternalFrame {
         return txtbd;
     }
 
+    public JMenu getTxtRuta() {
+        return txtRuta;
+    }
+
 
     public FrmServidor() {
         initComponents();
@@ -45,6 +51,7 @@ public class FrmServidor extends javax.swing.JInternalFrame {
            txtPass.setText(ini.getProperties().getProperty("Pass","default value"));
            txtUsu.setText(ini.getProperties().getProperty("Usuario","default value"));
            txtbd.setText(ini.getProperties().getProperty("BD","default value"));
+           txtRuta.setText(ini.getProperties().getProperty("ruta","default value"));
            
     }
 
@@ -57,6 +64,7 @@ public class FrmServidor extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu2 = new javax.swing.JMenu();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txtIP = new javax.swing.JTextField();
@@ -64,6 +72,11 @@ public class FrmServidor extends javax.swing.JInternalFrame {
         txtUsu = new javax.swing.JTextField();
         txtPass = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        txtRuta = new javax.swing.JMenu();
+
+        jMenu2.setText("jMenu2");
 
         setBackground(new java.awt.Color(85, 151, 248));
         setClosable(true);
@@ -117,6 +130,17 @@ public class FrmServidor extends javax.swing.JInternalFrame {
             }
         });
 
+        jMenu1.setText("Ruta");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(txtRuta);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,7 +175,7 @@ public class FrmServidor extends javax.swing.JInternalFrame {
                         .addComponent(txtUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtbd, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -202,13 +226,27 @@ public class FrmServidor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPassActionPerformed
 
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+      JFileChooser buscador= new JFileChooser();
+        buscador.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+buscador.setMultiSelectionEnabled(false);
+int selecionado=buscador.showOpenDialog(null);
+        if (selecionado==JFileChooser.APPROVE_OPTION) {
+           txtRuta.setText(buscador.getSelectedFile().getAbsolutePath());
+        }
+    }//GEN-LAST:event_jMenu1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JTextField txtIP;
     private javax.swing.JTextField txtPass;
+    private javax.swing.JMenu txtRuta;
     private javax.swing.JTextField txtUsu;
     private javax.swing.JTextField txtbd;
     // End of variables declaration//GEN-END:variables
