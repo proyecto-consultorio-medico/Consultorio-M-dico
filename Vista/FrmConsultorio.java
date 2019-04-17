@@ -38,7 +38,6 @@ private ControladorConexion conexion;
         }else{
         estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/error-base-datos-wordpress.png")));
         }
-        
     }
 
     /**
@@ -110,6 +109,11 @@ private ControladorConexion conexion;
         jMenu1.add(jSeparator3);
 
         RegistroCitas.setText("Registro de citas");
+        RegistroCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistroCitasActionPerformed(evt);
+            }
+        });
         jMenu1.add(RegistroCitas);
         jMenu1.add(jSeparator6);
 
@@ -163,6 +167,12 @@ private ControladorConexion conexion;
         Escritorio.add(servidor);
         servidor.show();
     }//GEN-LAST:event_conectarActionPerformed
+
+    private void RegistroCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroCitasActionPerformed
+       Citas cita= new Citas();
+       Escritorio.add(cita);
+       cita.show();
+    }//GEN-LAST:event_RegistroCitasActionPerformed
 
     /**
      * @param args the command line arguments

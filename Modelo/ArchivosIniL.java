@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author kille
+ * @author kille     
  */
 public class ArchivosIniL {
     private Properties Parametro;

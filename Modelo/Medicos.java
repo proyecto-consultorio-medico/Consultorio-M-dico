@@ -5,13 +5,7 @@
  */
 package Modelo;
 
-import Controlador.ControladorPacientes;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.input.KeyCode;
-import javax.swing.JOptionPane;
-
+import java.sql.Date;
 /**
  *
  * @author Jose,Marco,Yuliana,Elver
@@ -19,7 +13,7 @@ import javax.swing.JOptionPane;
 public class Medicos {
     private String nombre;
      private String cedula;
-      private String fecha;
+      private Date fecha;
        private String correo;
         private String telefono;
          private String usuario;
@@ -29,6 +23,7 @@ public class Medicos {
              private double salario;
                private int año;
                 private int mes;
+                  private int dia;
             
     public double SalarioNeto;
 
@@ -61,7 +56,7 @@ public class Medicos {
         return cedula;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -89,7 +84,7 @@ public class Medicos {
         this.cedula = cedula;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -121,7 +116,18 @@ public class Medicos {
         this.SalarioNeto = SalarioNeto;
     }
 
-  
+    public int getAño() {
+        return año;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
 
     public String getEspecialidad() {
         return especialidad;
@@ -131,27 +137,29 @@ public class Medicos {
         return codigo;
     }
 
-    public Medicos(String nombre, String cedula, String fecha, String correo, String telefono, String usuario, String pass, String especialidad, String codigo, double salario) {
+    public Medicos(String nombre, String cedula, String correo, String telefono, String usuario, String pass, String especialidad, String codigo, double salario,int año ,int mes,int dia) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.fecha = fecha;
         this.correo = correo;
         this.telefono = telefono;
+        this.fecha=null;
         this.usuario = usuario;
         this.pass = pass;
         this.especialidad = especialidad;
         this.codigo = codigo;
         this.salario = salario;
+        this.dia=dia;
+        this.mes=mes;
+        this.año=año;
     }
-
-    public Medicos(String usuario) {
-        this.usuario = usuario;
+    
+        
+    public void validarFecha(int año,int mes,int dia){
+        año=año-1900;
+        mes=mes-1;
+        this.fecha= new Date(año,mes,dia);
     }
-
-
     
-    
-       
     public void calcularSalarioNeto() {
         if (this.salario < 817000) {
             this.deducionesDelSalario();
@@ -182,4 +190,20 @@ public class Medicos {
         this.SalarioNeto = this.salario - total;
     }
 
+    public boolean contarDigitosCedu(){
+        this.cedula = cedula.replaceAll("[^0-9]","");
+        System.out.println(this.cedula);
+        if (cedula.length()>9) {
+            return false;
+        }
+            return true;
+        
+    }
+public boolean contarDigitostel(){
+       this.telefono= telefono.replaceAll("[^0-9]","");
+        if (this.telefono.length()>8) {
+            return false;
+        }
+            return true;
+    }
 }

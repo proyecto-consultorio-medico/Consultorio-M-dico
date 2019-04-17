@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +18,7 @@ import java.time.format.DateTimeFormatter;
  * @author Jose,Marco,Yuliana,Elver
  */
 public class Pacientes {
-    private int cedula;
+    private String cedula;
     private String nombreCompleto;
     private Date fecha;
     private String telefono;
@@ -25,8 +26,8 @@ public class Pacientes {
     private int año;
     private int mes;
     private int dia;
-    
-    public void setCedula(int cedula) {
+      String fechas;
+    public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
@@ -48,10 +49,9 @@ public class Pacientes {
 
     
     public Pacientes() {
-       this.cedula=0;
     }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
@@ -84,7 +84,7 @@ public class Pacientes {
     }
     
     
-    public Pacientes(int cedula, String nombreCompleto, String telefono, String correo, int año, int mes, int dia) {
+    public Pacientes(String cedula, String nombreCompleto, String telefono, String correo, int año, int mes, int dia) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
@@ -95,7 +95,7 @@ public class Pacientes {
         this.fecha=null;
     }
 
-    public Pacientes(int cedula, String nombreCompleto, String telefono, int año, int mes, int dia) {
+    public Pacientes(String cedula, String nombreCompleto, String telefono, int año, int mes, int dia) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
@@ -105,7 +105,7 @@ public class Pacientes {
           this.fecha=null;
     }
 
-    public Pacientes(int cedula, String nombreCompleto, int año, int mes, int dia) {
+    public Pacientes(String cedula, String nombreCompleto, int año, int mes, int dia) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.año = año;
@@ -114,7 +114,7 @@ public class Pacientes {
           this.fecha=null;
     }
 
-    public Pacientes(int cedula, String nombreCompleto) {
+    public Pacientes(String cedula, String nombreCompleto) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
           this.fecha=null;
@@ -128,27 +128,46 @@ public class Pacientes {
         año=año-1900;
         mes=mes-1;
         this.fecha= new Date(año,mes,dia);
-        System.out.println(fecha);
     }
 
     public String calcularedad(String fecha) {
         if (!"".equals(fecha)) {
-              String fechas;
+         
             if (mes<10) {
               fechas=this.dia+"/"+"0"+this.mes+"/"+this.año;
-            }else{
-            fechas=this.dia+"/"+this.mes+"/"+this.año;
             }
-            
+                if (dia<10) {
+                     fechas="0"+this.dia+"/"+this.mes+"/"+this.año;
+                }
+                 if (dia<10&&mes<10) {
+                         fechas="0"+this.dia+"/"+"0"+this.mes+"/"+this.año;
+                    }  
+            System.out.println(fechas);
             DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaNac = LocalDate.parse(fechas, calendario);
             LocalDate ahora = LocalDate.now();
             Period periodo = Period.between(fechaNac, ahora);
             return periodo.getYears() + " años y  " + periodo.getMonths() + " meses";
-        }
+        } 
         return null;
     }
-
+    
+    public boolean contarDigitosCedu(){
+        this.cedula = cedula.replaceAll("[^0-9]","");
+        System.out.println(this.cedula);
+        if (cedula.length()>9) {
+            return false;
+        }
+            return true;
+        
+    }
+public boolean contarDigitostel(){
+       this.telefono= telefono.replaceAll("[^0-9]","");
+        if (this.telefono.length()>8) {
+            return false;
+        }
+            return true;
+    }
     @Override
     public String toString() {
         return "Pacientes{" + "cedula=" + cedula + ", nombreCompleto=" + nombreCompleto + ", fecha=" + fecha + ", telefono=" + telefono + ", correo=" + correo + '}';

@@ -5,10 +5,7 @@
  */
 package Modelo;
 
-import Controlador.ControladorPacientes;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Date;
 
 /**
  *
@@ -16,23 +13,25 @@ import java.util.logging.Logger;
  */
 public class Secretaria {
     private String nombre;
-     private int cedula;
-      private String fecha;
+     private String cedula;
+      private Date fecha;
        private String correo;
         private String telefono;
          private String usuario;
           private String pass;
-           
+           private int año;
+            private int mes;
+             private int dia;
 
     public String getNombre() {
         return nombre;
     }
 
-    public int getCedula() {
+    public String getCedula() {
         return cedula;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -52,53 +51,65 @@ public class Secretaria {
         return pass;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public int getAño() {
+        return año;
     }
 
-    public void setCedula(int cedula) {
+    public int getMes() {
+        return mes;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setCedula(String cedula) {
         this.cedula = cedula;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
+             
+             
     public Secretaria() {
-         this.nombre = null;
-        this.cedula = 0;
-        this.fecha = null;
-        this.correo = null;
-        this.telefono = null;
-        this.usuario= null;
-        this.pass= null;
+       usuario=null;
     }
 
-    
-    public Secretaria(String nombre, int cedula, String fecha, String correo, String telefono,String usuario,String pass) {
+    public Secretaria(String nombre, String cedula, String correo, String telefono,String usuario,String pass,int año ,int mes,int dia) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.fecha = fecha;
+        this.fecha = null;
         this.correo = correo;
         this.telefono = telefono;
         this.usuario= usuario;
         this.pass= pass;
+        this.dia=dia;
+        this.mes=mes;
+        this.año=año;
     }
- 
+     
+    public void validarFecha(int año,int mes,int dia){
+        año=año-1900;
+        mes=mes-1;
+        this.fecha= new Date(año,mes,dia);
+    }
+    
+    public boolean contarDigitosCedu(){
+        this.cedula = cedula.replaceAll("[^0-9]","");
+        System.out.println(this.cedula);
+        if (cedula.length()>9) {
+            return false;
+        }
+            return true;
+        
+    }
+public boolean contarDigitostel(){
+       this.telefono= telefono.replaceAll("[^0-9]","");
+        if (this.telefono.length()>8) {
+            return false;
+        }
+            return true;
+    }
 }

@@ -8,9 +8,9 @@ package Controlador;
 import Modelo.BD;
 import Modelo.Pacientes;
 import Vista.FrmPacientes;
-import java.lang.reflect.Array;
-import java.sql.SQLException;
-import java.util.Arrays;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -37,31 +37,52 @@ public class ControladorPacientes {
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
                     String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
-                BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
+                 if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
+                if (this.pacientes.contarDigitostel()==false) {
+                    JOptionPane.showMessageDialog(null, "El numero es invalido");
+                    return false;
+                }
+                     BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
-                    this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
+                    this.pacientes.getFecha(), this.pacientes.getCorreo(),this.pacientes.getTelefono()});
                 return true;
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
                 String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
-                BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
+                  if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
+                if (this.pacientes.contarDigitostel()==false) {
+                    JOptionPane.showMessageDialog(null, "El numero es invalido");
+                    return false;
+                }
+                     BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
                 return true;
+                }
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText())) {
                 String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
+                 if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -69,15 +90,19 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
                  String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
+                  if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
                 BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
                 bd.ejectuar(new Object[]{this.pacientes.getCedula(), this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
                 return true;
             }
-        }
+        
 
         return false;
 
@@ -86,7 +111,7 @@ public class ControladorPacientes {
     public void buscarpaciente() {
         if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
             pacientes = new Pacientes();
-        pacientes.setCedula(Integer.parseInt(frmpacientes.getTxtBuscar().getText()));
+        pacientes.setCedula(frmpacientes.getTxtBuscar().getText());
         BD bd = new BD("SELECT *  FROM `pacientes` WHERE Cedula=?");
         bd.ejectuar(new Object[]{pacientes.getCedula()});  
                  
@@ -105,7 +130,7 @@ public class ControladorPacientes {
     public boolean eliminar() {
         if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
             pacientes = new Pacientes();
-            pacientes.setCedula(Integer.parseInt(frmpacientes.getTxtBuscar().getText()));
+            pacientes.setCedula(frmpacientes.getTxtBuscar().getText());
             BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
             bd.ejectuar(new Object[]{pacientes.getCedula()});
             return true;
@@ -118,9 +143,17 @@ public class ControladorPacientes {
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
                  String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                 pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
+                  if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
+                if (this.pacientes.contarDigitostel()==false) {
+                    JOptionPane.showMessageDialog(null, "El numero es invalido");
+                    return false;
+                }
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono(),this.pacientes.getCedula()});
@@ -129,9 +162,17 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText()) && !"".equals(frmpacientes.getTxtTelefono().getText())) {
                 String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                 pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
+                  if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
+                if (this.pacientes.contarDigitostel()==false) {
+                    JOptionPane.showMessageDialog(null, "El numero es invalido");
+                    return false;
+                }
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -140,9 +181,13 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && !"".equals(frmpacientes.getTxtfecha().getText())) {
                 String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                 pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
+                  if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                  }
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
@@ -150,9 +195,13 @@ public class ControladorPacientes {
             }
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
             String fechas[]=frmpacientes.getTxtfecha().getText().split("/");
-                pacientes = new Pacientes(Integer.parseInt(frmpacientes.getTxtcedula().getText()),frmpacientes.getTxtnombre().getText(),
+                pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(),frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(),frmpacientes.getTxtcorreo().getText(),Integer.parseInt(fechas[2]),Integer.parseInt(fechas[1]),Integer.parseInt(fechas[0]));
                 this.pacientes.validarFecha(this.pacientes.getAño(), this.pacientes.getMes(), this.pacientes.getDia());
+                  if (this.pacientes.contarDigitosCedu()==false) {
+                    JOptionPane.showMessageDialog(null, "La cedula es invalida");
+                    return false;
+                }
                 BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
                 bd.ejectuar(new Object[]{this.pacientes.getNombreCompleto(),
                     this.pacientes.getFecha(), this.pacientes.getCorreo(), this.pacientes.getTelefono()});
