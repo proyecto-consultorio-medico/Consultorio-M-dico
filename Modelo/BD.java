@@ -70,7 +70,7 @@ public class BD{
     }
     
     public BD(){
-        this.ruta="C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico";
+        this.ruta="C:\\Users\\dell\\Desktop\\Consultorio Medico";
     this.conectar();
     }
     
@@ -79,13 +79,12 @@ public class BD{
     this.setSentencia(sql);
     }
     
-    private String conectar(){
-         
+    private String conectar(){         
         if (this.conexion==null) {
              try {
             ini = new ArchivosIniL();
             ini.leerArchivo(ruta+"\\Configuracion.ini");
-            
+                 System.out.println(ruta);            
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+
                     "/"+ini.getProperties().getProperty("BD","default value")+"?useServerPrepStmts=true",
@@ -97,8 +96,7 @@ public class BD{
             return "Fallo";
         } catch (SQLException ex) {
              System.out.println("Error al conectar");
-             return "Fallo";
-          
+             return "Fallo";          
         }
         }
        return "Existe";
@@ -131,8 +129,7 @@ public class BD{
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;
-                }      
-   
+                }        
         }
             if (parametro[i] instanceof java.lang.Double) {
                 try {
@@ -149,15 +146,12 @@ public class BD{
                     JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;
                 }     
-    }   
-        
+    }         
     }
    return true;
     }
-
-    
      
-       public Object[] getObject(){
+      public Object[] getObject(){
         try {
             if (this.datos.next()) {
                 ArrayList<Object> obj= new ArrayList();
@@ -172,7 +166,7 @@ public class BD{
         return null;
     }
   
-     public boolean ejectuar(Object [] parametro){
+     public boolean ejecutar(Object [] parametro){
          this.setParametros(parametro);
          return this.ejectuar();
     }
@@ -208,6 +202,7 @@ public class BD{
       
      public Boolean encender(){
         this.iniCrear = new ArchivoIniC(this.ruta);
+         System.out.println(ruta);
          this.iniCrear.limpiar();
          this.iniCrear.escribir("[Configuracion]");
           this.iniCrear.escribir("BD="+this.bd);

@@ -33,6 +33,7 @@ public class Medicos {
     }
 
     public Medicos() {
+        this.cedula=null;
         this.salario = 0;
         this.SalarioNeto = 0;
     }
@@ -137,6 +138,18 @@ public class Medicos {
         return codigo;
     }
 
+    public void setAño(int año) {
+        this.año = año;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
     public Medicos(String nombre, String cedula, String correo, String telefono, String usuario, String pass, String especialidad, String codigo, double salario,int año ,int mes,int dia) {
         this.nombre = nombre;
         this.cedula = cedula;
@@ -192,7 +205,6 @@ public class Medicos {
 
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        System.out.println(this.cedula);
         if (cedula.length()>9) {
             return false;
         }

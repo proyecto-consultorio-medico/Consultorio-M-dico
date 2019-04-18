@@ -89,7 +89,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     public Usuarios() {
         initComponents();
               this.getContentPane().setBackground(new Color(85,151,248));
-        cusuarios = new ControladorUsuarios(this);
+        cusuarios = new ControladorUsuarios();
         this.cargarTamanio();
            txtSalario.setVisible(false);
              txtCondigo.setVisible(false);
@@ -124,6 +124,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         txtmensaje = new javax.swing.JLabel();
         txtMensajeC = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -221,6 +222,13 @@ public class Usuarios extends javax.swing.JInternalFrame {
 
         txtMensajeC.setForeground(new java.awt.Color(153, 51, 0));
 
+        jButton5.setText("Cambio");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -264,7 +272,9 @@ public class Usuarios extends javax.swing.JInternalFrame {
                                 .addGap(5, 5, 5)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5)))))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -301,7 +311,8 @@ public class Usuarios extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -319,7 +330,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if ( cusuarios.agregar()==false) {
+        if ( cusuarios.agregar(this)==false) {
             txtMensajeC.setBackground(new Color(153,51,0));
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -350,7 +361,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_combotipoItemStateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (cusuarios.comprobarUs()==true) {
+        if (cusuarios.comprobarUs(this)==true) {
            
             txtmensaje.setForeground(Color.GREEN);
         }else{
@@ -359,7 +370,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (cusuarios.eliminar()==true) {
+        if (cusuarios.eliminar(this)==true) {
             JOptionPane.showMessageDialog(null, "Se elimino el usuario de la base de datos");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -372,6 +383,12 @@ public class Usuarios extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+      frmCambioPass cambio= new frmCambioPass();
+      FrmConsultorio.Escritorio.add(cambio);
+      cambio.show();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboespe;
@@ -380,6 +397,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtCondigo;

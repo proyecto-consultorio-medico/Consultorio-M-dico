@@ -45,7 +45,7 @@ public class FrmServidor extends javax.swing.JInternalFrame {
         initComponents();
               this.getContentPane().setBackground(new Color(85,151,248));
             ArchivosIniL ini= new ArchivosIniL();
-            ini.leerArchivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
+            ini.leerArchivo("C:\\Users\\dell\\Desktop\\Consultorio Medico\\Configuracion.ini");
            conexion = new ControladorConexion(this);
            txtIP.setText(ini.getProperties().getProperty("IP","default value"));
            txtPass.setText(ini.getProperties().getProperty("Pass","default value"));

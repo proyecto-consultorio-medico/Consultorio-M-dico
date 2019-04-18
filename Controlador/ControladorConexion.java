@@ -23,20 +23,14 @@ public class ControladorConexion {
 
     public boolean comprobar() {
         BD bd = new BD();
-        if (bd.comprobar() == "Encendido") {
-            return true;
-        }
-        return false;
+        return bd.comprobar() == "Encendido";
     }
 
     public boolean conectar() {
        BD bd = new BD(this.servidor.getTxtIP().getText(), this.servidor.getTxtUsu().getText(), this.servidor.getTxtPass().getText(),
                this.servidor.getTxtbd().getText());
        bd.setRuta(this.servidor.getTxtRuta().getText());
-       if (bd.encender()==false) {
-            return false;
-        }
-        return true;
+        return bd.encender() != false;
     }
 
     public boolean desconectar() {

@@ -9,6 +9,7 @@ import Modelo.BD;
 import Modelo.Medicos;
 import Modelo.Secretaria;
 import Vista.Usuarios;
+import Vista.frmCambioPass;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,16 +19,13 @@ import javax.swing.JOptionPane;
 public class ControladorUsuarios {
     private Secretaria secretaria;
     private Medicos medico;
-    private Usuarios frmUsuarios;
     private  Object obj[];
-
-    public ControladorUsuarios(Usuarios frmUsuarios) {
-        this.frmUsuarios = frmUsuarios;
+    public ControladorUsuarios() {
         this.secretaria = null;
         this.medico= null;
     }
     
-    public boolean agregar(){
+    public boolean agregar(Usuarios frmUsuarios){
         if (!"".equals(frmUsuarios.getTxtcedula().getText())) {
              if ("Secretaria".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
                  String fechas[]=frmUsuarios.getTxtfecha().getText().split("/");
@@ -39,7 +37,7 @@ public class ControladorUsuarios {
                  }
             if (comprobarCedulaSecre()==true) {
              
-            if (comprobarUsuarioSecre()==false) {
+            if (comprobarUsuarioSecre(frmUsuarios)==false) {
                 frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
                 this.secretaria= new Secretaria(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),
@@ -54,7 +52,7 @@ public class ControladorUsuarios {
                    this.secretaria.validarFecha(this.secretaria.getAño(), this.secretaria.getMes(), secretaria.getDia());
                 System.out.println(secretaria.getCedula()+" "+secretaria.getNombre()+secretaria.getFecha()+
                 " "+secretaria.getCorreo()+" "+secretaria.getTelefono()+" "+secretaria.getUsuario()+" "+secretaria.getPass());
-                 bd.ejectuar(new Object[]{secretaria.getCedula(),secretaria.getNombre(),secretaria.getFecha(),
+                 bd.ejecutar(new Object[]{secretaria.getCedula(),secretaria.getNombre(),secretaria.getFecha(),
                 secretaria.getCorreo(),secretaria.getTelefono(),secretaria.getUsuario(),secretaria.getPass()});
                  frmUsuarios.setTxtmensaje("");
                   return true;
@@ -68,16 +66,16 @@ public class ControladorUsuarios {
         
         if ("Medico".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
             String fechas[]=frmUsuarios.getTxtfecha().getText().split("/");
+            medico=new Medicos();
             medico.setCedula(frmUsuarios.getTxtcedula().getText());
             if (medico.contarDigitosCedu()==false) {
                 JOptionPane.showMessageDialog(null, "La cedula es invalida");
             }
-            if ( comprobarCedulaMedic()==false) {
+            if ( comprobarCedulaMedic()==true) {
                
-            if (comprobarUsuarioMedic()==false) {
+            if (comprobarUsuarioMedic(frmUsuarios)==false) {
                     frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
-                
                   this.medico= new Medicos(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),
                     frmUsuarios.getTxtcorreo().getText(),frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),
                     frmUsuarios.getTxtcontra().getText(), (String) frmUsuarios.getComboespe().getSelectedItem(),frmUsuarios.getTxtCondigo().getText(),
@@ -89,7 +87,7 @@ public class ControladorUsuarios {
                  }
                     BD bd=new BD("INSERT INTO medicos VALUES (?,?,?,?,?,?,?,?,?,?)");
                    this.medico.validarFecha(this.medico.getAño(), this.medico.getMes(), this.medico.getDia());
-            bd.ejectuar(new Object[]{medico.getCedula(),medico.getNombre(),medico.getFecha()
+            bd.ejecutar(new Object[]{medico.getCedula(),medico.getNombre(),medico.getFecha()
                     ,medico.getCorreo(),medico.getCodigo(),medico.getTelefono(),medico.getEspecialidad()
                     ,medico.getSalario(),medico.getUsuario(),medico.getPass()});
                     frmUsuarios.setTxtmensaje("");
@@ -104,11 +102,12 @@ public class ControladorUsuarios {
          return false;
     }
     
-    public boolean comprobarUs(){
+    public boolean comprobarUs(Usuarios frmUsuarios){
+      
         if ("Secretaria".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
               this.secretaria= new Secretaria();
               secretaria.setUsuario(frmUsuarios.getTxtusuario().getText());
-              if (comprobarUsuarioSecre()==false) {
+              if (comprobarUsuarioSecre(frmUsuarios)==false) {
                 frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
                 return false;
                     }
@@ -116,7 +115,7 @@ public class ControladorUsuarios {
         if ("Medico".equals(frmUsuarios.getCombotipo().getSelectedItem())){
         this.medico= new Medicos();
         this.medico.setUsuario(frmUsuarios.getTxtusuario().getText());
-            if (comprobarUsuarioMedic()==false) {
+            if (comprobarUsuarioMedic(frmUsuarios)==false) {
                  frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
                  return false;
             }
@@ -125,11 +124,11 @@ public class ControladorUsuarios {
             frmUsuarios.setTxtmensaje("El usuario esta disponible");
         return true;
     }
-    public boolean comprobarUsuarioSecre(){
+    public boolean comprobarUsuarioSecre(Usuarios frmUsuarios){
        this.secretaria= new Secretaria();
        secretaria.setUsuario(frmUsuarios.getTxtusuario().getText());
         BD bd= new BD("SELECT `Usuario` FROM `secretarias` WHERE Usuario=?");
-        bd.ejectuar(new Object[]{this.secretaria.getUsuario()});
+        bd.ejecutar(new Object[]{this.secretaria.getUsuario()});
        obj=bd.getObject();
         System.out.println(obj);
         if (obj==null) {
@@ -143,9 +142,11 @@ public class ControladorUsuarios {
         
     }
     
-    public boolean comprobarUsuarioMedic(){
+    public boolean comprobarUsuarioMedic(Usuarios frmUsuarios){
+        this.medico=new Medicos();
+        this.medico.setUsuario(frmUsuarios.getTxtusuario().getText());
     BD bd= new BD("SELECT `Usuario` FROM `medicos` WHERE Usuario=?");
-    bd.ejectuar(new Object[]{this.medico.getUsuario()});
+    bd.ejecutar(new Object[]{this.medico.getUsuario()});
     obj=bd.getObject();
         System.out.println(obj);
         System.out.println(this.medico.getUsuario());
@@ -160,7 +161,7 @@ public class ControladorUsuarios {
     }
    public boolean comprobarCedulaSecre(){
     BD bd= new BD("SELECT `Cedula` FROM `secretarias` WHERE Cedula=?");
-    bd.ejectuar(new Object[]{this.secretaria.getCedula()});
+    bd.ejecutar(new Object[]{this.secretaria.getCedula()});
     obj=bd.getObject();
         System.out.println(obj);
         System.out.println(this.secretaria.getCedula());
@@ -175,7 +176,7 @@ public class ControladorUsuarios {
     }
      public boolean comprobarCedulaMedic(){
        BD bd= new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?");
-       bd.ejectuar(new Object[]{this.medico.getCedula()});
+       bd.ejecutar(new Object[]{this.medico.getCedula()});
         obj=bd.getObject();
         System.out.println(obj);
         System.out.println(this.medico.getCedula());
@@ -189,10 +190,34 @@ public class ControladorUsuarios {
         return true;
     }
      
-      public boolean eliminar() {
+      public boolean eliminar(Usuarios frmUsuarios) {
             BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
-            bd.ejectuar(new Object[]{frmUsuarios.getTxtcedula()});
+            bd.ejecutar(new Object[]{frmUsuarios.getTxtcedula()});
             return true;
         }
    
+      public void cambioContraSec(frmCambioPass frmcambiocont){
+      BD bd= new BD("SELECT `Contra` FROM `secretarias` WHERE Usuario=?");
+      secretaria= new Secretaria();
+      secretaria.setUsuario(frmcambiocont.getTxtUsuario().getText());
+          System.out.println(this.secretaria.getUsuario());
+      bd.ejecutar(new Object[]{this.secretaria.getUsuario()});
+      obj=bd.getObject();
+          System.out.println(obj[0]);
+          System.out.println(frmcambiocont.getTxtContraAnti().getText());
+          if(obj[0].equals(frmcambiocont.getTxtContraAnti().getText())){
+          JOptionPane.showMessageDialog(null,"Contraseña correcta");
+          BD bd2= new BD("UPDATE `secretarias` SET `Contra`=? WHERE Usuario=?");
+          if(frmcambiocont.getTxtContraNue().getText().equals(frmcambiocont.getTxtverificontra().getText())){
+              System.out.println("Se agrego a la base");
+              bd2.ejecutar(new Object[]{frmcambiocont.getTxtContraNue().getText(),secretaria.getUsuario()});
+          }
+          
+      }
+          System.out.println("Salto");
+      }
+      
+     public void cambioContraMedic(){
+         
+     } 
 }

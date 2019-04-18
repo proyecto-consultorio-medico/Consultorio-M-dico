@@ -121,8 +121,7 @@ public class Pacientes {
           this.mes=1;
           this.dia=0;
     }
-
-    
+   
     public void validarFecha(int año,int mes,int dia){
         año=año-1900;
         mes=mes-1;
@@ -141,7 +140,6 @@ public class Pacientes {
                  if (dia<10&&mes<10) {
                          fechas="0"+this.dia+"/"+"0"+this.mes+"/"+this.año;
                     }  
-            System.out.println(fechas);
             DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaNac = LocalDate.parse(fechas, calendario);
             LocalDate ahora = LocalDate.now();
@@ -153,7 +151,6 @@ public class Pacientes {
     
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        System.out.println(this.cedula);
         if (cedula.length()>9) {
             return false;
         }

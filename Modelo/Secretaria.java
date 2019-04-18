@@ -98,7 +98,6 @@ public class Secretaria {
     
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        System.out.println(this.cedula);
         if (cedula.length()>9) {
             return false;
         }
@@ -120,6 +119,5 @@ public void ponerMayusculas(){
         }
         nombreConLasMayusculas = nombreConLasMayusculas.trim();
         this.nombre=nombreConLasMayusculas;
-  
         }
 }

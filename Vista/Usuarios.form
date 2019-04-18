@@ -105,6 +105,8 @@
                               <Component id="jButton2" min="-2" pref="75" max="-2" attributes="0"/>
                               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                               <Component id="jButton3" min="-2" pref="75" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -155,6 +157,7 @@
                   <Component id="jButton1" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="jButton3" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jButton5" min="-2" pref="65" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
@@ -412,6 +415,14 @@
           <Color blue="0" green="33" red="99" type="rgb"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cambio"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

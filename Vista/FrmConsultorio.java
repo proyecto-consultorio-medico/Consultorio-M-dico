@@ -28,7 +28,7 @@ private ControladorConexion conexion;
         this.RegistroPaci.setEnabled(false);
         this.RegistroUsu.setEnabled(false);
         BD bd=new BD();
-        bd.setRuta("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
+        bd.setRuta("C:\\Users\\dell\\Desktop\\Consultorio Medico\\Configuracion.ini");
         if (bd.comprobar().equals("Encendido")) {
         estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
             FrmConsultorio.Expendientes.setEnabled(true);
@@ -210,7 +210,7 @@ private ControladorConexion conexion;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane Escritorio;
+    public static javax.swing.JDesktopPane Escritorio;
     public static javax.swing.JMenuItem Expendientes;
     public static javax.swing.JMenuItem RegistroCitas;
     public static javax.swing.JMenuItem RegistroPaci;

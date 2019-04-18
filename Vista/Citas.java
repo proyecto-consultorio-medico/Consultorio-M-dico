@@ -8,6 +8,7 @@ package Vista;
 import Controlador.ControladorCitas;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -32,6 +33,15 @@ public class Citas extends javax.swing.JInternalFrame {
         return txtFecha;
     }
 
+    public JTable getTablamedicos() {
+        return tablamedicos;
+    }
+
+    public JTable getTablaPaciente() {
+        return tablaPaciente;
+    }
+    
+    
     public void cargarHora(){
             horas.addItem("7:00 am"); 
             horas.addItem("8:00 am");        
@@ -47,6 +57,8 @@ public class Citas extends javax.swing.JInternalFrame {
     public Citas() {
         initComponents();
         cCitas= new ControladorCitas(this);
+        this.txtDatoMedico.setVisible(false);
+        this.txtDatoPaciente.setVisible(false);
          this.getContentPane().setBackground(new Color(85,151,248));
         cargarHora();
     }
@@ -60,11 +72,29 @@ public class Citas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jSpinner1 = new javax.swing.JSpinner();
+        jProgressBar1 = new javax.swing.JProgressBar();
         txtFecha = new javax.swing.JTextField();
         txtCedulaMedic = new javax.swing.JTextField();
         txtCedulaPaciente = new javax.swing.JTextField();
         horas = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        txtDatoMedico = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablamedicos = new javax.swing.JTable();
+        txtDatoPaciente = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPaciente = new javax.swing.JTable();
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -103,38 +133,112 @@ public class Citas extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setText("jButton2");
+
+        txtDatoMedico.setBackground(new java.awt.Color(0, 153, 204));
+        txtDatoMedico.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Datos del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
+        tablamedicos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Fecha", "Especialidad"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablamedicos);
+
+        javax.swing.GroupLayout txtDatoMedicoLayout = new javax.swing.GroupLayout(txtDatoMedico);
+        txtDatoMedico.setLayout(txtDatoMedicoLayout);
+        txtDatoMedicoLayout.setHorizontalGroup(
+            txtDatoMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        txtDatoMedicoLayout.setVerticalGroup(
+            txtDatoMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+        );
+
+        txtDatoPaciente.setBackground(new java.awt.Color(0, 153, 204));
+        txtDatoPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Datos del paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtDatoPaciente.setPreferredSize(new java.awt.Dimension(233, 182));
+
+        tablaPaciente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Fecha"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tablaPaciente);
+
+        javax.swing.GroupLayout txtDatoPacienteLayout = new javax.swing.GroupLayout(txtDatoPaciente);
+        txtDatoPaciente.setLayout(txtDatoPacienteLayout);
+        txtDatoPacienteLayout.setHorizontalGroup(
+            txtDatoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+        txtDatoPacienteLayout.setVerticalGroup(
+            txtDatoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(7, 7, 7)
+                        .addComponent(jButton2))
+                    .addComponent(txtDatoMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDatoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtFecha)
-                    .addComponent(horas)
-                    .addComponent(txtCedulaMedic)
-                    .addComponent(txtCedulaPaciente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6)
+                .addComponent(txtDatoMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
+                .addComponent(txtDatoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,29 +251,47 @@ public class Citas extends javax.swing.JInternalFrame {
     private void txtCedulaMedicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaMedicKeyReleased
         if (cCitas.buscarMedico()== true) {
             txtCedulaMedic.setForeground(Color.GREEN);
+            this.txtDatoMedico.setVisible(true);
+            this.cCitas.agregarDatosMedico();
         }else{
         txtCedulaMedic.setForeground(Color.RED);
+        this.txtDatoMedico.setVisible(false);
         }
     }//GEN-LAST:event_txtCedulaMedicKeyReleased
 
     private void txtCedulaPacienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaPacienteKeyReleased
        if (cCitas.buscarPaciente()== true) {
             txtCedulaPaciente.setForeground(Color.GREEN);
+             this.txtDatoPaciente.setVisible(true);
+             this.cCitas.agregarDatosPaciente();
         }else{
         txtCedulaPaciente.setForeground(Color.RED);
+       this.txtDatoPaciente.setVisible(false);
         }
     }//GEN-LAST:event_txtCedulaPacienteKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cCitas.guardarCita();
+        cCitas.limitarCitas();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> horas;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTable tablaPaciente;
+    private javax.swing.JTable tablamedicos;
     private javax.swing.JTextField txtCedulaMedic;
     private javax.swing.JTextField txtCedulaPaciente;
+    private javax.swing.JPanel txtDatoMedico;
+    private javax.swing.JPanel txtDatoPaciente;
     private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }
