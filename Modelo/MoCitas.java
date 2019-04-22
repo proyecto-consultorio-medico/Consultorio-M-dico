@@ -53,24 +53,11 @@ public class MoCitas {
         return dia;
     }
 
-    public MoCitas(int ID,String hora,Pacientes paciente,Medicos medico,int año,int mes, int dia) {
+    public MoCitas(int ID,String hora,Pacientes paciente,Medicos medico,Date fecha) {
         this.ID=ID;
         this.hora=hora;
-        this.fecha=null;
-        this.año=año;
-        this.mes=mes;
-        this.dia=dia;
+        this.fecha=fecha;
         this.paciente=paciente;
         this.medico=medico;
     }
-    
-    public void validarFecha(int año,int mes,int dia){
-        año=año-1900;
-        mes=mes-1;
-        this.fecha= new Date(año,mes,dia);
-    }
-
-         
-     
-    
 }

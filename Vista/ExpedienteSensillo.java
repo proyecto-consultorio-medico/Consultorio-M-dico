@@ -5,23 +5,30 @@
  */
 package Vista;
 
+import Modelo.Archivo;
 import Modelo.ModeloCitas;
 import java.awt.Color;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  *
  * @author Jose,Marco,Yuliana,Elver
  */
 public class ExpedienteSensillo extends javax.swing.JInternalFrame {
-        ModeloCitas c;
+
+        private Archivo arch;
 
     /**
      * Creates new form Expediente
      */
     public ExpedienteSensillo() {
         initComponents();
-              this.getContentPane().setBackground(new Color(85,151,248));
-        c=new ModeloCitas();
+           this.getContentPane().setBackground(new Color(85,151,248));
+
     }
 
     /**
@@ -34,18 +41,30 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        lblExpediente1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        txtExpendiente = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        txtNombreMedico = new javax.swing.JTextField();
+        txtEspecialidad = new javax.swing.JTextField();
+        txtNombrePaciente = new javax.swing.JTextField();
+        txtFechaPaciente = new javax.swing.JTextField();
+        txtCedulaMedic = new javax.swing.JTextField();
+        txtCedulaPaciente = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtComentario = new javax.swing.JTextArea();
+        txtFecha = new javax.swing.JTextField();
+        txtHora = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(85, 151, 248));
 
         jLabel1.setBackground(new java.awt.Color(0, 51, 255));
         jLabel1.setFont(new java.awt.Font("Lucida Calligraphy", 0, 24)); // NOI18N
-        jLabel1.setText("Expediente");
+        jLabel1.setText("Expediente:");
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        jButton1.setText("Mostrar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Metro-Save-Blue-256.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -60,44 +79,160 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        txtNombreMedico.setEditable(false);
+        txtNombreMedico.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtNombreMedico.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Nombre del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
+        txtEspecialidad.setEditable(false);
+        txtEspecialidad.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtEspecialidad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Especialdiad del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEspecialidadActionPerformed(evt);
+            }
+        });
+
+        txtNombrePaciente.setEditable(false);
+        txtNombrePaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtNombrePaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Nombre del paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
+        txtFechaPaciente.setEditable(false);
+        txtFechaPaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtFechaPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
+        txtCedulaMedic.setEditable(false);
+        txtCedulaMedic.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtCedulaMedic.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cedula del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtCedulaMedic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaMedicActionPerformed(evt);
+            }
+        });
+        txtCedulaMedic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCedulaMedicKeyReleased(evt);
+            }
+        });
+
+        txtCedulaPaciente.setEditable(false);
+        txtCedulaPaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtCedulaPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cedula del paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtCedulaPaciente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCedulaPacienteKeyReleased(evt);
+            }
+        });
+
+        txtComentario.setColumns(20);
+        txtComentario.setRows(5);
+        jScrollPane1.setViewportView(txtComentario);
+
+        txtFecha.setEditable(false);
+        txtFecha.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de la cita", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
+        txtHora.setEditable(false);
+        txtHora.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtHora.setToolTipText("");
+        txtHora.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Hora de la cita", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblExpediente1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtFechaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtNombreMedico, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtCedulaMedic, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNombrePaciente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtFecha)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jButton1)
-                        .addGap(144, 144, 144)
-                        .addComponent(jButton2)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtExpendiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(lblExpediente1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(txtExpendiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addComponent(txtNombreMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtFechaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        this.lblExpediente1.setText(c.getObservaciones());
+       arch.limpiar();
+       arch.escribir("<Cita>");
+       arch.escribir("<FechaDeLaCita>"+this.txtFecha.getText()+"</FechaDeLaCita>");
+       arch.escribir("<HoraDeLaCita>"+this.txtHora.getText()+"</HoraDeLaCita>");
+       arch.escribir("<CedulaMedico>"+this.txtCedulaMedic.getText()+"</CedulaMedico>");
+       arch.escribir("<NombreMedico>"+this.txtNombreMedico.getText()+"</NombreMedico>");
+       arch.escribir("<Especialidad>"+this.txtEspecialidad.getText()+"</Especialidad>");
+       arch.escribir("<CedulaPaciente>"+this.txtCedulaPaciente.getText()+"</CedulaPaciente>");
+       arch.escribir("<NombrePaciente>"+this.txtNombrePaciente.getText()+"</NombrePaciente>");
+       arch.escribir("<FechaNacimientoPaciente>"+this.txtFechaPaciente.getText()+"</FechaNacimientoPaciente>");
+       arch.escribir("<Comentario>"+this.txtComentario.getText()+"</Comentario>");
+       arch.escribir("</Cita>");
+       arch.guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -105,11 +240,65 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      JFileChooser seleccionar= new JFileChooser();
+        int selecionador=seleccionar.showOpenDialog(null);
+        if (selecionador==JFileChooser.APPROVE_OPTION){
+            File selecionado= seleccionar.getSelectedFile();
+            this.txtExpendiente.setText(selecionado.getName());
+            arch = new Archivo(selecionado.getAbsolutePath());
+              for (int temp = 0; temp < arch.listaCaracteristicas.getLength(); temp++) {
+                 arch.nodo = arch.listaCaracteristicas.item(temp);
+                if (arch.nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elemento = (Element) arch.nodo;
+                    this.txtCedulaMedic.setText(elemento.getElementsByTagName("CedulaMedico").item(0).getTextContent());
+                    this.txtCedulaPaciente.setText(elemento.getElementsByTagName("CedulaPaciente").item(0).getTextContent());
+                    this.txtEspecialidad.setText(elemento.getElementsByTagName("Especialidad").item(0).getTextContent());
+                    this.txtNombreMedico.setText(elemento.getElementsByTagName("NombreMedico").item(0).getTextContent());
+                    this.txtHora.setText(elemento.getElementsByTagName("HoraDeLaCita").item(0).getTextContent());
+                    this.txtFecha.setText(elemento.getElementsByTagName("FechaDeLaCita").item(0).getTextContent());
+                    this.txtFechaPaciente.setText(elemento.getElementsByTagName("FechaNacimientoPaciente").item(0).getTextContent());
+                    this.txtNombrePaciente.setText(elemento.getElementsByTagName("NombrePaciente").item(0).getTextContent());
+                    this.txtComentario.setText(elemento.getElementsByTagName("Comentario").item(0).getTextContent());
+                }   
+              }
+        }else{
+            JOptionPane.showMessageDialog(null,"No selecciono una ruta para el archivo");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecialidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEspecialidadActionPerformed
+
+    private void txtCedulaMedicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaMedicActionPerformed
+
+    }//GEN-LAST:event_txtCedulaMedicActionPerformed
+
+    private void txtCedulaMedicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaMedicKeyReleased
+ 
+    }//GEN-LAST:event_txtCedulaMedicKeyReleased
+
+    private void txtCedulaPacienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaPacienteKeyReleased
+     
+    }//GEN-LAST:event_txtCedulaPacienteKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblExpediente1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtCedulaMedic;
+    private javax.swing.JTextField txtCedulaPaciente;
+    private javax.swing.JTextArea txtComentario;
+    private javax.swing.JTextField txtEspecialidad;
+    private javax.swing.JLabel txtExpendiente;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtFechaPaciente;
+    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtNombreMedico;
+    private javax.swing.JTextField txtNombrePaciente;
     // End of variables declaration//GEN-END:variables
 }

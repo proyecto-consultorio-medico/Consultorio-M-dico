@@ -6,10 +6,17 @@
 package Vista;
 
 import Controlador.ControladorCitas;
+import Modelo.Archivo;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Font;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  *
@@ -17,6 +24,7 @@ import javax.swing.JTextField;
  */
 public class Citas extends javax.swing.JInternalFrame {
     private ControladorCitas cCitas;
+    private Archivo arch;
     public JComboBox<String> getHoras() {
         return horas;
     }
@@ -29,30 +37,56 @@ public class Citas extends javax.swing.JInternalFrame {
         return txtCedulaPaciente;
     }
 
-    public JTextField getTxtFecha() {
+ 
+    public JTextField getTxtFechaPaciente() {
+        return txtFechaPaciente;
+    }
+
+    public JTextField getTxtNombreMedico() {
+        return txtNombreMedico;
+    }
+
+    public JTextField getTxtNombrePaciente() {
+        return txtNombrePaciente;
+    }
+
+    public JDateChooser getTxtFecha() {
         return txtFecha;
     }
 
-    public JTable getTablamedicos() {
-        return tablamedicos;
+
+    public void setTxtFechaPaciente(Date txtFechaPaciente) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaComoCadena = sdf.format(txtFechaPaciente);
+        this.txtFechaPaciente.setText(fechaComoCadena);
     }
 
-    public JTable getTablaPaciente() {
-        return tablaPaciente;
+    public void setTxtNombreMedico(String txtNombreMedico) {
+        this.txtNombreMedico.setText(txtNombreMedico);
     }
+
+    public void setTxtNombrePaciente(String txtNombrePaciente) {
+        this.txtNombrePaciente.setText(txtNombrePaciente);
+    }
+
+    public void setTxtEspecialidad(String txtEspecialidad) {
+        this.txtEspecialidad.setText(txtEspecialidad);
+    }
+
+   
     
     
     public void cargarHora(){
-            horas.addItem("7:00 am"); 
-            horas.addItem("8:00 am");        
-            horas.addItem("9:00 am");  
-            horas.addItem("10:00 am");    
-            horas.addItem("11:00 am");          
-            horas.addItem("12:00 pm");        
-            horas.addItem("1:00 pm");        
-            horas.addItem("2:00 pm");           
-            horas.addItem("3:00 pm");
-            horas.addItem("4:00 pm");       
+            horas.addItem("7 am"); 
+            horas.addItem("8 am");        
+            horas.addItem("9 am");  
+            horas.addItem("10 am");    
+            horas.addItem("11 am");          
+            horas.addItem("12 pm");        
+            horas.addItem("1 pm");        
+            horas.addItem("2 pm");           
+            horas.addItem("3 pm");
+            horas.addItem("4 pm");       
         }
     public Citas() {
         initComponents();
@@ -77,18 +111,19 @@ public class Citas extends javax.swing.JInternalFrame {
         jMenu2 = new javax.swing.JMenu();
         jSpinner1 = new javax.swing.JSpinner();
         jProgressBar1 = new javax.swing.JProgressBar();
-        txtFecha = new javax.swing.JTextField();
         txtCedulaMedic = new javax.swing.JTextField();
         txtCedulaPaciente = new javax.swing.JTextField();
         horas = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtDatoMedico = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablamedicos = new javax.swing.JTable();
+        txtNombreMedico = new javax.swing.JTextField();
+        txtEspecialidad = new javax.swing.JTextField();
         txtDatoPaciente = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaPaciente = new javax.swing.JTable();
+        txtNombrePaciente = new javax.swing.JTextField();
+        txtFechaPaciente = new javax.swing.JTextField();
+        txtFecha = new com.toedter.calendar.JDateChooser();
+        jButton3 = new javax.swing.JButton();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -99,9 +134,6 @@ public class Citas extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
-
-        txtFecha.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        txtFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha dia/mes/año", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
         txtCedulaMedic.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtCedulaMedic.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cedula del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
@@ -126,79 +158,99 @@ public class Citas extends javax.swing.JInternalFrame {
 
         horas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Horas" }));
 
-        jButton1.setText("jButton1");
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Metro-Save-Blue-256.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Icon-merge.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         txtDatoMedico.setBackground(new java.awt.Color(0, 153, 204));
         txtDatoMedico.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Datos del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        tablamedicos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        txtNombreMedico.setEditable(false);
+        txtNombreMedico.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtNombreMedico.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Nombre del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-            },
-            new String [] {
-                "Nombre", "Fecha", "Especialidad"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        txtEspecialidad.setEditable(false);
+        txtEspecialidad.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtEspecialidad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Especialdiad del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEspecialidadActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(tablamedicos);
 
         javax.swing.GroupLayout txtDatoMedicoLayout = new javax.swing.GroupLayout(txtDatoMedico);
         txtDatoMedico.setLayout(txtDatoMedicoLayout);
         txtDatoMedicoLayout.setHorizontalGroup(
             txtDatoMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(txtDatoMedicoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtNombreMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         txtDatoMedicoLayout.setVerticalGroup(
             txtDatoMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+            .addGroup(txtDatoMedicoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(txtDatoMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         txtDatoPaciente.setBackground(new java.awt.Color(0, 153, 204));
         txtDatoPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Datos del paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
         txtDatoPaciente.setPreferredSize(new java.awt.Dimension(233, 182));
 
-        tablaPaciente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        txtNombrePaciente.setEditable(false);
+        txtNombrePaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtNombrePaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Nombre del paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-            },
-            new String [] {
-                "Nombre", "Fecha"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tablaPaciente);
+        txtFechaPaciente.setEditable(false);
+        txtFechaPaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtFechaPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
         javax.swing.GroupLayout txtDatoPacienteLayout = new javax.swing.GroupLayout(txtDatoPaciente);
         txtDatoPaciente.setLayout(txtDatoPacienteLayout);
         txtDatoPacienteLayout.setHorizontalGroup(
             txtDatoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addGroup(txtDatoPacienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtNombrePaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtFechaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         txtDatoPacienteLayout.setVerticalGroup(
             txtDatoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+            .addGroup(txtDatoPacienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(txtDatoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFechaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/57477.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,37 +260,43 @@ public class Citas extends javax.swing.JInternalFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
+                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
                         .addComponent(jButton1)
-                        .addGap(7, 7, 7)
-                        .addComponent(jButton2))
-                    .addComponent(txtDatoMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtDatoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtDatoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDatoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCedulaPaciente)
+                    .addComponent(txtCedulaMedic)
+                    .addComponent(horas)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(6, 6, 6)
-                .addComponent(txtDatoMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(6, 6, 6)
-                .addComponent(txtDatoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                    .addComponent(txtDatoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDatoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -271,27 +329,74 @@ public class Citas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCedulaPacienteKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cCitas.limitarCitas();
+        if (cCitas.limitarCitas()==true) {
+              SimpleDateFormat fecha= new SimpleDateFormat("dd-MM-yyyy");
+    String fechas= fecha.format(this.txtFecha.getDate().getTime());
+    String hora=(String) this.horas.getSelectedItem();
+            arch = new Archivo(this.txtCedulaPaciente.getText()+"["+fechas+"]"+"{"+hora+"}","C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Citas",".xml");
+        for (int temp = 0; temp < arch.listaCaracteristicas.getLength(); temp++) {
+                 arch.nodo = arch.listaCaracteristicas.item(temp);
+                if (arch.nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elemento = (Element) arch.nodo;
+                }
+                     }
+        this.guardar();
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    this.txtCedulaMedic.setText(null);
+    this.txtCedulaPaciente.setText(null);
+    this.txtFecha.setDate(null);
+    this.horas.setSelectedIndex(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void txtEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecialidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEspecialidadActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+private void guardar(){
+    SimpleDateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
+    String fechas= fecha.format(this.txtFecha.getDate().getTime());
+    String hora=(String) this.horas.getSelectedItem();
+    System.out.println(fechas);
+arch.limpiar();
+        arch.escribir("<Cita>");
+        arch.escribir("<FechaDeLaCita>"+fechas+"</FechaDeLaCita>");
+        arch.escribir("<HoraDeLaCita>"+hora+"</HoraDeLaCita>");
+        arch.escribir("<CedulaMedico>"+this.txtCedulaMedic.getText()+"</CedulaMedico>");
+        arch.escribir("<NombreMedico>"+this.txtNombreMedico.getText()+"</NombreMedico>");
+        arch.escribir("<Especialidad>"+this.txtEspecialidad.getText()+"</Especialidad>");
+        arch.escribir("<CedulaPaciente>"+this.txtCedulaPaciente.getText()+"</CedulaPaciente>");
+        arch.escribir("<NombrePaciente>"+this.txtNombrePaciente.getText()+"</NombrePaciente>");
+        arch.escribir("<FechaNacimientoPaciente>"+this.txtFechaPaciente.getText()+"</FechaNacimientoPaciente>");
+        arch.escribir("<Comentario>"+"</Comentario>");
+        arch.escribir("</Cita>");
+        arch.guardar();
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> horas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable tablaPaciente;
-    private javax.swing.JTable tablamedicos;
     private javax.swing.JTextField txtCedulaMedic;
     private javax.swing.JTextField txtCedulaPaciente;
     private javax.swing.JPanel txtDatoMedico;
     private javax.swing.JPanel txtDatoPaciente;
-    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtEspecialidad;
+    private com.toedter.calendar.JDateChooser txtFecha;
+    private javax.swing.JTextField txtFechaPaciente;
+    private javax.swing.JTextField txtNombreMedico;
+    private javax.swing.JTextField txtNombrePaciente;
     // End of variables declaration//GEN-END:variables
 }

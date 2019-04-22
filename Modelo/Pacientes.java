@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -83,34 +84,27 @@ public class Pacientes {
     }
     
     
-    public Pacientes(String cedula, String nombreCompleto, String telefono, String correo, int año, int mes, int dia) {
+    public Pacientes(String cedula, String nombreCompleto, String telefono, String correo,Date fecha) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
         this.correo = correo;
-        this.año = año;
-        this.mes = mes;
-        this.dia = dia;
-        this.fecha=null;
+        this.fecha=fecha;
     }
 
-    public Pacientes(String cedula, String nombreCompleto, String telefono, int año, int mes, int dia) {
+    public Pacientes(String cedula, String nombreCompleto, String telefono,Date fecha) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
-        this.año = año;
-        this.mes = mes;
-        this.dia = dia;
-          this.fecha=null;
+        
+          this.fecha=fecha;
     }
 
-    public Pacientes(String cedula, String nombreCompleto, int año, int mes, int dia) {
+    public Pacientes(String cedula, String nombreCompleto,Date fecha) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
-        this.año = año;
-        this.mes = mes;
-        this.dia = dia;
-          this.fecha=null;
+       this.fecha=fecha;
+      
     }
 
     public Pacientes(String cedula, String nombreCompleto) {
@@ -122,15 +116,11 @@ public class Pacientes {
           this.dia=0;
     }
    
-    public void validarFecha(int año,int mes,int dia){
-        año=año-1900;
-        mes=mes-1;
-        this.fecha= new Date(año,mes,dia);
-    }
 
-    public String calcularedad(String fecha) {
-        if (!"".equals(fecha)) {
-         
+
+    public String calcularedad(Date fecha) {
+        if (fecha!=null) {
+        
             if (mes<10) {
               fechas=this.dia+"/"+"0"+this.mes+"/"+this.año;
             }
@@ -140,8 +130,10 @@ public class Pacientes {
                  if (dia<10&&mes<10) {
                          fechas="0"+this.dia+"/"+"0"+this.mes+"/"+this.año;
                     }  
-            DateTimeFormatter calendario = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate fechaNac = LocalDate.parse(fechas, calendario);
+                 SimpleDateFormat fechas= new SimpleDateFormat("yyyy/MM/dd");
+            String fechaString=fechas.format(fecha);
+            DateTimeFormatter calendario = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            LocalDate fechaNac = LocalDate.parse(fechaString, calendario);
             LocalDate ahora = LocalDate.now();
             Period periodo = Period.between(fechaNac, ahora);
             return periodo.getYears() + " años y  " + periodo.getMonths() + " meses";

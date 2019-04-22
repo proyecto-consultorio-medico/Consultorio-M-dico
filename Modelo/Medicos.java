@@ -150,28 +150,32 @@ public class Medicos {
         this.dia = dia;
     }
 
-    public Medicos(String nombre, String cedula, String correo, String telefono, String usuario, String pass, String especialidad, String codigo, double salario,int año ,int mes,int dia) {
+    public Medicos(String nombre, String cedula, String correo, String telefono, String usuario, String pass, String especialidad, String codigo, double salario,Date fecha) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.correo = correo;
         this.telefono = telefono;
-        this.fecha=null;
+        this.fecha=fecha;
         this.usuario = usuario;
         this.pass = pass;
         this.especialidad = especialidad;
         this.codigo = codigo;
         this.salario = salario;
-        this.dia=dia;
-        this.mes=mes;
-        this.año=año;
     }
     
-        
-    public void validarFecha(int año,int mes,int dia){
-        año=año-1900;
-        mes=mes-1;
-        this.fecha= new Date(año,mes,dia);
-    }
+        public Medicos(Object[] obj){
+            this.nombre=(String) obj[1];
+            this.cedula=(String) obj[0];
+            this.correo=(String) obj[3];
+            this.telefono=(String) obj[5];
+            this.fecha=(Date) obj[2];
+            this.usuario=(String) obj[8];
+            this.pass=(String) obj[9];
+            this.especialidad=(String) obj[6];
+            this.codigo=(String) obj[4];
+            this.salario=(double) obj[7];
+        }
+
     
     public void calcularSalarioNeto() {
         if (this.salario < 817000) {
@@ -227,4 +231,8 @@ public void ponerMayusculas(){
         nombreConLasMayusculas = nombreConLasMayusculas.trim();
        this.nombre=nombreConLasMayusculas;
         }
+
+ public Object[] toObject(){
+    return new Object[]{this.cedula,this.nombre,this.fecha,this.correo,this.codigo,this.telefono,this.especialidad,this.salario,this.usuario,this.pass};
+    }
 }

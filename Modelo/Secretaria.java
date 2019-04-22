@@ -77,25 +77,17 @@ public class Secretaria {
        usuario=null;
     }
 
-    public Secretaria(String nombre, String cedula, String correo, String telefono,String usuario,String pass,int año ,int mes,int dia) {
+    public Secretaria(String nombre, String cedula, String correo, String telefono,String usuario,String pass,Date fecha) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.fecha = null;
+        this.fecha = fecha;
         this.correo = correo;
         this.telefono = telefono;
         this.usuario= usuario;
         this.pass= pass;
-        this.dia=dia;
-        this.mes=mes;
-        this.año=año;
     }
      
-    public void validarFecha(int año,int mes,int dia){
-        año=año-1900;
-        mes=mes-1;
-        this.fecha= new Date(año,mes,dia);
-    }
-    
+ 
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
         if (cedula.length()>9) {

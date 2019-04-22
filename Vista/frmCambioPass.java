@@ -9,6 +9,7 @@ import Controlador.ControladorUsuarios;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -24,8 +25,14 @@ ControladorUsuarios contr;
     public frmCambioPass() {
         initComponents();
         this.getContentPane().setBackground(new Color(85,151,248));
-        
  contr= new ControladorUsuarios();
+    this.txtUsuario.setText(Usuarios.txtusuario.getText());
+        if (Usuarios.combotipo.getSelectedItem()=="Medico") {
+             this.rMedico.setSelected(true);
+        }
+        if (Usuarios.combotipo.getSelectedItem()=="Secretaria") {
+            this.rSecre.setSelected(true);
+        }
     }
 
     /**
@@ -38,26 +45,40 @@ ControladorUsuarios contr;
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        btnTipo = new javax.swing.ButtonGroup();
         txtContraAnti = new javax.swing.JTextField();
         txtContraNue = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
         txtverificontra = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
+        rMedico = new javax.swing.JRadioButton();
+        rSecre = new javax.swing.JRadioButton();
 
-        txtContraAnti.setBorder(javax.swing.BorderFactory.createTitledBorder("Contraseña antigua"));
+        txtContraAnti.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtContraAnti.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Contraseña antigua", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        txtContraNue.setBorder(javax.swing.BorderFactory.createTitledBorder("Contraseña nueva"));
+        txtContraNue.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtContraNue.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Contraseña nueva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        txtUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder("Usuario"));
+        txtUsuario.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        txtverificontra.setBorder(javax.swing.BorderFactory.createTitledBorder("Verficar contraseña nueva"));
+        txtverificontra.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtverificontra.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Verficar contraseña nueva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        btnGuardar.setText("Guardar contraseñar nueva");
+        btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Metro-Save-Blue-256.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
+
+        btnTipo.add(rMedico);
+        rMedico.setText("Medico");
+
+        btnTipo.add(rSecre);
+        rSecre.setText("Secretaria");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,11 +92,17 @@ ControladorUsuarios contr;
                             .addComponent(txtContraAnti)
                             .addComponent(txtContraNue, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtverificontra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUsuario)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rMedico)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rSecre)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnGuardar)
-                        .addGap(0, 204, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -85,11 +112,18 @@ ControladorUsuarios contr;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtContraAnti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContraNue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtContraNue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rMedico)
+                            .addComponent(rSecre))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtverificontra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addContainerGap())
         );
@@ -98,13 +132,26 @@ ControladorUsuarios contr;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        contr.cambioContraSec(this);
+        if (rSecre.isSelected()) {
+            if (contr.cambioContraSec(this)==true) {
+                JOptionPane.showMessageDialog(null, "Se Cambio exitosamente la contraseña");
+            }
+        }
+        if (rMedico.isSelected()) {
+            if (contr.cambioContraMedic(this)==true) {
+                 JOptionPane.showMessageDialog(null, "Se Cambio exitosamente la contraseña");
+            }
+           
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
+    public static javax.swing.ButtonGroup btnTipo;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JRadioButton rMedico;
+    private javax.swing.JRadioButton rSecre;
     private javax.swing.JTextField txtContraAnti;
     private javax.swing.JTextField txtContraNue;
     private javax.swing.JTextField txtUsuario;

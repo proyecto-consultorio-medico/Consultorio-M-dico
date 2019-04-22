@@ -28,7 +28,7 @@ private ControladorConexion conexion;
         this.RegistroPaci.setEnabled(false);
         this.RegistroUsu.setEnabled(false);
         BD bd=new BD();
-        bd.setRuta("C:\\Users\\dell\\Desktop\\Consultorio Medico\\Configuracion.ini");
+        bd.setRuta("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
         if (bd.comprobar().equals("Encendido")) {
         estado.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept-database-icon.png")));
             FrmConsultorio.Expendientes.setEnabled(true);
@@ -118,6 +118,11 @@ private ControladorConexion conexion;
         jMenu1.add(jSeparator6);
 
         Expendientes.setText("Expedientes");
+        Expendientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExpendientesActionPerformed(evt);
+            }
+        });
         jMenu1.add(Expendientes);
 
         jMenuBar1.add(jMenu1);
@@ -173,6 +178,12 @@ private ControladorConexion conexion;
        Escritorio.add(cita);
        cita.show();
     }//GEN-LAST:event_RegistroCitasActionPerformed
+
+    private void ExpendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExpendientesActionPerformed
+      ExpedienteSensillo expediente = new ExpedienteSensillo();
+       Escritorio.add(expediente);
+       expediente.show();
+    }//GEN-LAST:event_ExpendientesActionPerformed
 
     /**
      * @param args the command line arguments

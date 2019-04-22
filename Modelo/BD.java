@@ -8,6 +8,7 @@ package Modelo;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,7 +71,7 @@ public class BD{
     }
     
     public BD(){
-        this.ruta="C:\\Users\\dell\\Desktop\\Consultorio Medico";
+        this.ruta="C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico";
     this.conectar();
     }
     
@@ -141,7 +142,7 @@ public class BD{
     }   
             if (parametro[i] instanceof java.util.Date) {
                 try {
-                    this.sentencia.setDate(i+1, (java.sql.Date) parametro[i]);
+                    this.sentencia.setDate(i+1, (Date)parametro[i]);
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, ex.getErrorCode()+" "+" "+ ex.getMessage());
                             return false;

@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class ArchivosIniL {
     private Properties Parametro;
+    private String ruta;
 
     public Properties getProperties() {
         return Parametro;

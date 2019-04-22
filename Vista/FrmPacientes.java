@@ -6,8 +6,10 @@
 package Vista;
 
 import Controlador.ControladorPacientes;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -18,7 +20,7 @@ import javax.swing.JTextField;
  *
  * @author Jose,Marco,Yuliana,Elver
  */
-public class FrmPacientes extends javax.swing.JInternalFrame {
+public class FrmPacientes extends javax.swing.JInternalFrame{
     protected static ControladorPacientes cpacientes;
     
     public JTextField getTxtTelefono() {
@@ -29,8 +31,8 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         return txtcorreo;
     }
 
-    public JTextField getTxtfecha() {
-        return txtfecha;
+    public JDateChooser getTxtFecha() {
+        return txtFecha;
     }
 
     public JTextField getTxtnombre() {
@@ -49,11 +51,12 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         return txtcedula;
     }
 
-    
+  
     public FrmPacientes() {
         initComponents();
               this.getContentPane().setBackground(new Color(85,151,248));
         cpacientes= new ControladorPacientes(this);
+   
     }
 
     /**
@@ -76,11 +79,11 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtcorreo = new javax.swing.JTextField();
-        txtfecha = new javax.swing.JTextField();
         txtedad = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtnombre = new javax.swing.JTextField();
         txtcedula = new javax.swing.JTextField();
+        txtFecha = new com.toedter.calendar.JDateChooser();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -106,9 +109,15 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaPacientesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaPacientes);
 
-        jButton6.setText("Actualizar");
+        jButton6.setBackground(new java.awt.Color(255, 255, 255));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/46640.png"))); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -170,9 +179,6 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         txtcorreo.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtcorreo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Correo electronico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        txtfecha.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        txtfecha.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de nacimiento: dia/mes/año", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
-
         txtedad.setEditable(false);
         txtedad.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtedad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Edad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
@@ -200,19 +206,17 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addGap(6, 6, 6)
                                 .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtBuscar)
                                     .addComponent(txtcorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -222,7 +226,7 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton6))
                                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 272, Short.MAX_VALUE))
+                        .addGap(0, 274, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -234,9 +238,9 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
                     .addComponent(txtcedula, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtedad, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,13 +270,13 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
         this.txtcedula.setText(null);
         this.txtTelefono.setText(null);
         this.txtcorreo.setText(null);
-        this.txtfecha.setText(null);
+
         this.txtedad.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (cpacientes.guardarPaciente()==true ) {
-            if (!"".equals(this.txtfecha.getText())) {
+            if (this.txtFecha.getDate()!=null) {
        txtedad.setText(cpacientes.edad());
             }
             JOptionPane.showMessageDialog(null, "Se agrego paciente a la base de datos");
@@ -286,21 +290,7 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (tablaPacientes.getSelectedColumn()==0) {
-            txtcedula.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 0)));
-        }
-        if (tablaPacientes.getSelectedColumn()==1) {
-            txtnombre.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 1)));
-        }
-        if (tablaPacientes.getSelectedColumn()==2) {
-            txtfecha.setText(String.valueOf(new SimpleDateFormat("dd/MM/yyyy").format(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 2))));
-        }
-        if (tablaPacientes.getSelectedColumn()==3) {
-            txtcorreo.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 3)));
-        }
-        if (tablaPacientes.getSelectedColumn()==4) {
-            txtTelefono.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 4)));
-        }
+      
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -321,6 +311,15 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
       cpacientes.buscarpaciente();
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    private void tablaPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPacientesMouseClicked
+           txtcedula.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 0)));
+           txtnombre.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 1)));
+           txtFecha.setDate((Date) tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 2));
+           txtcorreo.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 3)));
+           txtTelefono.setText(String.valueOf(tablaPacientes.getValueAt(tablaPacientes.getSelectedRow(), 4)));
+             txtedad.setText(cpacientes.edad());
+    }//GEN-LAST:event_tablaPacientesMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -333,11 +332,11 @@ public class FrmPacientes extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaPacientes;
     private javax.swing.JTextField txtBuscar;
+    private com.toedter.calendar.JDateChooser txtFecha;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtcorreo;
     private javax.swing.JTextField txtedad;
-    private javax.swing.JTextField txtfecha;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }
