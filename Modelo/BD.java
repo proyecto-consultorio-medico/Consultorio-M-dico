@@ -84,8 +84,7 @@ public class BD{
         if (this.conexion==null) {
              try {
             ini = new ArchivosIniL();
-            ini.leerArchivo(ruta+"\\Configuracion.ini");
-                 System.out.println(ruta);            
+            ini.leerArchivo(ruta+"\\Configuracion.ini");          
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+
                     "/"+ini.getProperties().getProperty("BD","default value")+"?useServerPrepStmts=true",

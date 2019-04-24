@@ -71,6 +71,10 @@ public class Secretaria {
         this.usuario = usuario;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
              
              
     public Secretaria() {
@@ -87,6 +91,15 @@ public class Secretaria {
         this.pass= pass;
     }
      
+    public Secretaria(Object []obj){
+        this.nombre = (String) obj[1];
+        this.cedula = (String) obj[0];
+        this.fecha = (Date) obj[2];
+        this.correo = (String) obj[3];
+        this.telefono = (String) obj[4];
+        this.usuario= (String) obj[5];
+        this.pass= (String) obj[6];
+    }
  
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
@@ -112,4 +125,7 @@ public void ponerMayusculas(){
         nombreConLasMayusculas = nombreConLasMayusculas.trim();
         this.nombre=nombreConLasMayusculas;
         }
+public Object[] toObject(){
+    return new Object[]{this.cedula,this.nombre,this.fecha,this.correo,this.telefono,this.usuario,this.pass};
+    }
 }

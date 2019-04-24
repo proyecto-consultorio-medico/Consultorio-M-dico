@@ -180,9 +180,9 @@ private ControladorConexion conexion;
     }//GEN-LAST:event_RegistroCitasActionPerformed
 
     private void ExpendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExpendientesActionPerformed
-      ExpedienteSensillo expediente = new ExpedienteSensillo();
-       Escritorio.add(expediente);
-       expediente.show();
+     FrmSesion sesion= new FrmSesion();
+     Escritorio.add(sesion);
+     sesion.show();
     }//GEN-LAST:event_ExpendientesActionPerformed
 
     /**

@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.BD;
 import Modelo.Pacientes;
 import Vista.FrmPacientes;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,7 +32,7 @@ public class ControladorPacientes {
                     && frmpacientes.getTxtFecha().getDate()!=null && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
                  BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
-                java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+                Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                 frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);
                 this.pacientes.ponerMayusculas();
@@ -51,7 +52,7 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     &&  frmpacientes.getTxtFecha().getDate()!=null && !"".equals(frmpacientes.getTxtTelefono().getText())) {
                        BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
-                java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+               Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                   frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);
                 this.pacientes.ponerMayusculas();
@@ -73,7 +74,7 @@ public class ControladorPacientes {
         if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                 && frmpacientes.getTxtFecha().getDate()!=null) {
               BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
-          java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+         Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
             pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
              frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(), fecha);   
             this.pacientes.ponerMayusculas();
@@ -89,7 +90,7 @@ public class ControladorPacientes {
         
         if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
                      BD bd = new BD("INSERT INTO pacientes VALUES (?,?,?,?,?)");
-         java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+       Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
             pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                     frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);
             this.pacientes.ponerMayusculas();
@@ -117,7 +118,7 @@ public class ControladorPacientes {
     }
 
     public String edad() {
-                java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+               Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
         return pacientes.calcularedad(fecha);
     }
 
@@ -138,7 +139,7 @@ public class ControladorPacientes {
                     && frmpacientes.getTxtFecha()!=null && !"".equals(frmpacientes.getTxtTelefono().getText())
                     && !"".equals(frmpacientes.getTxtcorreo().getText())) {
                  BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
-                java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+                Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);
                 this.pacientes.ponerMayusculas();
@@ -158,7 +159,7 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     && frmpacientes.getTxtFecha().getDate()!=null && !"".equals(frmpacientes.getTxtTelefono().getText())) {
                   BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
-                java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+                Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);
                 this.pacientes.ponerMayusculas();
@@ -178,7 +179,7 @@ public class ControladorPacientes {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
                     &&frmpacientes.getTxtFecha().getDate()!=null) {
                   BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
-                 java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+                 Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);
                 
@@ -195,7 +196,7 @@ public class ControladorPacientes {
             
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())) {
                    BD bd = new BD("UPDATE `pacientes` SET `Nombre`=?,`Fecha`=?,`Correo`=?,`Telefono`=? WHERE Cedula=?");
-               java.sql.Date fecha = new java.sql.Date(frmpacientes.getTxtFecha().getDate().getTime());
+              Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
                 pacientes = new Pacientes(frmpacientes.getTxtcedula().getText(), frmpacientes.getTxtnombre().getText(),
                         frmpacientes.getTxtTelefono().getText(), frmpacientes.getTxtcorreo().getText(),fecha);     
                 this.pacientes.ponerMayusculas();

@@ -9,11 +9,12 @@ import Modelo.BD;
 import Modelo.Medicos;
 import Modelo.MoCitas;
 import Modelo.Pacientes;
+import Modelo.Secretaria;
 import Vista.Citas;
 import java.sql.Date;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -27,19 +28,20 @@ public class ControladorCitas {
     private Citas frmcitas;
     private Object[] obj;
 
-    public ControladorCitas(Citas frmcitas) {
+    public ControladorCitas() {
         this.frmcitas = frmcitas;
         medico=null;
         paciente=null;
     }
-    
-  public void guardarCita(){
+   
+  public void guardarCita(Citas frmcitas){
       int cont;
-       java.sql.Date fecha = new java.sql.Date(frmcitas.getTxtFecha().getDate().getTime());
+      int cont2;
+       Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
      cita= new MoCitas(0,(String) frmcitas.getHoras().getSelectedItem(),paciente,medico, fecha);
      cita.getPaciente().setCedula(frmcitas.getTxtCedulaPaciente().getText());
      cita.getMedico().setCedula(frmcitas.getTxtCedulaMedic().getText());
-        if (buscarMedico()==true && buscarPaciente()==true) {
+        if (buscarMedico(frmcitas)==true && buscarPaciente(frmcitas)==true) {
             BD bd2= new BD("Select count(*) from citas join pacientes on citas.Paciente= pacientes.cedula WHERE  Paciente=? and citas.fecha=? and citas.hora=?");
         bd2.ejecutar(new Object[]{this.paciente.getCedula(),cita.getFecha(),cita.getHora()});
         obj=bd2.getObject();
@@ -47,14 +49,23 @@ public class ControladorCitas {
             if (cont>=1) {
                 JOptionPane.showMessageDialog(null,"El paciente ya tiene una cita en ese dia y a esa misma hora");
             }else{
-            BD bd= new BD("INSERT INTO `citas` VALUES (null,?,?,?,?)");
-     bd.ejecutar(new Object[]{cita.getFecha(),cita.getHora(),cita.getPaciente().getCedula(),cita.getMedico().getCedula()});
+                BD bd3= new BD("Select count(*) from citas join pacientes on citas.Paciente= pacientes.cedula WHERE  Paciente=? and citas.fecha=? and citas.hora!=? and Medico=?");
+             bd3.ejecutar(new Object[]{this.paciente.getCedula(),cita.getFecha(),cita.getHora(), this.medico.getCedula()});
+             obj=bd3.getObject();
+             cont2=Integer.parseInt(obj[0].toString());
+                if(cont2>=1) {
+                    JOptionPane.showMessageDialog(null,"El medico ya atendio ese paciente");
+                }else{
+                BD bd= new BD("INSERT INTO `citas` VALUES (null,?,?,?,?)");
+                   bd.ejecutar(new Object[]{cita.getFecha(),cita.getHora(),cita.getPaciente().getCedula(),cita.getMedico().getCedula()});
+                }
+            
             }
      
         }
     }
     
-    public boolean buscarMedico(){
+    public boolean buscarMedico(Citas frmcitas){
         BD bd = new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?"); 
         medico= new Medicos();
         medico.setCedula(frmcitas.getTxtCedulaMedic().getText());
@@ -72,7 +83,7 @@ public class ControladorCitas {
        return false;
     }
    
-     public boolean buscarPaciente(){
+     public boolean buscarPaciente(Citas frmcitas){
         BD bd = new BD("SELECT `Cedula` FROM `pacientes` WHERE Cedula=?"); 
         paciente= new Pacientes();
         paciente.setCedula(frmcitas.getTxtCedulaPaciente().getText());
@@ -90,11 +101,11 @@ public class ControladorCitas {
        return false;
     }
      
-     public boolean limitarCitas(){
+     public boolean limitarCitas(Citas frmcitas){
      int cont;
      medico= new Medicos();
      medico.setCedula(frmcitas.getTxtCedulaMedic().getText());
-      java.sql.Date fecha = new java.sql.Date(frmcitas.getTxtFecha().getDate().getTime());
+      Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
       medico.setFecha(fecha);
         BD bd= new BD("Select count(*) FROM citas join medicos on citas.Medico = medicos.cedula where medicos.cedula=? and citas.fecha=?");
            bd.ejecutar(new Object[]{this.medico.getCedula(),this.medico.getFecha()});
@@ -105,12 +116,12 @@ public class ControladorCitas {
          return false;
         
      }else{
-     this.guardarCita();
+     this.guardarCita(frmcitas);
      return true;
      }
 }
 
-     public void agregarDatosMedico(){
+     public void agregarDatosMedico(Citas frmcitas){
       BD bd = new BD("SELECT NombreCompleto,Especialidad FROM `medicos` WHERE Cedula=?"); 
         medico= new Medicos();
         medico.setCedula(frmcitas.getTxtCedulaMedic().getText());
@@ -120,7 +131,7 @@ public class ControladorCitas {
             this.frmcitas.setTxtEspecialidad((String) obj[1]);
      }
      
-     public void agregarDatosPaciente(){
+     public void agregarDatosPaciente(Citas frmcitas){
       BD bd = new BD("SELECT Nombre,Fecha FROM `pacientes` WHERE Cedula=?"); 
         paciente= new Pacientes();
         paciente.setCedula(frmcitas.getTxtCedulaPaciente().getText());
@@ -129,4 +140,47 @@ public class ControladorCitas {
           this.frmcitas.setTxtNombrePaciente((String) obj[0]);
           this.frmcitas.setTxtFechaPaciente((Date) obj[1]);
      }
+     
+     public void buscarTodasLasCitas(Citas frmcitas){
+         BD bd= new BD("SELECT citas.ID,citas.Fecha,citas.Hora,citas.Paciente,citas.Medico FROM `citas` JOIN medicos on citas.Medico = medicos.Cedula JOIN pacientes on citas.Paciente = pacientes.Cedula");
+         bd.ejectuar();
+         DefaultTableModel modelo = (DefaultTableModel) frmcitas.getTablaCitas().getModel();
+                  modelo.setNumRows(0);
+             do {
+                 obj = bd.getObject();
+            if (obj != null) {
+                
+                modelo.addRow(obj);
+            }
+        } while (obj!=null);
+      
+     }
+     
+     public void buscarCitaPorFecha(Citas frmcitas){
+        BD bd=new BD("SELECT * FROM `citas` WHERE Fecha=?");
+        Date fecha = new Date(frmcitas.getTxtFecha2().getDate().getTime());
+        cita= new MoCitas();
+        cita.setFecha(fecha);
+        bd.ejecutar(new Object[]{cita.getFecha()});
+         DefaultTableModel modelo = (DefaultTableModel) frmcitas.getTablaCitas().getModel();
+         modelo.setNumRows(0);
+       
+       do {
+                 obj = bd.getObject();
+            if (obj != null) {
+                
+                modelo.addRow(obj);
+            }
+        } while (obj!=null);
+       
+                 
+
+     }
+     public void eliminar(Citas frmcitas){
+     BD bd=new BD("Delete FROM citas where ID=?");
+     cita=new MoCitas();
+     cita.setID(frmcitas.getId());
+     bd.ejecutar(new Object[]{cita.getID()});
+     }
+  
 }

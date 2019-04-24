@@ -8,9 +8,12 @@ package Controlador;
 import Modelo.BD;
 import Modelo.Medicos;
 import Modelo.Secretaria;
+import Vista.ExpedienteSensillo;
 import Vista.FrmBuscarUsuario;
+import Vista.FrmSesion;
 import Vista.Usuarios;
 import Vista.frmCambioPass;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,7 +44,7 @@ public class ControladorUsuarios {
             if (comprobarUsuarioSecre(frmUsuarios)==false) {
                 frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
-                java.sql.Date fecha = new java.sql.Date(frmUsuarios.getTxtFecha().getDate().getTime());
+                Date fecha = new Date(frmUsuarios.getTxtFecha().getDate().getTime());
                 this.secretaria= new Secretaria(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),
                     frmUsuarios.getTxtcorreo().getText(),frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),
                     frmUsuarios.getTxtcontra().getText(),fecha);
@@ -74,8 +77,8 @@ public class ControladorUsuarios {
             if (comprobarUsuarioMedic(frmUsuarios)==false) {
                     frmUsuarios.setTxtmensaje("El usuario no esta disponible, por favor elija otro");
             }else{
-                    java.sql.Date fecha = new java.sql.Date(frmUsuarios.getTxtFecha().getDate().getTime());
-                    System.out.println(fecha);
+                    Date fecha = new Date(frmUsuarios.getTxtFecha().getDate().getTime());
+                  
                   this.medico= new Medicos(frmUsuarios.getTxtnombre().getText(),frmUsuarios.getTxtcedula().getText(),
                     frmUsuarios.getTxtcorreo().getText(),frmUsuarios.getTxtTelefono().getText(),frmUsuarios.getTxtusuario().getText(),
                     frmUsuarios.getTxtcontra().getText(), (String) frmUsuarios.getComboespe().getSelectedItem(),frmUsuarios.getTxtCondigo().getText(),
@@ -128,7 +131,6 @@ public class ControladorUsuarios {
         BD bd= new BD("SELECT `Usuario` FROM `secretarias` WHERE Usuario=?");
         bd.ejecutar(new Object[]{this.secretaria.getUsuario()});
        obj=bd.getObject();
-        System.out.println(obj);
         if (obj==null) {
             return true;
         }else{
@@ -146,8 +148,6 @@ public class ControladorUsuarios {
     BD bd= new BD("SELECT `Usuario` FROM `medicos` WHERE Usuario=?");
     bd.ejecutar(new Object[]{this.medico.getUsuario()});
     obj=bd.getObject();
-        System.out.println(obj);
-        System.out.println(this.medico.getUsuario());
         if (obj==null) {
             return true;
         }else{
@@ -161,8 +161,6 @@ public class ControladorUsuarios {
     BD bd= new BD("SELECT `Cedula` FROM `secretarias` WHERE Cedula=?");
     bd.ejecutar(new Object[]{this.secretaria.getCedula()});
     obj=bd.getObject();
-        System.out.println(obj);
-        System.out.println(this.secretaria.getCedula());
         if (obj==null) {
             return true;
         }else{
@@ -176,8 +174,6 @@ public class ControladorUsuarios {
        BD bd= new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?");
        bd.ejecutar(new Object[]{this.medico.getCedula()});
         obj=bd.getObject();
-        System.out.println(obj);
-        System.out.println(this.medico.getCedula());
         if (obj==null) {
             return true;
         }else{
@@ -188,10 +184,36 @@ public class ControladorUsuarios {
         return true;
     }
      
+     public boolean buscarcitamedico(Usuarios frmUsuarios){
+     BD bd= new BD("SELECT * FROM `medicos` JOIN citas ON medicos.Cedula=citas.Medico  WHERE Cedula=?");
+        this.medico= new Medicos();
+        this.medico.setCedula(frmUsuarios.getTxtcedula().getText());
+        bd.ejecutar(new Object[]{this.medico.getCedula()});
+        obj=bd.getObject();
+         if (obj==null) {
+             return false;
+         }else{
+             return true;
+         }
+         
+     }
+     
       public boolean eliminar(Usuarios frmUsuarios) {
-            BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
-            bd.ejecutar(new Object[]{frmUsuarios.getTxtcedula()});
+          if (frmUsuarios.combotipo.getSelectedItem().equals("Secretaria")) {
+              BD bd = new BD("DELETE FROM secretarias WHERE Cedula=?");
+              this.secretaria=new Secretaria();
+              this.secretaria.setCedula(frmUsuarios.getTxtcedula().getText());
+            bd.ejecutar(new Object[]{this.secretaria.getCedula()});
             return true;
+          }
+             if (frmUsuarios.combotipo.getSelectedItem().equals("Medico")) {
+                BD bd = new BD("DELETE FROM medicos WHERE Cedula=?");
+                this.medico=new Medicos();
+                this.medico.setCedula(frmUsuarios.getTxtcedula().getText());
+            bd.ejecutar(new Object[]{this.medico.getCedula()});
+            return true;
+          }
+          return false;
         }
    
       public boolean cambioContraSec(frmCambioPass frmcambiocont){
@@ -203,15 +225,16 @@ public class ControladorUsuarios {
           if (obj==null) {
               return false;
           }else{
-          System.out.println(frmcambiocont.getTxtContraAnti().getText());
           if(obj[0].equals(frmcambiocont.getTxtContraAnti().getText())){
           JOptionPane.showMessageDialog(null,"Contraseña correcta");
           BD bd2= new BD("UPDATE `secretarias` SET `Contra`=? WHERE Usuario=?");
           if(frmcambiocont.getTxtContraNue().getText().equals(frmcambiocont.getTxtverificontra().getText())){
               bd2.ejecutar(new Object[]{frmcambiocont.getTxtContraNue().getText(),secretaria.getUsuario()});
               return true;
+          }else{
+              
           }
-          
+          JOptionPane.showMessageDialog(null, "Las contraseña no son iguales");
       }
           }
           
@@ -224,8 +247,6 @@ public class ControladorUsuarios {
       medico.setUsuario(frmcambiocont.getTxtUsuario().getText());
       bd.ejecutar(new Object[]{this.medico.getUsuario()});
       obj=bd.getObject();
-          System.out.println(obj[0]);
-          System.out.println(frmcambiocont.getTxtContraAnti().getText());
           if (obj==null) {
              return false;
          }else{
@@ -259,7 +280,7 @@ public class ControladorUsuarios {
             secretaria.setCedula(frmpbuscar.getTxtBuscar().getText());
             BD bd = new BD("SELECT *  FROM `secretarias` WHERE Cedula=?");
             bd.ejecutar(new Object[]{secretaria.getCedula()});
-            DefaultTableModel modelo = (DefaultTableModel) frmpbuscar.getTablaUsuarios().getModel();
+            DefaultTableModel modelo = (DefaultTableModel) frmpbuscar.getTablaUsuarios2().getModel();
             modelo.addRow(bd.getObject());
         }
        }
@@ -279,5 +300,91 @@ public class ControladorUsuarios {
                 modelo.addRow(medico.toObject());
             }
         } while (obj!=null);
+       }
+       
+       public void buscarSecretariaNom(FrmBuscarUsuario frmpbuscar){
+          secretaria= new Secretaria();
+        secretaria.setNombre(frmpbuscar.getTxtBuscar().getText());
+           BD bd = new BD("SELECT * FROM `secretarias` WHERE 	`Nombre Completo` LIKE ?"); 
+             bd.ejecutar(new Object[]{"%"+secretaria.getNombre()+"%"});
+              DefaultTableModel modelo = (DefaultTableModel)
+                      frmpbuscar.getTablaUsuarios2().getModel();
+              modelo.setNumRows(0);
+             do {
+                 obj = bd.getObject();
+            if (obj != null) {
+                this.secretaria = new Secretaria(obj);
+                modelo.addRow(secretaria.toObject());
+            }
+        } while (obj!=null);
+       }
+       
+       public boolean contarUsuarios(){
+           int cont;
+           BD bd= new BD("Select count(*) FROM `medicos` WHERE Cedula=Cedula");
+           bd.ejectuar();
+           obj=bd.getObject();
+           cont=Integer.parseInt(obj[0].toString());
+           if (cont>0) {
+               return true;
+           }else{
+               return false;
+           }
+       }
+       public String salarioNeto(Usuarios frmUsuarios){
+           this.medico= new Medicos();
+           this.medico.setSalario(Double.parseDouble(frmUsuarios.getTxtSalario().getText()));
+           return this.medico.calcularSalarioNeto();
+       }
+       public String salarioNeto2(FrmBuscarUsuario frmbuscar, String salario){
+           this.medico= new Medicos();
+           this.medico.setSalario(Double.parseDouble(salario));
+           return this.medico.calcularSalarioNeto();
+       }
+       
+       public boolean actualizar(Usuarios frmUsuarios){
+        if (frmUsuarios.combotipo.getSelectedItem().equals("Secretaria")) {
+              BD bd = new BD("DELETE FROM secretarias WHERE Cedula=?");
+              this.secretaria=new Secretaria();
+              this.secretaria.setCedula(frmUsuarios.getTxtcedula().getText());
+            bd.ejecutar(new Object[]{this.secretaria.getCedula()});
+            return true;
+          }
+             if (frmUsuarios.combotipo.getSelectedItem().equals("Medico")) {
+                BD bd = new BD("UPDATE `medicos` SET `NombreCompleto`=?,`FechaDeNacimiento`=?,`CorreoElectronico`=?,`CodigoDeColegio`=?,`NumeroTelefono`=?,`Especialidad`=?,`Salario`=?,`Usuario`=? WHERE Cedula=?");
+               Date fecha = new Date(frmUsuarios.getTxtFecha().getDate().getTime());
+                this.medico=new Medicos(frmUsuarios.getTxtnombre().getText(), frmUsuarios.getTxtcedula().getText(), frmUsuarios.getTxtcorreo().getText(), frmUsuarios.getTxtTelefono().getText(), frmUsuarios.getTxtusuario().getText(), frmUsuarios.getTxtcontra().getText(), (String) frmUsuarios.comboespe.getSelectedItem(), frmUsuarios.getTxtCondigo().getText(),Double.parseDouble(frmUsuarios.getTxtSalario().getText()), fecha);
+            bd.ejecutar(new Object[]{this.medico.getNombre(),this.medico.getFecha(),this.medico.getCorreo(),this.medico.getCodigo(),this.medico.getTelefono(),this.medico.getEspecialidad(),this.medico.getSalario(),this.medico.getUsuario(),this.medico.getCedula()});
+            return true;
+          }
+          return false;
+       }
+       
+       public boolean iniciarSeccion(FrmSesion frmsesion){
+          BD bd = new BD("SELECT `Usuario`,`Contraseña` FROM `medicos` WHERE Usuario=? and Contraseña=?");
+          this.medico=new Medicos();
+          this.medico.setUsuario(frmsesion.getTxtUsuario().getText());
+          this.medico.setPass(frmsesion.getTxtContra().getText());
+          bd.ejecutar(new Object[]{medico.getUsuario(),medico.getPass()});
+          obj=bd.getObject();
+           if (obj==null) {
+               return false;
+           }else{
+               if (obj[0].equals(this.medico.getUsuario())&&obj[1].equals(this.medico.getPass())) {
+                   return true;
+               }
+           }
+          return false;
+       }
+       
+       public void cargarMedico(FrmSesion frmsesion,ExpedienteSensillo exp){
+       BD bd = new BD("SELECT `NombreCompleto`,`Cedula`,`Especialidad` FROM `medicos` WHERE Usuario=?" );
+       this.medico=new Medicos();
+          this.medico.setUsuario(frmsesion.getTxtUsuario().getText());
+          bd.ejecutar(new Object[]{medico.getUsuario()});
+          obj=bd.getObject();
+          exp.setTxtMedico(obj[0].toString());
+          exp.setTxtEspecialidad(obj[2].toString());
+          exp.setTxtCedulaMedic(obj[1].toString());
        }
 }

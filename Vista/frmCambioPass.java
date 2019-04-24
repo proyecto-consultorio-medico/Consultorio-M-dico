@@ -33,6 +33,7 @@ ControladorUsuarios contr;
         if (Usuarios.combotipo.getSelectedItem()=="Secretaria") {
             this.rSecre.setSelected(true);
         }
+        this.lblmsj.setVisible(false);
     }
 
     /**
@@ -53,6 +54,7 @@ ControladorUsuarios contr;
         btnGuardar = new javax.swing.JButton();
         rMedico = new javax.swing.JRadioButton();
         rSecre = new javax.swing.JRadioButton();
+        lblmsj = new javax.swing.JLabel();
 
         txtContraAnti.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtContraAnti.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Contraseña antigua", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
@@ -80,6 +82,8 @@ ControladorUsuarios contr;
         btnTipo.add(rSecre);
         rSecre.setText("Secretaria");
 
+        lblmsj.setText("La contraseña se ha cambiado con exito");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,6 +108,10 @@ ControladorUsuarios contr;
                         .addComponent(btnGuardar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lblmsj, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,6 +131,8 @@ ControladorUsuarios contr;
                             .addComponent(rSecre))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtverificontra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblmsj)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addContainerGap())
@@ -134,12 +144,14 @@ ControladorUsuarios contr;
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (rSecre.isSelected()) {
             if (contr.cambioContraSec(this)==true) {
-                JOptionPane.showMessageDialog(null, "Se Cambio exitosamente la contraseña");
+            lblmsj.setVisible(true);
+            lblmsj.setForeground(Color.BLUE);
             }
         }
         if (rMedico.isSelected()) {
             if (contr.cambioContraMedic(this)==true) {
-                 JOptionPane.showMessageDialog(null, "Se Cambio exitosamente la contraseña");
+                 lblmsj.setVisible(true);
+                 lblmsj.setForeground(Color.BLUE);
             }
            
         }
@@ -150,6 +162,7 @@ ControladorUsuarios contr;
     private javax.swing.JButton btnGuardar;
     public static javax.swing.ButtonGroup btnTipo;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel lblmsj;
     private javax.swing.JRadioButton rMedico;
     private javax.swing.JRadioButton rSecre;
     private javax.swing.JTextField txtContraAnti;

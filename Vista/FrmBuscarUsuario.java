@@ -7,6 +7,7 @@ package Vista;
 
 import Controlador.ControladorUsuarios;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.ButtonGroup;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -19,6 +20,10 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
     ControladorUsuarios cUsuarios;
     public JTextField getTxtBuscar() {
         return txtBuscar;
+    }
+
+    public JTable getTablaUsuarios2() {
+        return tablaUsuarios2;
     }
 
   
@@ -34,6 +39,8 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
         initComponents();
          this.getContentPane().setBackground(new Color(85,151,248));
         cUsuarios= new ControladorUsuarios();
+        this.panel2.setVisible(false);
+        this.panel1.setVisible(false);
     }
 
     /**
@@ -47,8 +54,6 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaUsuarios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         rCedula = new javax.swing.JRadioButton();
         rNombre = new javax.swing.JRadioButton();
@@ -56,6 +61,102 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         rMedico = new javax.swing.JRadioButton();
         rSecretaria = new javax.swing.JRadioButton();
+        panel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaUsuarios2 = new javax.swing.JTable();
+        panel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+
+        setClosable(true);
+        setIconifiable(true);
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Lucida Calligraphy", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Buscar por:");
+
+        buttonGroup1.add(rCedula);
+        rCedula.setFont(new java.awt.Font("Lucida Calligraphy", 0, 14)); // NOI18N
+        rCedula.setForeground(new java.awt.Color(255, 255, 255));
+        rCedula.setText("Cedula");
+
+        buttonGroup1.add(rNombre);
+        rNombre.setFont(new java.awt.Font("Lucida Calligraphy", 0, 14)); // NOI18N
+        rNombre.setForeground(new java.awt.Color(255, 255, 255));
+        rNombre.setText("Nombre");
+
+        txtBuscar.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Lucida Calligraphy", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Seleccion el tipo de usuario a buscar:");
+
+        buttonGroup2.add(rMedico);
+        rMedico.setFont(new java.awt.Font("Lucida Calligraphy", 0, 14)); // NOI18N
+        rMedico.setForeground(new java.awt.Color(255, 255, 255));
+        rMedico.setText("Medico");
+
+        buttonGroup2.add(rSecretaria);
+        rSecretaria.setFont(new java.awt.Font("Lucida Calligraphy", 0, 14)); // NOI18N
+        rSecretaria.setForeground(new java.awt.Color(255, 255, 255));
+        rSecretaria.setText("Secretaria");
+
+        panel2.setBackground(new java.awt.Color(85, 151, 248));
+
+        tablaUsuarios2.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        tablaUsuarios2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cedula", "Nombre completo", "Fecha", "Correo electronico", "Numero", "Nombre de Usuario", "Contraseña"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaUsuarios2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaUsuarios2MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tablaUsuarios2);
+        if (tablaUsuarios2.getColumnModel().getColumnCount() > 0) {
+            tablaUsuarios2.getColumnModel().getColumn(0).setPreferredWidth(1);
+            tablaUsuarios2.getColumnModel().getColumn(2).setPreferredWidth(15);
+            tablaUsuarios2.getColumnModel().getColumn(5).setPreferredWidth(15);
+        }
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1319, Short.MAX_VALUE)
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+        );
+
+        panel1.setBackground(new java.awt.Color(85, 151, 248));
 
         tablaUsuarios.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,95 +175,81 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaUsuarios);
         if (tablaUsuarios.getColumnModel().getColumnCount() > 0) {
-            tablaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tablaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(1);
             tablaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(15);
             tablaUsuarios.getColumnModel().getColumn(5).setPreferredWidth(15);
             tablaUsuarios.getColumnModel().getColumn(7).setPreferredWidth(50);
         }
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Lucida Calligraphy", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buscar por:");
-
-        buttonGroup1.add(rCedula);
-        rCedula.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        rCedula.setForeground(new java.awt.Color(255, 255, 255));
-        rCedula.setText("Cedula");
-
-        buttonGroup1.add(rNombre);
-        rNombre.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        rNombre.setForeground(new java.awt.Color(255, 255, 255));
-        rNombre.setText("Nombre");
-
-        txtBuscar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar"));
-        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyReleased(evt);
-            }
-        });
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Lucida Calligraphy", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Seleccion el tipo de usuario a buscar:");
-
-        buttonGroup2.add(rMedico);
-        rMedico.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        rMedico.setForeground(new java.awt.Color(255, 255, 255));
-        rMedico.setText("Medico");
-
-        buttonGroup2.add(rSecretaria);
-        rSecretaria.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        rSecretaria.setForeground(new java.awt.Color(255, 255, 255));
-        rSecretaria.setText("Secretaria");
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rCedula)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rNombre))
-                                .addComponent(txtBuscar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rMedico)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rSecretaria)))
-                        .addContainerGap(824, Short.MAX_VALUE))))
+                        .addComponent(jLabel1)
+                        .addGap(6, 6, 6)
+                        .addComponent(rCedula)
+                        .addGap(6, 6, 6)
+                        .addComponent(rNombre))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)
+                        .addComponent(rMedico)
+                        .addGap(6, 6, 6)
+                        .addComponent(rSecretaria))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(rCedula)
-                    .addComponent(rNombre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rCedula)
+                            .addComponent(rNombre))))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(rMedico)
-                    .addComponent(rSecretaria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rMedico)
+                            .addComponent(rSecretaria))))
+                .addGap(6, 6, 6)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -171,12 +258,87 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         if (rNombre.isSelected()) {
             if (rMedico.isSelected()) {
-                cUsuarios.buscarMedicoNom(this);
+                cUsuarios.buscarMedicoNom(this);  
+                this.panel1.setVisible(true);
+                Usuarios.combotipo.setSelectedIndex(2);
+            }else{
+                this.panel1.setVisible(false);
+            }
+            if (rSecretaria.isSelected()) {
+                cUsuarios.buscarSecretariaNom(this);
+           this.panel2.setVisible(true);
+             Usuarios.combotipo.setSelectedIndex(1);
+           }else{
+                   this.panel2.setVisible(false);
             }
         }
-        
+       
        
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+       if (rCedula.isSelected()) {
+            if (rMedico.isSelected()) {
+                cUsuarios.buscarMedicoCedu(this);
+                this.panel1.setVisible(true);
+                  Usuarios.combotipo.setSelectedIndex(2);
+            }else{
+                this.panel1.setVisible(false);
+            }
+            if (rSecretaria.isSelected()) {
+               cUsuarios.buscarSecretariaCedu(this);
+               this.panel2.setVisible(true);
+                 Usuarios.combotipo.setSelectedIndex(1);
+           }else{
+                   this.panel2.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void tablaUsuarios2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuarios2MouseClicked
+        Usuarios.txtcedula.setText(String.valueOf(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 0)));
+            Usuarios.txtnombre.setText(String.valueOf(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 1)));
+             Usuarios.txtFecha.setDate((Date)(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 2)));
+             Usuarios.txtcorreo.setText(String.valueOf(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 3)));
+             Usuarios.txtTelefono.setText(String.valueOf(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 4)));
+               Usuarios.txtusuario.setText(String.valueOf(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 5)));
+                  Usuarios.txtcontra.setText(String.valueOf(tablaUsuarios2.getValueAt(tablaUsuarios2.getSelectedRow(), 6)));
+    }//GEN-LAST:event_tablaUsuarios2MouseClicked
+
+    private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
+            
+        Usuarios.txtcedula.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0)));
+            Usuarios.txtnombre.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 1)));
+             Usuarios.txtFecha.setDate((Date)(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 2)));
+             Usuarios.txtcorreo.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 3)));
+             Usuarios.txtCondigo.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 4)));
+             Usuarios.txtTelefono.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 5)));
+             if (String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 6)).equals("Medicina General")) {
+                  Usuarios.comboespe.setSelectedIndex(1);
+              
+           }
+             if (String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 6)).equals("Pediatría")) {
+               Usuarios.comboespe.setSelectedIndex(2);
+           }
+             if (String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 6)).equals("Neurología")) {
+               Usuarios.comboespe.setSelectedIndex(3);
+           }
+             if (String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 6)).equals("Cardiología")) {
+               Usuarios.comboespe.setSelectedIndex(4);
+           }
+             if (String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 6)).equals("Cirugía General")) {
+               Usuarios.comboespe.setSelectedIndex(5);
+           }
+             if (String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 6)).equals("Ginecología")) {
+               Usuarios.comboespe.setSelectedIndex(6);
+           }
+            
+             Usuarios.txtSalario.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 7)));
+               Usuarios.txtusuario.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 8)));
+                  Usuarios.txtcontra.setText(String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 9)));
+                  Usuarios.txtSalarioNeto.setText(cUsuarios.salarioNeto2(this,String.valueOf(tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 7))));
+       
+    }//GEN-LAST:event_tablaUsuariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -185,11 +347,15 @@ public class FrmBuscarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel panel1;
+    private javax.swing.JPanel panel2;
     private javax.swing.JRadioButton rCedula;
     private javax.swing.JRadioButton rMedico;
     private javax.swing.JRadioButton rNombre;
     private javax.swing.JRadioButton rSecretaria;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTable tablaUsuarios2;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

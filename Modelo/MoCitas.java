@@ -17,9 +17,11 @@ public class MoCitas {
     private int ID;
     private Pacientes paciente;
     private Medicos medico;
-    private int año;
-    private int mes;
-    private int dia;
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+   
  
     public String getHora() {
         return hora;
@@ -41,17 +43,19 @@ public class MoCitas {
         return medico;
     }
 
-    public int getAño() {
-        return año;
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+  
+    public MoCitas() {
     }
 
-    public int getMes() {
-        return mes;
+    public void setMedico(Medicos medico) {
+        this.medico = medico;
     }
+    
 
-    public int getDia() {
-        return dia;
-    }
+ 
 
     public MoCitas(int ID,String hora,Pacientes paciente,Medicos medico,Date fecha) {
         this.ID=ID;
@@ -59,5 +63,10 @@ public class MoCitas {
         this.fecha=fecha;
         this.paciente=paciente;
         this.medico=medico;
+    }
+    
+    public void aleatorio(){
+        int id2= (int)(Math.random()+60);
+        this.ID=id2;
     }
 }
