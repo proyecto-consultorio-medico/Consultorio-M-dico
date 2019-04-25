@@ -21,7 +21,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
     private ControladorUsuarios cusuarios;
     private String txtespe;
     private String txtTipo;
-
+    
     public JComboBox<String> getComboespe() {
         return comboespe;
     }
@@ -97,6 +97,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
            txtSalario.setVisible(false);
              txtCondigo.setVisible(false);
                comboespe.setVisible(false);
+                txtSalarioNeto.setVisible(false);
     }
 
     /**
@@ -354,13 +355,14 @@ public class Usuarios extends javax.swing.JInternalFrame {
        this.txtcontra.setText(null);
        this.txtcorreo.setText(null);
        this.txtusuario.setText(null);
+       txtSalarioNeto.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if ( cusuarios.agregar(this)==false) {
             txtMensajeC.setBackground(new Color(153,51,0));
-            this.txtSalarioNeto.setText(cusuarios.salarioNeto(this));
         }
+         this.txtSalarioNeto.setText(cusuarios.salarioNeto(this));
     }//GEN-LAST:event_jButton1ActionPerformed
  public void cargar(){
             combotipo.addItem("Secretaria");
@@ -379,11 +381,13 @@ public class Usuarios extends javax.swing.JInternalFrame {
             txtSalario.setVisible(true);
              txtCondigo.setVisible(true);
                comboespe.setVisible(true);
+               txtSalarioNeto.setVisible(true);
         }else{
             if (combotipo.getSelectedItem()=="Secretaria") {
                   txtSalario.setVisible(false);
-             txtCondigo.setVisible(false);
-               comboespe.setVisible(false);
+                    txtCondigo.setVisible(false);
+                     comboespe.setVisible(false);
+                       txtSalarioNeto.setVisible(false);
             }
         }
     }//GEN-LAST:event_combotipoItemStateChanged

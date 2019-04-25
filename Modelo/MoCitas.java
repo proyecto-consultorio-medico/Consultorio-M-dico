@@ -12,7 +12,7 @@ import java.sql.Date;
  * @author Jose,Marco,Yuliana,Elver
  */
 public class MoCitas {
-    private String hora;
+    private int hora;
     private Date fecha;
     private int ID;
     private Pacientes paciente;
@@ -23,7 +23,7 @@ public class MoCitas {
     }
    
  
-    public String getHora() {
+    public int getHora() {
         return hora;
     }
 
@@ -50,6 +50,11 @@ public class MoCitas {
     public MoCitas() {
     }
 
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
+
+
     public void setMedico(Medicos medico) {
         this.medico = medico;
     }
@@ -57,7 +62,7 @@ public class MoCitas {
 
  
 
-    public MoCitas(int ID,String hora,Pacientes paciente,Medicos medico,Date fecha) {
+    public MoCitas(int ID,int hora,Pacientes paciente,Medicos medico,Date fecha) {
         this.ID=ID;
         this.hora=hora;
         this.fecha=fecha;

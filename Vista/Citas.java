@@ -22,11 +22,26 @@ import org.w3c.dom.Node;
  *
  * @author kille
  */
-public class Citas extends javax.swing.JInternalFrame {
+public class Citas extends javax.swing.JInternalFrame implements Runnable{
     private ControladorCitas cCitas;
     private Archivo arch;
     private int id ;
-
+    private boolean estado;
+    
+    public synchronized void buscar(){
+      while(this.estado){
+           try {
+              cCitas.buscarTodasLasCitas(this);
+          } catch (Exception e) {
+          }
+            try {
+                this.wait();
+            } catch (InterruptedException ex1) {
+                
+            }
+      }
+    }
+    
     public int getId() {
         return id;
     }
@@ -68,7 +83,6 @@ public class Citas extends javax.swing.JInternalFrame {
         return txtFecha2;
     }
 
-
     public void setTxtFechaPaciente(Date txtFechaPaciente) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String fechaComoCadena = sdf.format(txtFechaPaciente);
@@ -86,29 +100,30 @@ public class Citas extends javax.swing.JInternalFrame {
     public void setTxtEspecialidad(String txtEspecialidad) {
         this.txtEspecialidad.setText(txtEspecialidad);
     }
-
-   
-    
     
     public void cargarHora(){
-            horas.addItem("7 am"); 
-            horas.addItem("8 am");        
-            horas.addItem("9 am");  
-            horas.addItem("10 am");    
-            horas.addItem("11 am");          
-            horas.addItem("12 pm");        
-            horas.addItem("1 pm");        
-            horas.addItem("2 pm");           
-            horas.addItem("3 pm");
-            horas.addItem("4 pm");       
+            horas.addItem("7"); 
+            horas.addItem("8");        
+            horas.addItem("9");  
+            horas.addItem("10");    
+            horas.addItem("11");          
+            horas.addItem("12");        
+            horas.addItem("13");        
+            horas.addItem("14");           
+            horas.addItem("15");
+            horas.addItem("16");       
         }
+    
     public Citas() {
         initComponents();
+        this.estado=true;
         cCitas= new ControladorCitas();
         this.txtDatoMedico.setVisible(false);
         this.txtDatoPaciente.setVisible(false);
          this.getContentPane().setBackground(new Color(85,151,248));
         cargarHora();
+        Thread h1= new Thread(this);
+        h1.start();
     }
 
     /**
@@ -143,6 +158,7 @@ public class Citas extends javax.swing.JInternalFrame {
         txtFecha2 = new com.toedter.calendar.JDateChooser();
         jButton4 = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
+        txtTiempo = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -176,6 +192,11 @@ public class Citas extends javax.swing.JInternalFrame {
         });
 
         horas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Horas" }));
+        horas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                horasItemStateChanged(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Metro-Save-Blue-256.png"))); // NOI18N
@@ -212,8 +233,8 @@ public class Citas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(txtNombreMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addContainerGap())
         );
         txtDatoMedicoLayout.setVerticalGroup(
             txtDatoMedicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +264,7 @@ public class Citas extends javax.swing.JInternalFrame {
             txtDatoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(txtDatoPacienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtNombrePaciente)
+                .addComponent(txtNombrePaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFechaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -268,7 +289,7 @@ public class Citas extends javax.swing.JInternalFrame {
             }
         });
 
-        TablaCitas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar o borrar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Bright", 0, 12))); // NOI18N
+        TablaCitas.setBorder(null);
         TablaCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -309,93 +330,85 @@ public class Citas extends javax.swing.JInternalFrame {
             }
         });
 
+        txtTiempo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        txtTiempo.setText("AM/PM");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(jButton1)
-                                .addGap(6, 6, 6)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btneliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDatoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDatoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))))
+                        .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btneliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtDatoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDatoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1060, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jButton4))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCedulaPaciente)
-                            .addComponent(txtCedulaMedic)
-                            .addComponent(horas)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3)))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btneliminar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtDatoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDatoPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFecha2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCedulaMedicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaMedicActionPerformed
-     
-    }//GEN-LAST:event_txtCedulaMedicActionPerformed
-
     private void txtCedulaMedicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaMedicKeyReleased
         if (cCitas.buscarMedico(this)== true) {
             txtCedulaMedic.setForeground(Color.GREEN);
-            this.txtDatoMedico.setVisible(true);
+            try {
+                 this.txtDatoMedico.setVisible(true);
             this.cCitas.agregarDatosMedico(this);
+            } catch (Exception e) {
+            }
+           
         }else{
         txtCedulaMedic.setForeground(Color.RED);
         this.txtDatoMedico.setVisible(false);
@@ -405,8 +418,12 @@ public class Citas extends javax.swing.JInternalFrame {
     private void txtCedulaPacienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaPacienteKeyReleased
        if (cCitas.buscarPaciente(this)== true) {
             txtCedulaPaciente.setForeground(Color.GREEN);
-             this.txtDatoPaciente.setVisible(true);
-             this.cCitas.agregarDatosPaciente(this);
+           try {
+              this.txtDatoPaciente.setVisible(true);
+             this.cCitas.agregarDatosPaciente(this); 
+           } catch (Exception e) {
+           }
+             
         }else{
         txtCedulaPaciente.setForeground(Color.RED);
        this.txtDatoPaciente.setVisible(false);
@@ -414,7 +431,10 @@ public class Citas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCedulaPacienteKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (cCitas.limitarCitas(this)==true) {
+        this.enviar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+public synchronized void enviar(){
+       if (cCitas.limitarCitas(this)==true) {
               SimpleDateFormat fecha= new SimpleDateFormat("dd-MM-yyyy");
     String fechas= fecha.format(this.txtFecha.getDate().getTime());
     String hora=(String) this.horas.getSelectedItem();
@@ -426,10 +446,9 @@ public class Citas extends javax.swing.JInternalFrame {
                 }
                      }
         this.guardar();
+        notify();
         }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+}
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     this.txtCedulaMedic.setText(null);
     this.txtCedulaPaciente.setText(null);
@@ -437,22 +456,42 @@ public class Citas extends javax.swing.JInternalFrame {
     this.horas.setSelectedIndex(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       cCitas.buscarTodasLasCitas(this);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         cCitas.buscarCitaPorFecha(this);
+        this.estado=false;
+        cCitas.buscarCitaPorFecha(this);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+     eliminar();
      
-       cCitas.eliminar(this);
     }//GEN-LAST:event_btneliminarActionPerformed
-
+public synchronized void eliminar(){
+  cCitas.eliminar(this);
+  notify();
+}
     private void TablaCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCitasMouseClicked
            this.id=(int) TablaCitas.getValueAt(TablaCitas.getSelectedRow(), 0);
     }//GEN-LAST:event_TablaCitasMouseClicked
+
+    private void txtCedulaMedicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaMedicActionPerformed
+
+    }//GEN-LAST:event_txtCedulaMedicActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.estado=true;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void horasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_horasItemStateChanged
+        if (this.horas.getSelectedItem()=="7" | this.horas.getSelectedItem()=="8" | this.horas.getSelectedItem()=="9" | this.horas.getSelectedItem()=="10" | this.horas.getSelectedItem()=="11") {
+            this.txtTiempo.setText("  AM");
+        }
+        if (this.horas.getSelectedItem()=="12") {
+            this.txtTiempo.setText("  MD");
+        }
+        if (this.horas.getSelectedItem()=="13"|this.horas.getSelectedItem()=="14"|this.horas.getSelectedItem()=="15"|this.horas.getSelectedItem()=="16") {
+            this.txtTiempo.setText("  PM");
+        }
+    }//GEN-LAST:event_horasItemStateChanged
 
 private void guardar(){
     SimpleDateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
@@ -496,5 +535,11 @@ arch.limpiar();
     private javax.swing.JTextField txtFechaPaciente;
     private javax.swing.JTextField txtNombreMedico;
     private javax.swing.JTextField txtNombrePaciente;
+    private javax.swing.JLabel txtTiempo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+       buscar();
+    }
 }

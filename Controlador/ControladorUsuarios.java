@@ -377,14 +377,5 @@ public class ControladorUsuarios {
           return false;
        }
        
-       public void cargarMedico(FrmSesion frmsesion,ExpedienteSensillo exp){
-       BD bd = new BD("SELECT `NombreCompleto`,`Cedula`,`Especialidad` FROM `medicos` WHERE Usuario=?" );
-       this.medico=new Medicos();
-          this.medico.setUsuario(frmsesion.getTxtUsuario().getText());
-          bd.ejecutar(new Object[]{medico.getUsuario()});
-          obj=bd.getObject();
-          exp.setTxtMedico(obj[0].toString());
-          exp.setTxtEspecialidad(obj[2].toString());
-          exp.setTxtCedulaMedic(obj[1].toString());
-       }
+       
 }

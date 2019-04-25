@@ -6,12 +6,21 @@
 package Vista;
 
 import Controlador.ControladorCitas;
+import Controlador.ControladorExpendiente;
 import Modelo.Archivo;
-import Modelo.ModeloCitas;
 import java.awt.Color;
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,23 +30,100 @@ import org.w3c.dom.Node;
  * @author Jose,Marco,Yuliana,Elver
  */
 public class ExpedienteSensillo extends javax.swing.JInternalFrame {
-            private boolean estado; 
+        private boolean estado; 
         private Archivo arch;
         private ControladorCitas cCitas;
+        private ControladorExpendiente exp;
+        
 
-    public void buscar(){
-         while (this.estado) {
-            try {
-                
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-            }
+  public void cargarHora(){
+            Horas.addItem("7"); 
+            Horas.addItem("8");        
+            Horas.addItem("9");  
+            Horas.addItem("10");    
+            Horas.addItem("11");          
+            Horas.addItem("12");        
+            Horas.addItem("13");        
+            Horas.addItem("14");           
+            Horas.addItem("15");
+            Horas.addItem("16");       
         }
+    public JTextField getTxtFechaAtencion() {
+        return txtFechaAtencion;
     }
+
+    public void setTxtFechaAtencion(String txtFechaAtencion) {
+        this.txtFechaAtencion.setText(txtFechaAtencion);
+    }
+
+    public void setTxtFechaPaciente(String txtFechaPaciente) {
+        this.txtFechaPaciente.setText(txtFechaPaciente);
+    }
+
+    public void setTxtNombrePaciente(String txtNombrePaciente) {
+        this.txtNombrePaciente.setText(txtNombrePaciente);
+    }
+    
+   
+    public JTable getTablaCitasDelDia() {
+        return TablaCitasDelDia;
+    }
+
+    public JComboBox<String> getHoras() {
+        return Horas;
+    }
+
+    public JTextField getTxtCedulaMedic() {
+        return txtCedulaMedic;
+    }
+
+    public JTextField getTxtCedulaPaciente() {
+        return txtCedulaPaciente;
+    }
+
+    public JTextArea getTxtComentario() {
+        return txtComentario;
+    }
+
+    public JTextField getTxtEspecialidad() {
+        return txtEspecialidad;
+    }
+
+    public JLabel getTxtExpendiente() {
+        return txtExpendiente;
+    }
+
+    public JTextField getTxtFecha() {
+        return txtFecha;
+    }
+
+    public JTextField getTxtFechaPaciente() {
+        return txtFechaPaciente;
+    }
+
+    public JTextField getTxtHora() {
+        return txtHora;
+    }
+
+    public JTextField getTxtMedico() {
+        return txtMedico;
+    }
+
+    public JTextField getTxtNombrePaciente() {
+        return txtNombrePaciente;
+    }
+
+
     public ExpedienteSensillo() {
         initComponents();
+        this.estado=true;
+         this.cargarHora();
            this.getContentPane().setBackground(new Color(85,151,248));
            cCitas=new ControladorCitas();
+           exp= new ControladorExpendiente();
+       this.rPresente.setVisible(false);
+       this.rAusente.setVisible(false);
+           
     }
 
     public void setTxtCedulaMedic(String txtCedulaMedic) {
@@ -61,10 +147,10 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         txtExpendiente = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         txtEspecialidad = new javax.swing.JTextField();
         txtNombrePaciente = new javax.swing.JTextField();
         txtFechaPaciente = new javax.swing.JTextField();
@@ -75,10 +161,13 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
         txtFecha = new javax.swing.JTextField();
         txtHora = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaCitasDelDia = new javax.swing.JTable();
         txtMedico = new javax.swing.JTextField();
-        txtFechaAtencion = new com.toedter.calendar.JDateChooser();
         Horas = new javax.swing.JComboBox<>();
+        txtFechaAtencion = new javax.swing.JTextField();
+        txtTiempo = new javax.swing.JLabel();
+        rPresente = new javax.swing.JRadioButton();
+        rAusente = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(85, 151, 248));
 
@@ -95,21 +184,9 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setText("Buscar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         txtEspecialidad.setEditable(false);
         txtEspecialidad.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtEspecialidad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Especialdiad del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
-        txtEspecialidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEspecialidadActionPerformed(evt);
-            }
-        });
 
         txtNombrePaciente.setEditable(false);
         txtNombrePaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
@@ -122,28 +199,14 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
         txtCedulaMedic.setEditable(false);
         txtCedulaMedic.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtCedulaMedic.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cedula del medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
-        txtCedulaMedic.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaMedicActionPerformed(evt);
-            }
-        });
-        txtCedulaMedic.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCedulaMedicKeyReleased(evt);
-            }
-        });
 
         txtCedulaPaciente.setEditable(false);
         txtCedulaPaciente.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtCedulaPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cedula del paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
-        txtCedulaPaciente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCedulaPacienteKeyReleased(evt);
-            }
-        });
 
         txtComentario.setColumns(20);
         txtComentario.setRows(5);
+        txtComentario.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Descripción de la cita", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
         jScrollPane1.setViewportView(txtComentario);
 
         txtFecha.setEditable(false);
@@ -155,24 +218,62 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
         txtHora.setToolTipText("");
         txtHora.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Hora de la cita", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaCitasDelDia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "# Cita", "Fecha", "Hora", "Paciente"
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaCitasDelDia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaCitasDelDiaMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TablaCitasDelDia);
 
         txtMedico.setEditable(false);
         txtMedico.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtMedico.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Medico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
         Horas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hora de atención" }));
+        Horas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                HorasItemStateChanged(evt);
+            }
+        });
+
+        txtFechaAtencion.setEditable(false);
+        txtFechaAtencion.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
+        txtFechaAtencion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+
+        txtTiempo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        txtTiempo.setText("AM/PM");
+
+        buttonGroup1.add(rPresente);
+        rPresente.setText("Presente");
+        rPresente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rPresenteActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rAusente);
+        rAusente.setText("Ausente");
+        rAusente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rAusenteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,17 +290,20 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
                             .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)))
+                            .addComponent(jButton1))
                         .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(rPresente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rAusente)
+                                .addGap(6, 6, 6))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -211,28 +315,36 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtExpendiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtFechaAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFechaAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Horas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(96, 96, 96)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtExpendiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtExpendiente, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtFechaAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Horas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtFechaAtencion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCedulaMedic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Horas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(2, 2, 2)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -243,17 +355,19 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
                                 .addComponent(txtCedulaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
+                                .addGap(4, 4, 4)
                                 .addComponent(txtFechaPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(rPresente)
+                                    .addComponent(rAusente))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -279,68 +393,110 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
        arch.guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      JFileChooser seleccionar= new JFileChooser();
-        int selecionador=seleccionar.showOpenDialog(null);
-        if (selecionador==JFileChooser.APPROVE_OPTION){
-            File selecionado= seleccionar.getSelectedFile();
-            this.txtExpendiente.setText(selecionado.getName());
-            arch = new Archivo(selecionado.getAbsolutePath());
-              for (int temp = 0; temp < arch.listaCaracteristicas.getLength(); temp++) {
-                 arch.nodo = arch.listaCaracteristicas.item(temp);
-                if (arch.nodo.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elemento = (Element) arch.nodo;
-                    this.txtCedulaMedic.setText(elemento.getElementsByTagName("CedulaMedico").item(0).getTextContent());
-                    this.txtCedulaPaciente.setText(elemento.getElementsByTagName("CedulaPaciente").item(0).getTextContent());
-                    this.txtEspecialidad.setText(elemento.getElementsByTagName("Especialidad").item(0).getTextContent());
-                    this.txtMedico.setText(elemento.getElementsByTagName("NombreMedico").item(0).getTextContent());
-                    this.txtHora.setText(elemento.getElementsByTagName("HoraDeLaCita").item(0).getTextContent());
-                    this.txtFecha.setText(elemento.getElementsByTagName("FechaDeLaCita").item(0).getTextContent());
-                    this.txtFechaPaciente.setText(elemento.getElementsByTagName("FechaNacimientoPaciente").item(0).getTextContent());
-                    this.txtNombrePaciente.setText(elemento.getElementsByTagName("NombrePaciente").item(0).getTextContent());
-                    this.txtComentario.setText(elemento.getElementsByTagName("Comentario").item(0).getTextContent());
-                }   
-              }
-        }else{
-            JOptionPane.showMessageDialog(null,"No selecciono una ruta para el archivo");
+    private void TablaCitasDelDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCitasDelDiaMouseClicked
+        this.txtCedulaPaciente.setText(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 3)));
+        exp.buscarpaciente(this);
+        String fecha2[]=(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 1))).split("-");
+        this.txtFecha.setText(fecha2[2]+"/"+fecha2[1]+"/"+fecha2[0]);
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==7) {
+            this.txtHora.setText(7+":00 AM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==8) {
+            this.txtHora.setText(8+":00 AM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==9) {
+            this.txtHora.setText(9+":00 AM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==10) {
+            this.txtHora.setText(10+":00 AM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==11) {
+            this.txtHora.setText(11+":00 AM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==12) {
+            this.txtHora.setText(12+":00 MD");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==13) {
+            this.txtHora.setText(13+":00 PM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==14) {
+            this.txtHora.setText(14+":00 PM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==15) {
+            this.txtHora.setText(15+":00 PM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+        if (Integer.parseInt(String.valueOf(this.TablaCitasDelDia.getValueAt(this.TablaCitasDelDia.getSelectedRow(), 2)))==16) {
+            this.txtHora.setText(16+":00 PM");
+            this.rPresente.setVisible(true);
+            this.rAusente.setVisible(true);
+        }
+    }//GEN-LAST:event_TablaCitasDelDiaMouseClicked
+  
+    private void HorasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_HorasItemStateChanged
+         if (this.Horas.getSelectedItem()=="7" | this.Horas.getSelectedItem()=="8" | this.Horas.getSelectedItem()=="9" | this.Horas.getSelectedItem()=="10" | this.Horas.getSelectedItem()=="11") {
+            this.txtTiempo.setText("  AM");
+        }
+        if (this.Horas.getSelectedItem()=="12") {
+            this.txtTiempo.setText("  MD");
+        }
+        if (this.Horas.getSelectedItem()=="13"|this.Horas.getSelectedItem()=="14"|this.Horas.getSelectedItem()=="15"|this.Horas.getSelectedItem()=="16") {
+            this.txtTiempo.setText("  PM");
+        }
+    }//GEN-LAST:event_HorasItemStateChanged
 
-    private void txtEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecialidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEspecialidadActionPerformed
+    private void rPresenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rPresenteActionPerformed
+        if (rPresente.isSelected()) {
+           this.txtComentario.setText("");
+        }
+    }//GEN-LAST:event_rPresenteActionPerformed
 
-    private void txtCedulaMedicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaMedicActionPerformed
-
-    }//GEN-LAST:event_txtCedulaMedicActionPerformed
-
-    private void txtCedulaMedicKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaMedicKeyReleased
- 
-    }//GEN-LAST:event_txtCedulaMedicKeyReleased
-
-    private void txtCedulaPacienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaPacienteKeyReleased
-     
-    }//GEN-LAST:event_txtCedulaPacienteKeyReleased
+    private void rAusenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rAusenteActionPerformed
+        if (rAusente.isSelected()) {
+             this.txtComentario.setText("El paciente no se presentó a la cita");
+        }
+    }//GEN-LAST:event_rAusenteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Horas;
+    private javax.swing.JTable TablaCitasDelDia;
+    public static javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton rAusente;
+    private javax.swing.JRadioButton rPresente;
     private javax.swing.JTextField txtCedulaMedic;
     private javax.swing.JTextField txtCedulaPaciente;
     private javax.swing.JTextArea txtComentario;
     private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JLabel txtExpendiente;
     private javax.swing.JTextField txtFecha;
-    private com.toedter.calendar.JDateChooser txtFechaAtencion;
+    private javax.swing.JTextField txtFechaAtencion;
     private javax.swing.JTextField txtFechaPaciente;
     private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtMedico;
     private javax.swing.JTextField txtNombrePaciente;
+    private javax.swing.JLabel txtTiempo;
     // End of variables declaration//GEN-END:variables
+
 }

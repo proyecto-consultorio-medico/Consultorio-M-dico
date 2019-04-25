@@ -143,7 +143,7 @@ public class Pacientes {
     
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        if (cedula.length()>9) {
+        if (cedula.length()==9||cedula.length()==10) {
             return false;
         }
             return true;
@@ -151,7 +151,7 @@ public class Pacientes {
     }
 public boolean contarDigitostel(){
        this.telefono= telefono.replaceAll("[^0-9]","");
-        if (this.telefono.length()>8) {
+        if (this.telefono.length()==8) {
             return false;
         }
             return true;

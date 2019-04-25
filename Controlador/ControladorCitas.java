@@ -11,6 +11,8 @@ import Modelo.MoCitas;
 import Modelo.Pacientes;
 import Modelo.Secretaria;
 import Vista.Citas;
+import Vista.ExpedienteSensillo;
+import Vista.FrmSesion;
 import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -37,8 +39,9 @@ public class ControladorCitas {
   public void guardarCita(Citas frmcitas){
       int cont;
       int cont2;
+      int cont3;
        Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
-     cita= new MoCitas(0,(String) frmcitas.getHoras().getSelectedItem(),paciente,medico, fecha);
+     cita= new MoCitas(0, Integer.parseInt(frmcitas.getHoras().getSelectedItem().toString()),paciente,medico, fecha);
      cita.getPaciente().setCedula(frmcitas.getTxtCedulaPaciente().getText());
      cita.getMedico().setCedula(frmcitas.getTxtCedulaMedic().getText());
         if (buscarMedico(frmcitas)==true && buscarPaciente(frmcitas)==true) {
@@ -49,21 +52,29 @@ public class ControladorCitas {
             if (cont>=1) {
                 JOptionPane.showMessageDialog(null,"El paciente ya tiene una cita en ese dia y a esa misma hora");
             }else{
-                BD bd3= new BD("Select count(*) from citas join pacientes on citas.Paciente= pacientes.cedula WHERE  Paciente=? and citas.fecha=? and citas.hora!=? and Medico=?");
-             bd3.ejecutar(new Object[]{this.paciente.getCedula(),cita.getFecha(),cita.getHora(), this.medico.getCedula()});
-             obj=bd3.getObject();
-             cont2=Integer.parseInt(obj[0].toString());
-                if(cont2>=1) {
+           BD bd3= new BD("Select count(*) from citas join pacientes on citas.Paciente=pacientes.cedula WHERE  Medico=? and citas.fecha=? and citas.hora=?");
+            bd3.ejecutar(new Object[]{this.medico.getCedula(),this.cita.getFecha(),this.cita.getHora()});
+            obj=bd3.getObject();
+            cont2=Integer.parseInt(obj[0].toString());
+                if (cont2>=1) {
+                    JOptionPane.showMessageDialog(null,"El medico ya tiene una cita a esa hora");
+                }else{
+                BD bd4= new BD("Select count(*) from citas join pacientes on citas.Paciente= pacientes.cedula WHERE  Paciente=? and citas.fecha=? and citas.hora!=? and Medico=?");
+             bd4.ejecutar(new Object[]{this.paciente.getCedula(),cita.getFecha(),cita.getHora(), this.medico.getCedula()});
+             obj=bd4.getObject();
+             cont3=Integer.parseInt(obj[0].toString());
+                if(cont3>=1) {
                     JOptionPane.showMessageDialog(null,"El medico ya atendio ese paciente");
                 }else{
                 BD bd= new BD("INSERT INTO `citas` VALUES (null,?,?,?,?)");
                    bd.ejecutar(new Object[]{cita.getFecha(),cita.getHora(),cita.getPaciente().getCedula(),cita.getMedico().getCedula()});
                 }
-            
+                }
             }
      
         }
     }
+//       
     
     public boolean buscarMedico(Citas frmcitas){
         BD bd = new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?"); 
@@ -103,12 +114,17 @@ public class ControladorCitas {
      
      public boolean limitarCitas(Citas frmcitas){
      int cont;
-     medico= new Medicos();
-     medico.setCedula(frmcitas.getTxtCedulaMedic().getText());
+  
+     cita=new MoCitas();
+     cita.setMedico(medico);
+     cita.getMedico().setCedula(frmcitas.getTxtCedulaMedic().getText());
       Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
-      medico.setFecha(fecha);
-        BD bd= new BD("Select count(*) FROM citas join medicos on citas.Medico = medicos.cedula where medicos.cedula=? and citas.fecha=?");
-           bd.ejecutar(new Object[]{this.medico.getCedula(),this.medico.getFecha()});
+      cita.setFecha(fecha);
+      cita.setHora(Integer.parseInt(frmcitas.getHoras().getSelectedItem().toString()));
+     
+      
+        BD bd= new BD("Select count(*) FROM citas join medicos on citas.Medico = medicos.cedula where medicos.cedula=? and citas.fecha=? and citas.hora=?");
+           bd.ejecutar(new Object[]{this.cita.getMedico().getCedula(),this.cita.getFecha(),this.cita.getHora()});
      obj=bd.getObject();
    cont = Integer.parseInt(obj[0].toString());
      if(cont>=4){
@@ -127,8 +143,8 @@ public class ControladorCitas {
         medico.setCedula(frmcitas.getTxtCedulaMedic().getText());
            bd.ejecutar(new Object[]{medico.getCedula()});
           obj=bd.getObject();
-            this.frmcitas.setTxtNombreMedico((String) obj[0]);
-            this.frmcitas.setTxtEspecialidad((String) obj[1]);
+            frmcitas.setTxtNombreMedico((String) obj[0]);
+            frmcitas.setTxtEspecialidad((String) obj[1]);
      }
      
      public void agregarDatosPaciente(Citas frmcitas){
@@ -137,8 +153,8 @@ public class ControladorCitas {
         paciente.setCedula(frmcitas.getTxtCedulaPaciente().getText());
            bd.ejecutar(new Object[]{paciente.getCedula()});
           obj=bd.getObject();
-          this.frmcitas.setTxtNombrePaciente((String) obj[0]);
-          this.frmcitas.setTxtFechaPaciente((Date) obj[1]);
+          frmcitas.setTxtNombrePaciente((String) obj[0]);
+          frmcitas.setTxtFechaPaciente((Date) obj[1]);
      }
      
      public void buscarTodasLasCitas(Citas frmcitas){
@@ -176,6 +192,8 @@ public class ControladorCitas {
                  
 
      }
+     
+     
      public void eliminar(Citas frmcitas){
      BD bd=new BD("Delete FROM citas where ID=?");
      cita=new MoCitas();
