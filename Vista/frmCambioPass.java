@@ -25,7 +25,7 @@ ControladorUsuarios contr;
     public frmCambioPass() {
         initComponents();
         this.getContentPane().setBackground(new Color(85,151,248));
- contr= new ControladorUsuarios();
+    contr= new ControladorUsuarios();
     this.txtUsuario.setText(Usuarios.txtusuario.getText());
         if (Usuarios.combotipo.getSelectedItem()=="Medico") {
              this.rMedico.setSelected(true);
@@ -146,12 +146,16 @@ ControladorUsuarios contr;
             if (contr.cambioContraSec(this)==true) {
             lblmsj.setVisible(true);
             lblmsj.setForeground(Color.BLUE);
+            }else{
+             lblmsj.setVisible(false);
             }
         }
         if (rMedico.isSelected()) {
             if (contr.cambioContraMedic(this)==true) {
                  lblmsj.setVisible(true);
                  lblmsj.setForeground(Color.BLUE);
+            }else{
+             lblmsj.setVisible(false);
             }
            
         }

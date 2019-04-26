@@ -30,8 +30,7 @@ public class BD{
     private static String usuario;
     private static String pass;
     private static String bd;
-    private ArchivosIniL ini;
-    private ArchivoIniC iniCrear;
+    private ArchivoIniC ini;
     protected String mesaje;
     private String ruta;
 
@@ -83,7 +82,7 @@ public class BD{
     private String conectar(){         
         if (this.conexion==null) {
              try {
-            ini = new ArchivosIniL();
+            ini = new ArchivoIniC();
             ini.leerArchivo(ruta+"\\Configuracion.ini");          
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion= DriverManager.getConnection("jdbc:mysql://"+ini.getProperties().getProperty("IP","default value")+
@@ -201,17 +200,17 @@ public class BD{
       }
       
      public Boolean encender(){
-        this.iniCrear = new ArchivoIniC(this.ruta);
+        this.ini = new ArchivoIniC(this.ruta);
          System.out.println(ruta);
-         this.iniCrear.limpiar();
-         this.iniCrear.escribir("[Configuracion]");
-          this.iniCrear.escribir("BD="+this.bd);
-           this.iniCrear.escribir("IP="+this.ip);
-            this.iniCrear.escribir("Usuario="+this.usuario);
-             this.iniCrear.escribir("Pass="+this.pass);
-             this.iniCrear.escribir("ruta="+this.ruta);
-             this.iniCrear.guardar();
-             this.iniCrear.cerrar();
+         this.ini.limpiar();
+         this.ini.escribir("[Configuracion]");
+          this.ini.escribir("BD="+this.bd);
+           this.ini.escribir("IP="+this.ip);
+            this.ini.escribir("Usuario="+this.usuario);
+             this.ini.escribir("Pass="+this.pass);
+             this.ini.escribir("ruta="+this.ruta);
+             this.ini.guardar();
+             this.ini.cerrar();
              this.conexion=null;
              if (this.conectar()=="Conecto") {
              return true;

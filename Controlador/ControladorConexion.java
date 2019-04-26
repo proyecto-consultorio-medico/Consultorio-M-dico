@@ -14,7 +14,6 @@ import Vista.FrmServidor;
  */
 
 public class ControladorConexion {
-
     private FrmServidor servidor;
 
     public ControladorConexion(FrmServidor servidor) {
@@ -23,7 +22,7 @@ public class ControladorConexion {
 
     public boolean comprobar() {
         BD bd = new BD();
-        return bd.comprobar() == "Encendido";
+        return "Encendido".equals(bd.comprobar());
     }
 
     public boolean conectar() {

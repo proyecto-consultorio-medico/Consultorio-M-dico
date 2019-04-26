@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class Modeloexpediente {
 private Date fecha;

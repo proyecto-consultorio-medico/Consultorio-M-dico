@@ -11,7 +11,6 @@ import Modelo.Medicos;
 import Modelo.MoCitas;
 import Modelo.Modeloexpediente;
 import Modelo.Pacientes;
-import Modelo.Secretaria;
 import Vista.ExpedienteSensillo;
 import Vista.FrmSesion;
 import java.sql.Date;
@@ -20,13 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class ControladorExpendiente {
     private MoCitas citas;
@@ -35,6 +32,7 @@ public class ControladorExpendiente {
     private Modeloexpediente modelo;
     private  Archivo arch;
     private Object []obj;
+    
     public ControladorExpendiente() {
         citas=null;
         medico=null;
@@ -43,10 +41,10 @@ public class ControladorExpendiente {
     
    public void buscarpaciente(ExpedienteSensillo exp) {
         if (!"".equals(exp.getTxtCedulaPaciente().getText())) {
-            pacientes = new Pacientes();
-            pacientes.setCedula(exp.getTxtCedulaPaciente().getText());
+            this.pacientes = new Pacientes();
+            this.pacientes.setCedula(exp.getTxtCedulaPaciente().getText());
             BD bd = new BD("SELECT Nombre,Fecha  FROM `pacientes` WHERE Cedula=?");
-            bd.ejecutar(new Object[]{pacientes.getCedula()});
+            bd.ejecutar(new Object[]{this.pacientes.getCedula()});
             Object[]obj=bd.getObject();
             exp.setTxtNombrePaciente(obj[0].toString());
             SimpleDateFormat fechas=new SimpleDateFormat("dd/MM/yyyy");
@@ -58,7 +56,7 @@ public class ControladorExpendiente {
        BD bd = new BD("SELECT `NombreCompleto`,`Cedula`,`Especialidad` FROM `medicos` WHERE Usuario=?" );
        this.medico=new Medicos();
           this.medico.setUsuario(frmsesion.getTxtUsuario().getText());
-          bd.ejecutar(new Object[]{medico.getUsuario()});
+          bd.ejecutar(new Object[]{this.medico.getUsuario()});
          Object[] obj=bd.getObject();
           exp.setTxtMedico(obj[0].toString());
           exp.setTxtEspecialidad(obj[2].toString());
@@ -67,15 +65,15 @@ public class ControladorExpendiente {
    
    public void buscarFecha(FrmSesion frmsesion,ExpedienteSensillo exp){
          BD bd=new BD("SELECT Cedula FROM `medicos` WHERE Usuario=?");
-         medico=new Medicos();
-            medico.setUsuario(frmsesion.getTxtUsuario().getText());
-         bd.ejecutar(new Object[]{medico.getUsuario()});
-            Object[] obj = bd.getObject();
+         this.medico=new Medicos();
+            this.medico.setUsuario(frmsesion.getTxtUsuario().getText());
+         bd.ejecutar(new Object[]{this.medico.getUsuario()});
+            this.obj = bd.getObject();
          BD bd2=new BD("SELECT ID,Fecha,Hora,Paciente FROM `citas`  WHERE Medico=? and Fecha=? order by Hora");
                    Date fecha = new Date(frmsesion.getTxtFechaAtencion().getDate().getTime());
                    this.citas=new MoCitas();
               this.citas.setFecha(fecha);
-         bd2.ejecutar(new Object[]{obj[0],citas.getFecha()});
+         bd2.ejecutar(new Object[]{this.obj[0],this.citas.getFecha()});
          Object obj2[];
          DefaultTableModel modelo = (DefaultTableModel) exp.getTablaCitasDelDia().getModel();
          modelo.setNumRows(0);
@@ -93,15 +91,15 @@ public class ControladorExpendiente {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             java.util.Date utilDate = formato.parse(exp.getTxtFechaAtencion().getText());
             java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
-             pacientes=new Pacientes();
-             modelo=new Modeloexpediente();
-             modelo.setFecha(fecha);
-             modelo.setPaciente(pacientes);
-             modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
-             modelo.setHora(exp.getTxtHora().getText());
-             bd.ejecutar(new Object[]{modelo.getFecha(),modelo.getPaciente().getCedula(),modelo.getHora()});
-             obj=bd.getObject();
-             cont=Integer.parseInt(obj[0].toString());
+             this.pacientes=new Pacientes();
+             this.modelo=new Modeloexpediente();
+             this.modelo.setFecha(fecha);
+             this.modelo.setPaciente(pacientes);
+             this.modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
+             this.modelo.setHora(exp.getTxtHora().getText());
+             bd.ejecutar(new Object[]{this.modelo.getFecha(),this.modelo.getPaciente().getCedula(),this.modelo.getHora()});
+             this.obj=bd.getObject();
+             cont=Integer.parseInt(this.obj[0].toString());
              if (cont>=1) {
                 return false;
             }else{
@@ -122,15 +120,12 @@ public class ControladorExpendiente {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
            java.util.Date utilDate = formato.parse(exp.getTxtFechaAtencion().getText());
            java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
-            System.out.println(fecha);
-            medico=new Medicos();
-            pacientes=new Pacientes();
-            modelo = new Modeloexpediente(fecha, exp.getTxtHora().getText(), medico, pacientes,exp.getTxtComentario().getText());
-            System.out.println(exp.getTxtCedulaMedic().getText());
-            modelo.getMedico().setCedula(exp.getTxtCedulaMedic().getText());
-            System.out.println(modelo.getMedico().getCedula());
-            modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
-            bd.ejecutar(new Object[]{modelo.getFecha(),modelo.getHora(),modelo.getMedico().getCedula(),modelo.getPaciente().getCedula(),modelo.getDescripcion()});
+            this.medico=new Medicos();
+            this.pacientes=new Pacientes();
+            this.modelo = new Modeloexpediente(fecha, exp.getTxtHora().getText(), medico, pacientes,exp.getTxtComentario().getText());
+            this.modelo.getMedico().setCedula(exp.getTxtCedulaMedic().getText());
+            this.modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
+            bd.ejecutar(new Object[]{this.modelo.getFecha(),this.modelo.getHora(),this.modelo.getMedico().getCedula(),this.modelo.getPaciente().getCedula(),this.modelo.getDescripcion()});
         } catch (ParseException ex) {
             Logger.getLogger(ControladorExpendiente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -144,43 +139,43 @@ public class ControladorExpendiente {
    this.modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
    bd.ejecutar(new Object[]{this.modelo.getPaciente().getCedula()});
                  String[]fecha=exp.getTxtFechaAtencion().getText().split("/");
-   arch = new Archivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Citas"+"\\"+this.modelo.getPaciente().getCedula()+"["+fecha[0]+"-"+fecha[1]+"-"+fecha[2]+"]"+".xml");
-    arch.limpiar(); 
-arch.escribir("<Expediente>");
+   this.arch = new Archivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Citas"+"\\"+this.modelo.getPaciente().getCedula()+"["+fecha[0]+"-"+fecha[1]+"-"+fecha[2]+"]"+".xml");
+    this.arch.limpiar(); 
+this.arch.escribir("<Expediente>");
   do {
-     obj=bd.getObject();
-           if (obj!=null) {
-         arch.escribir("<Cita>");
-       arch.escribir("<FechaDeLaCita>"+obj[0].toString()+"</FechaDeLaCita>");
-       arch.escribir("<HoraDeLaCita>"+obj[1].toString()+"</HoraDeLaCita>");
-       arch.escribir("<CedulaMedico>"+obj[2].toString()+"</CedulaMedico>");
-       arch.escribir("<NombreMedico>"+obj[3].toString()+"</NombreMedico>");
-       arch.escribir("<Especialidad>"+obj[4].toString()+"</Especialidad>");
-       arch.escribir("<CedulaPaciente>"+obj[5].toString()+"</CedulaPaciente>");
-       arch.escribir("<NombrePaciente>"+obj[6].toString()+"</NombrePaciente>");
-       arch.escribir("<FechaNacimientoPaciente>"+obj[7].toString()+"</FechaNacimientoPaciente>");
-       arch.escribir("<Comentario>"+obj[8].toString()+"</Comentario>");
-       arch.escribir("</Cita>");
+     this.obj=bd.getObject();
+           if (this.obj!=null) {
+       this.arch.escribir("<Cita>");
+       this.arch.escribir("<FechaDeLaCita>"+this.obj[0].toString()+"</FechaDeLaCita>");
+       this.arch.escribir("<HoraDeLaCita>"+this.obj[1].toString()+"</HoraDeLaCita>");
+       this.arch.escribir("<CedulaMedico>"+this.obj[2].toString()+"</CedulaMedico>");
+       this.arch.escribir("<NombreMedico>"+this.obj[3].toString()+"</NombreMedico>");
+       this.arch.escribir("<Especialidad>"+this.obj[4].toString()+"</Especialidad>");
+       this.arch.escribir("<CedulaPaciente>"+this.obj[5].toString()+"</CedulaPaciente>");
+       this.arch.escribir("<NombrePaciente>"+this.obj[6].toString()+"</NombrePaciente>");
+       this.arch.escribir("<FechaNacimientoPaciente>"+this.obj[7].toString()+"</FechaNacimientoPaciente>");
+       this.arch.escribir("<Comentario>"+this.obj[8].toString()+"</Comentario>");
+       this.arch.escribir("</Cita>");
     
            }
-       } while (obj!=null);
-  arch.escribir("</Expediente>");
-      arch.guardar(); 
+       } while (this.obj!=null);
+  this.arch.escribir("</Expediente>");
+      this.arch.guardar(); 
    }
    
    public void buscarObservaciones(ExpedienteSensillo exp){
        BD bd= new BD("SELECT Fecha,Descripcion FROM `expediente` WHERE Paciente=?");
        this.modelo=new Modeloexpediente();
        this.pacientes=new Pacientes();
-       this.modelo.setPaciente(pacientes);
+       this.modelo.setPaciente(this.pacientes);
        this.modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
        bd.ejecutar(new Object[]{this.modelo.getPaciente().getCedula()});
           DefaultTableModel modelo = (DefaultTableModel) exp.getTablaObser().getModel();
          modelo.setNumRows(0);
          do {
-              obj=bd.getObject();
+              this.obj=bd.getObject();
              if (obj!=null) {
-              modelo.addRow(obj);
+              modelo.addRow(this.obj);
              }
        } while (obj!=null);
    }
@@ -193,7 +188,7 @@ arch.escribir("<Expediente>");
             java.sql.Date fecha = new java.sql.Date(utilDate.getTime());
             this.medico=new Medicos();
             this.pacientes=new Pacientes();
-            this.modelo=new Modeloexpediente(fecha, exp.getTxtHora().getText(), medico, pacientes, exp.getTxtComentario().getText());
+            this.modelo=new Modeloexpediente(fecha, exp.getTxtHora().getText(), this.medico, this.pacientes, exp.getTxtComentario().getText());
             this.modelo.getMedico().setCedula(exp.getTxtCedulaMedic().getText());
             this.modelo.getPaciente().setCedula(exp.getTxtCedulaPaciente().getText());
             bd.ejecutar(new Object[]{this.modelo.getDescripcion(),this.modelo.getMedico().getCedula(),this.modelo.getFecha(),this.modelo.getHora(),this.modelo.getPaciente().getCedula()});

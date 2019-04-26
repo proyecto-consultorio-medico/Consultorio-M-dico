@@ -9,10 +9,7 @@ import Modelo.BD;
 import Modelo.Medicos;
 import Modelo.MoCitas;
 import Modelo.Pacientes;
-import Modelo.Secretaria;
 import Vista.Citas;
-import Vista.ExpedienteSensillo;
-import Vista.FrmSesion;
 import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -144,12 +141,10 @@ public class ControladorCitas {
                   modelo.setNumRows(0);
              do {
                  obj = bd.getObject();
-            if (obj != null) {
-                
+            if (obj != null) {      
                 modelo.addRow(obj);
             }
-        } while (obj!=null);
-      
+        } while (obj!=null);   
      }
      
      public void buscarCitaPorFecha(Citas frmcitas){
@@ -159,8 +154,7 @@ public class ControladorCitas {
         cita.setFecha(fecha);
         bd.ejecutar(new Object[]{cita.getFecha()});
          DefaultTableModel modelo = (DefaultTableModel) frmcitas.getTablaCitas().getModel();
-         modelo.setNumRows(0);
-       
+         modelo.setNumRows(0);     
        do {
                  obj = bd.getObject();
             if (obj != null) {
@@ -168,11 +162,7 @@ public class ControladorCitas {
                 modelo.addRow(obj);
             }
         } while (obj!=null);
-       
-                 
-
      }
-     
      
      public void eliminar(Citas frmcitas){
      BD bd=new BD("Delete FROM citas where ID=?");
@@ -181,4 +171,7 @@ public class ControladorCitas {
      bd.ejecutar(new Object[]{cita.getID()});
      }
   
+     public void actualizarCita(){
+     BD bd= new BD();
+     }
 }

@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author kille
+ * @author Jose,Marco,Yuliana,Elver
  */
 public class Archivo {
     private String nombre;
@@ -35,7 +35,6 @@ public class Archivo {
     public  NodeList listaCaracteristicas;
     protected  NodeList textos;
     public  Node nodo ;
-    private String rutacompleta;
     public String getNombre() {
         return nombre;
     }
@@ -59,19 +58,7 @@ public class Archivo {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    /**
-     * 
-     * @param nombre
-     * @param ruta
-     * @param tipo 
-     */
-//    public Archivo(String nombre, String ruta, String tipo) {
-//        this.nombre = nombre;
-//        this.ruta = ruta;
-//        this.tipo = tipo;
-//        this.abrir();
-//    }
-//   
+
        public Archivo(String ruta) {
        
         this.ruta = ruta;
@@ -79,20 +66,6 @@ public class Archivo {
         this.abrir();
     }
    
-//       public void abrirXML(){
-//        try {
-//            archivo= new File(this.ruta);
-//        if (!existe()) {
-//            this.crear();
-//        }
-//            
-//           
-//            
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        
-//    }
     public void abrir(){
         try {
             archivo= new File(ruta);
@@ -116,7 +89,6 @@ public class Archivo {
             escribir("</Expediente>");
             guardar();     
         }
-//         this.ruta=this.ruta+"\\"+this.nombre+this.tipo;
           DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder construdocumenento = dbf.newDocumentBuilder();
             Document documento = construdocumenento.parse(archivo);

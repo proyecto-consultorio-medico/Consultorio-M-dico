@@ -9,7 +9,6 @@ import Controlador.ControladorUsuarios;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -19,8 +18,7 @@ import javax.swing.JTextField;
  */
 public class Usuarios extends javax.swing.JInternalFrame {
     private ControladorUsuarios cusuarios;
-    private String txtespe;
-    private String txtTipo;
+   
     
     public JComboBox<String> getComboespe() {
         return comboespe;
@@ -80,14 +78,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
         return txtSalario;
     }
 
-    public String getTxtespe() {
-        return txtespe;
-    }
-
-    public String getTxtTipo() {
-        return txtTipo;
-    }
-   
+  
    
     public Usuarios() {
         initComponents();
@@ -150,14 +141,14 @@ public class Usuarios extends javax.swing.JInternalFrame {
 
         txtcedula.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtcedula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Numero de cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtcedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtcedulaKeyReleased(evt);
+            }
+        });
 
         txtTelefono.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
         txtTelefono.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Numero de telefono", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
-            }
-        });
 
         combotipo.setBackground(new java.awt.Color(255, 255, 255));
         combotipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de usuario" }));
@@ -355,7 +346,17 @@ public class Usuarios extends javax.swing.JInternalFrame {
        this.txtcontra.setText(null);
        this.txtcorreo.setText(null);
        this.txtusuario.setText(null);
-       txtSalarioNeto.setText(null);
+       this.txtSalarioNeto.setText(null);
+       this.txtFecha.setDate(null);
+       this.txtSalario.setText(null);
+       this.txtCondigo.setText(null);
+       this.combotipo.setSelectedIndex(0);
+        if (this.combotipo.getSelectedItem()=="Tipo de usuario") {
+                 txtSalario.setVisible(false);
+             txtCondigo.setVisible(false);
+               comboespe.setVisible(false);
+                txtSalarioNeto.setVisible(false);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -372,8 +373,7 @@ public class Usuarios extends javax.swing.JInternalFrame {
             comboespe.addItem("Neurología");
             comboespe.addItem("Cardiología");
             comboespe.addItem("Cirugía General");
-            comboespe.addItem("Ginecología");
-            
+            comboespe.addItem("Ginecología");        
         }
 
     private void combotipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combotipoItemStateChanged
@@ -393,7 +393,8 @@ public class Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_combotipoItemStateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (cusuarios.buscarCitaMedico(this)==false) {
+        if (combotipo.getSelectedItem()=="Medico") {
+               if (cusuarios.buscarCitaMedico(this)==false) {
             if (cusuarios.contarUsuariosDeMedico(this)==true) {
                 if (cusuarios.eliminar(this)==true) {
             JOptionPane.showMessageDialog(null, "Se elimino el usuario de la base de datos");
@@ -406,8 +407,10 @@ public class Usuarios extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(null, "El medico no puede ser eliminado por que tiene una o mas citas que antender");
         }
-
-        if (cusuarios.contarUsuariosDeSecre(this)==true) {
+        }
+     
+        if (combotipo.getSelectedItem()=="Secretaria") {
+             if (cusuarios.contarUsuariosDeSecre(this)==true) {
             if (cusuarios.eliminar(this)==true) {
                 JOptionPane.showMessageDialog(null, "Se elimino el usuario de la base de datos");
             }else{
@@ -416,11 +419,10 @@ public class Usuarios extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(null, "No se puede eliminar usuario por que no hay nada para eliminar");
         }
+        }
+
+       
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-
-    }//GEN-LAST:event_txtTelefonoActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
       frmCambioPass cambio= new frmCambioPass();
@@ -438,13 +440,33 @@ public class Usuarios extends javax.swing.JInternalFrame {
         if (cusuarios.comprobarUs(this)==true) {
             txtmensaje.setForeground(Color.GREEN);
         }else{
-      txtmensaje.setForeground(new Color(153,51,0));
+            txtmensaje.setForeground(new Color(153,51,0));
     }
     }//GEN-LAST:event_txtusuarioKeyReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
      cusuarios.actualizar(this);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtcedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcedulaKeyReleased
+        if (combotipo.getSelectedItem()=="Medico") {
+            if (cusuarios.buscarCedulas(this)==true) {
+           
+            txtcedula.setForeground(new Color(153,51,0));
+        }else{
+               
+         txtcedula.setForeground(Color.green);
+        } 
+        }
+         if (combotipo.getSelectedItem()=="Secretaria") {
+                if (cusuarios.buscarCedulas(this)==true) {
+                       txtcedula.setForeground(new Color(153,51,0));
+             }else{
+                      txtcedula.setForeground(Color.green);
+        } 
+            }
+
+    }//GEN-LAST:event_txtcedulaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

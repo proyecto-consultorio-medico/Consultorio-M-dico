@@ -19,9 +19,6 @@ public class Secretaria {
         private String telefono;
          private String usuario;
           private String pass;
-           private int año;
-            private int mes;
-             private int dia;
 
     public String getNombre() {
         return nombre;
@@ -51,17 +48,6 @@ public class Secretaria {
         return pass;
     }
 
-    public int getAño() {
-        return año;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public int getDia() {
-        return dia;
-    }
 
     public void setCedula(String cedula) {
         this.cedula = cedula;
@@ -103,18 +89,12 @@ public class Secretaria {
  
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        if (cedula.length()==9||cedula.length()==10) {
-          return true;  
-        }
-            
-        return false;
+        return cedula.length()==9||cedula.length()==10;
     }
+    
 public boolean contarDigitostel(){
        this.telefono= telefono.replaceAll("[^0-9]","");
-        if (this.telefono.length()==8) {
-      return true;
-        }
-                  return false;
+                  return this.telefono.length()==8;
     }
 
 public void ponerMayusculas(){

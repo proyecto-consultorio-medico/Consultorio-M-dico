@@ -186,20 +186,12 @@ public class Medicos {
 
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        if (cedula.length()==9||cedula.length()==10) {
-       return true;
-        }
-           
-                  return false;
-        
+                  return cedula.length()==9||cedula.length()==10;   
     }
+    
 public boolean contarDigitostel(){
        this.telefono= telefono.replaceAll("[^0-9]","");
-        if (this.telefono.length()==8) {
-           
-             return true;
-        }
-            return false;
+            return this.telefono.length()==8;
     }
 
 public void ponerMayusculas(){

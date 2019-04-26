@@ -8,11 +8,14 @@ package Modelo;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,8 +28,7 @@ public class ArchivoIniC {
     private File archivo;
     private BufferedReader lector;
     private BufferedWriter escritor;
-    private ArchivosIniL inileer;
-    
+       private Properties Parametro;
     public String getNombre() {
         return nombre;
     }
@@ -50,13 +52,18 @@ public class ArchivoIniC {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-   
+    public Properties getProperties() {
+        return Parametro;
+    }
        public ArchivoIniC(String ruta){
          this.nombre="Configuracion";
          this.ruta=ruta;
          this.tipo=".ini";
           this.abrirIni();
        }
+
+    public ArchivoIniC() {
+    }
      
    
        public void abrirIni(){
@@ -135,11 +142,6 @@ public void borrar(){
     archivo.delete();
 }
 
-
-public void cambiarNombre(String nombre){
-File nuevoArchivo=new File(nombre);
-this.archivo.renameTo(nuevoArchivo);
-}
 public void limpiar(){
         try {
             escritor= new BufferedWriter(new FileWriter(archivo,false));
@@ -147,4 +149,17 @@ public void limpiar(){
             Logger.getLogger(ArchivoIniC.class.getName()).log(Level.SEVERE, null, ex);
         }
 }
+
+    public void leerArchivo(String ruta){
+    this.Parametro= new Properties();
+        try {
+            Parametro.load(new FileReader(ruta));
+            
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo encontrar el archivo ini");
+        } catch (IOException ex) {
+           JOptionPane.showMessageDialog(null, "No se pudo leer el archivo");
+        }
+    }
+    
 }

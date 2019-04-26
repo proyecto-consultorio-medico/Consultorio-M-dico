@@ -8,10 +8,7 @@ package Vista;
 import Controlador.ControladorPacientes;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -271,7 +268,7 @@ public class FrmPacientes extends javax.swing.JInternalFrame{
         this.txtcedula.setText(null);
         this.txtTelefono.setText(null);
         this.txtcorreo.setText(null);
-
+        this.txtFecha.setDate(null);
         this.txtedad.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -9,22 +9,11 @@ import Controlador.ControladorCitas;
 import Controlador.ControladorExpendiente;
 import Modelo.Archivo;
 import java.awt.Color;
-import java.io.File;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 /**
  *
  * @author Jose,Marco,Yuliana,Elver

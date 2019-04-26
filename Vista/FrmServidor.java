@@ -6,7 +6,7 @@
 package Vista;
 
 import Controlador.ControladorConexion;
-import Modelo.ArchivosIniL;
+import Modelo.ArchivoIniC;
 import java.awt.Color;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -44,7 +44,7 @@ public class FrmServidor extends javax.swing.JInternalFrame {
     public FrmServidor() {
         initComponents();
               this.getContentPane().setBackground(new Color(85,151,248));
-            ArchivosIniL ini= new ArchivosIniL();
+            ArchivoIniC ini= new ArchivoIniC();
             ini.leerArchivo("C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Configuracion.ini");
            conexion = new ControladorConexion(this);
            txtIP.setText(ini.getProperties().getProperty("IP","default value"));
@@ -52,7 +52,6 @@ public class FrmServidor extends javax.swing.JInternalFrame {
            txtUsu.setText(ini.getProperties().getProperty("Usuario","default value"));
            txtbd.setText(ini.getProperties().getProperty("BD","default value"));
            txtRuta.setText(ini.getProperties().getProperty("ruta","default value"));
-           
     }
 
     /**

@@ -23,10 +23,7 @@ public class Pacientes {
     private Date fecha;
     private String telefono;
     private String correo;
-    private int año;
-    private int mes;
-    private int dia;
-      String fechas;
+    
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
@@ -71,19 +68,6 @@ public class Pacientes {
         return correo;
     }
 
-    public int getAño() {
-        return año;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public int getDia() {
-        return dia;
-    }
-    
-    
     public Pacientes(String cedula, String nombreCompleto, String telefono, String correo,Date fecha) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
@@ -96,8 +80,7 @@ public class Pacientes {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
-        
-          this.fecha=fecha;
+        this.fecha=fecha;
     }
 
     public Pacientes(String cedula, String nombreCompleto,Date fecha) {
@@ -111,26 +94,13 @@ public class Pacientes {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
           this.fecha=null;
-          this.año=0;
-          this.mes=1;
-          this.dia=0;
     }
    
 
 
     public String calcularedad(Date fecha) {
         if (fecha!=null) {
-        
-            if (mes<10) {
-              fechas=this.dia+"/"+"0"+this.mes+"/"+this.año;
-            }
-                if (dia<10) {
-                     fechas="0"+this.dia+"/"+this.mes+"/"+this.año;
-                }
-                 if (dia<10&&mes<10) {
-                         fechas="0"+this.dia+"/"+"0"+this.mes+"/"+this.año;
-                    }  
-                 SimpleDateFormat fechas= new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat fechas= new SimpleDateFormat("yyyy/MM/dd");
             String fechaString=fechas.format(fecha);
             DateTimeFormatter calendario = DateTimeFormatter.ofPattern("yyyy/MM/dd");
             LocalDate fechaNac = LocalDate.parse(fechaString, calendario);
@@ -143,19 +113,14 @@ public class Pacientes {
     
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
-        if (cedula.length()==9||cedula.length()==10) {
-                       return true;
-        }
- return false;
+ return cedula.length()==9||cedula.length()==10;
         
     }
 public boolean contarDigitostel(){
        this.telefono= telefono.replaceAll("[^0-9]","");
-        if (this.telefono.length()==8) {
-         return true;
-        }
-               return false;
+               return this.telefono.length()==8;
     }
+
 public void ponerMayusculas(){
         String nombreConLasMayusculas = "";
         for (String palabra : this.nombreCompleto.split(" ")) {
