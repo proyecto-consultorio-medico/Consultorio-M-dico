@@ -52,13 +52,6 @@ public class ControladorCitas {
             if (cont>=1) {
                 JOptionPane.showMessageDialog(null,"El paciente ya tiene una cita en ese dia y a esa misma hora");
             }else{
-           BD bd3= new BD("Select count(*) from citas join pacientes on citas.Paciente=pacientes.cedula WHERE  Medico=? and citas.fecha=? and citas.hora=?");
-            bd3.ejecutar(new Object[]{this.medico.getCedula(),this.cita.getFecha(),this.cita.getHora()});
-            obj=bd3.getObject();
-            cont2=Integer.parseInt(obj[0].toString());
-                if (cont2>=1) {
-                    JOptionPane.showMessageDialog(null,"El medico ya tiene una cita a esa hora");
-                }else{
                 BD bd4= new BD("Select count(*) from citas join pacientes on citas.Paciente= pacientes.cedula WHERE  Paciente=? and citas.fecha=? and citas.hora!=? and Medico=?");
              bd4.ejecutar(new Object[]{this.paciente.getCedula(),cita.getFecha(),cita.getHora(), this.medico.getCedula()});
              obj=bd4.getObject();
@@ -69,12 +62,11 @@ public class ControladorCitas {
                 BD bd= new BD("INSERT INTO `citas` VALUES (null,?,?,?,?)");
                    bd.ejecutar(new Object[]{cita.getFecha(),cita.getHora(),cita.getPaciente().getCedula(),cita.getMedico().getCedula()});
                 }
-                }
+                
             }
      
         }
-    }
-//       
+    } 
     
     public boolean buscarMedico(Citas frmcitas){
         BD bd = new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?"); 
@@ -128,7 +120,7 @@ public class ControladorCitas {
      obj=bd.getObject();
    cont = Integer.parseInt(obj[0].toString());
      if(cont>=4){
-         System.out.println("Cantidad máxima de citas alcanzada!");
+       JOptionPane.showMessageDialog(null, "Cantidad máxima de citas alcanzada!");
          return false;
         
      }else{

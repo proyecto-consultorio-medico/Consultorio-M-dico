@@ -7,8 +7,7 @@ package Controlador;
 
 import Modelo.BD;
 import Modelo.Medicos;
-import Modelo.Secretaria;
-import Vista.ExpedienteSensillo;
+import Modelo.Secretaria; 
 import Vista.FrmBuscarUsuario;
 import Vista.FrmSesion;
 import Vista.Usuarios;

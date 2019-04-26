@@ -104,17 +104,17 @@ public class Secretaria {
     public boolean contarDigitosCedu(){
         this.cedula = cedula.replaceAll("[^0-9]","");
         if (cedula.length()==9||cedula.length()==10) {
-            return false;
+          return true;  
         }
-            return true;
-        
+            
+        return false;
     }
 public boolean contarDigitostel(){
        this.telefono= telefono.replaceAll("[^0-9]","");
         if (this.telefono.length()==8) {
-            return false;
+      return true;
         }
-            return true;
+                  return false;
     }
 
 public void ponerMayusculas(){

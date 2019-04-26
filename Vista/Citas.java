@@ -436,15 +436,7 @@ public class Citas extends javax.swing.JInternalFrame implements Runnable{
 public synchronized void enviar(){
        if (cCitas.limitarCitas(this)==true) {
               SimpleDateFormat fecha= new SimpleDateFormat("dd-MM-yyyy");
-    String fechas= fecha.format(this.txtFecha.getDate().getTime());
-    String hora=(String) this.horas.getSelectedItem();
-            arch = new Archivo(this.txtCedulaPaciente.getText()+"["+fechas+"]"+"{"+hora+"}","C:\\Users\\kille\\Documents\\NetBeansProjects\\Consultorio Medico\\Citas",".xml");
-        for (int temp = 0; temp < arch.listaCaracteristicas.getLength(); temp++) {
-                 arch.nodo = arch.listaCaracteristicas.item(temp);
-                if (arch.nodo.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elemento = (Element) arch.nodo;
-                }
-                     }
+   
         this.guardar();
         notify();
         }
@@ -497,19 +489,7 @@ private void guardar(){
     SimpleDateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
     String fechas= fecha.format(this.txtFecha.getDate().getTime());
     String hora=(String) this.horas.getSelectedItem();
-arch.limpiar();
-        arch.escribir("<Cita>");
-        arch.escribir("<FechaDeLaCita>"+fechas+"</FechaDeLaCita>");
-        arch.escribir("<HoraDeLaCita>"+hora+"</HoraDeLaCita>");
-        arch.escribir("<CedulaMedico>"+this.txtCedulaMedic.getText()+"</CedulaMedico>");
-        arch.escribir("<NombreMedico>"+this.txtNombreMedico.getText()+"</NombreMedico>");
-        arch.escribir("<Especialidad>"+this.txtEspecialidad.getText()+"</Especialidad>");
-        arch.escribir("<CedulaPaciente>"+this.txtCedulaPaciente.getText()+"</CedulaPaciente>");
-        arch.escribir("<NombrePaciente>"+this.txtNombrePaciente.getText()+"</NombrePaciente>");
-        arch.escribir("<FechaNacimientoPaciente>"+this.txtFechaPaciente.getText()+"</FechaNacimientoPaciente>");
-        arch.escribir("<Comentario>"+"</Comentario>");
-        arch.escribir("</Cita>");
-        arch.guardar();
+
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaCitas;

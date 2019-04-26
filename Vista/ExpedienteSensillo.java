@@ -254,7 +254,7 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
 
         txtFechaAtencion.setEditable(false);
         txtFechaAtencion.setFont(new java.awt.Font("Lucida Calligraphy", 0, 12)); // NOI18N
-        txtFechaAtencion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
+        txtFechaAtencion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fecha de atencion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
         txtTiempo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         txtTiempo.setText("AM/PM");
@@ -345,7 +345,6 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
                                     .addComponent(txtTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Horas, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(2, 2, 2)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -378,19 +377,8 @@ public class ExpedienteSensillo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       arch.limpiar();
-       arch.escribir("<Cita>");
-       arch.escribir("<FechaDeLaCita>"+this.txtFecha.getText()+"</FechaDeLaCita>");
-       arch.escribir("<HoraDeLaCita>"+this.txtHora.getText()+"</HoraDeLaCita>");
-       arch.escribir("<CedulaMedico>"+this.txtCedulaMedic.getText()+"</CedulaMedico>");
-       arch.escribir("<NombreMedico>"+this.txtMedico.getText()+"</NombreMedico>");
-       arch.escribir("<Especialidad>"+this.txtEspecialidad.getText()+"</Especialidad>");
-       arch.escribir("<CedulaPaciente>"+this.txtCedulaPaciente.getText()+"</CedulaPaciente>");
-       arch.escribir("<NombrePaciente>"+this.txtNombrePaciente.getText()+"</NombrePaciente>");
-       arch.escribir("<FechaNacimientoPaciente>"+this.txtFechaPaciente.getText()+"</FechaNacimientoPaciente>");
-       arch.escribir("<Comentario>"+this.txtComentario.getText()+"</Comentario>");
-       arch.escribir("</Cita>");
-       arch.guardar();
+      exp.exportarDatos(this);
+      exp.exportarXML(this);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void TablaCitasDelDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCitasDelDiaMouseClicked

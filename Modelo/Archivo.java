@@ -177,18 +177,6 @@ public void borrar(){
     archivo.delete();
 }
 
-public void guardarComo(String nombre,String ruta,String tipo,String lectura,int tamanio,String color,String color2,String fuente){
-   Archivo archivo= new Archivo(nombre,ruta,tipo);
-   archivo.limpiar();
-   archivo.escribir("<Caracteristicas>");
-   archivo.escribir("<Tamanio>"+tamanio+"</Tamanio>");
-   archivo.escribir("<Colorletra>"+color+"</Colorletra>");
-   archivo.escribir("<ColorFondo>"+color2+"</ColorFondo>");
-   archivo.escribir("<Fuente>"+fuente+"</Fuente>");
-   archivo.escribir("<Texto>"+lectura+"</Texto>");
-   archivo.escribir("</Caracteristicas>");
-   archivo.guardar();
-}
 
 public void cambiarNombre(String nombre){
 File nuevoArchivo=new File(nombre);
