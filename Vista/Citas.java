@@ -315,7 +315,8 @@ public class Citas extends javax.swing.JInternalFrame implements Runnable{
 
         txtFecha2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Buscar cita por fecha", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Calligraphy", 0, 12))); // NOI18N
 
-        jButton4.setText("jButton4");
+        jButton4.setBackground(new java.awt.Color(255, 255, 255));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/57477.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -394,7 +395,7 @@ public class Citas extends javax.swing.JInternalFrame implements Runnable{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
 
         pack();
@@ -435,9 +436,6 @@ public class Citas extends javax.swing.JInternalFrame implements Runnable{
     }//GEN-LAST:event_jButton1ActionPerformed
 public synchronized void enviar(){
        if (cCitas.limitarCitas(this)==true) {
-              SimpleDateFormat fecha= new SimpleDateFormat("dd-MM-yyyy");
-   
-        this.guardar();
         notify();
         }
 }
@@ -485,12 +483,6 @@ public synchronized void eliminar(){
         }
     }//GEN-LAST:event_horasItemStateChanged
 
-private void guardar(){
-    SimpleDateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
-    String fechas= fecha.format(this.txtFecha.getDate().getTime());
-    String hora=(String) this.horas.getSelectedItem();
-
-}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaCitas;
     private javax.swing.JButton btneliminar;

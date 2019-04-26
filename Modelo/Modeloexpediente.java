@@ -26,12 +26,20 @@ this.paciente=paciente;
 this.descripcion=descripcion;
 }
 
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
     public void setMedico(Medicos medico) {
         this.medico = medico;
     }
 
     public void setPaciente(Pacientes paciente) {
         this.paciente = paciente;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public Modeloexpediente() {

@@ -28,7 +28,11 @@ public class ControladorUsuarios {
         this.secretaria = null;
         this.medico= null;
     }
-    
+    /**
+     * Metodo que agrega usuario segun su tipo(medico o secretaria)
+     * @param frmUsuarios
+     * @return retorna un estado booleano
+     */
     public boolean agregar(Usuarios frmUsuarios){
         if (!"".equals(frmUsuarios.getTxtcedula().getText())) {
              if ("Secretaria".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
@@ -102,7 +106,11 @@ public class ControladorUsuarios {
         
          return false;
     }
-    
+    /**
+     * comprueba el usuario si existe o no para que el usuario se entere de ello
+     * @param frmUsuarios
+     * @return retorna un estado booleano
+     */
     public boolean comprobarUs(Usuarios frmUsuarios){
         if ("Secretaria".equals(frmUsuarios.getCombotipo().getSelectedItem())) {
               this.secretaria= new Secretaria();
@@ -124,6 +132,12 @@ public class ControladorUsuarios {
             frmUsuarios.setTxtmensaje("El usuario esta disponible");
         return true;
     }
+    
+    /**
+     * comprueba si el usuario de la secretaria si no existe en la base de datos para poder ser guardarlo en la base de datos
+     * @param frmUsuarios
+     * @return retorna un estado booleano
+     */
     public boolean comprobarUsuarioSecre(Usuarios frmUsuarios){
        this.secretaria= new Secretaria();
        secretaria.setUsuario(frmUsuarios.getTxtusuario().getText());
@@ -140,7 +154,11 @@ public class ControladorUsuarios {
         return true;
         
     }
-    
+    /**
+     * comprueba si el usuario del medico si no existe en la base de datos para poder ser agregado a la base de datos
+     * @param frmUsuarios
+     * @return 
+     */
     public boolean comprobarUsuarioMedic(Usuarios frmUsuarios){
         this.medico=new Medicos();
         this.medico.setUsuario(frmUsuarios.getTxtusuario().getText());
@@ -156,6 +174,10 @@ public class ControladorUsuarios {
         }
         return true;
     }
+    /**
+     * comprueba si no existe la cedula de la secretaria en la base datos para poder ser agregada si no existe
+     * @return retorna un estado booleano
+     */
    public boolean comprobarCedulaSecre(){
     BD bd= new BD("SELECT `Cedula` FROM `secretarias` WHERE Cedula=?");
     bd.ejecutar(new Object[]{this.secretaria.getCedula()});
@@ -169,6 +191,10 @@ public class ControladorUsuarios {
         }
         return true;
     }
+   /**
+    * compruba si no existe la cedula del medico en la base de datos para poder ser agregado si no existe
+    * @return retorna un estado booleano
+    */
      public boolean comprobarCedulaMedic(){
        BD bd= new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?");
        bd.ejecutar(new Object[]{this.medico.getCedula()});
@@ -182,8 +208,12 @@ public class ControladorUsuarios {
         }
         return true;
     }
-     
-     public boolean buscarcitamedico(Usuarios frmUsuarios){
+     /**
+      * busca si el medico tiene un cita pendiente ya que no puede ser eliminado por que debe cumplir con su trabajo
+      * @param frmUsuarios
+      * @return retorna una estado booleano
+      */
+     public boolean buscarCitaMedico(Usuarios frmUsuarios){
      BD bd= new BD("SELECT * FROM `medicos` JOIN citas ON medicos.Cedula=citas.Medico  WHERE Cedula=?");
         this.medico= new Medicos();
         this.medico.setCedula(frmUsuarios.getTxtcedula().getText());
@@ -197,6 +227,11 @@ public class ControladorUsuarios {
          
      }
      
+     /***
+      * elimina un usuario dependiendo su tipo(medico o secretaria) en la base de datos
+      * @param frmUsuarios
+      * @return retorna un estado booleano
+      */
       public boolean eliminar(Usuarios frmUsuarios) {
           if (frmUsuarios.combotipo.getSelectedItem().equals("Secretaria")) {
               BD bd = new BD("DELETE FROM secretarias WHERE Cedula=?");
@@ -214,7 +249,11 @@ public class ControladorUsuarios {
           }
           return false;
         }
-   
+   /**
+    * cambia la contraseña de la secretaria
+    * @param frmcambiocont
+    * @return retorna un estado booleano
+    */
       public boolean cambioContraSec(frmCambioPass frmcambiocont){
       BD bd= new BD("SELECT `Contra` FROM `secretarias` WHERE Usuario=?");
       secretaria= new Secretaria();
@@ -239,7 +278,11 @@ public class ControladorUsuarios {
           
          return false;
       }
-      
+      /**
+       * cambia la contraseña del medico
+       * @param frmcambiocont
+       * @return retorna un estado booleano
+       */
      public boolean cambioContraMedic(frmCambioPass frmcambiocont){
           BD bd= new BD("SELECT `Contraseña` FROM `medicos` WHERE Usuario=?");
       medico= new Medicos();
@@ -262,6 +305,10 @@ public class ControladorUsuarios {
           
           return false;
      } 
+     /**
+      * busca un medico segun su cedula en la base de datos
+      * @param frmpbuscar 
+      */
        public void buscarMedicoCedu(FrmBuscarUsuario frmpbuscar) {
         if (!"".equals(frmpbuscar.getTxtBuscar().getText())) {
            medico= new Medicos();
@@ -272,7 +319,10 @@ public class ControladorUsuarios {
             modelo.addRow(bd.getObject());
         }
        }
-       
+       /**
+        * busca una secretaria segun su cedula en la base de datos
+        * @param frmpbuscar 
+        */
        public void buscarSecretariaCedu(FrmBuscarUsuario frmpbuscar) {
         if (!"".equals(frmpbuscar.getTxtBuscar().getText())) {
            secretaria = new Secretaria();
@@ -283,7 +333,10 @@ public class ControladorUsuarios {
             modelo.addRow(bd.getObject());
         }
        }
-       
+       /**
+        * busca filtrado segun el nombre del medico
+        * @param frmpbuscar 
+        */
        public void buscarMedicoNom(FrmBuscarUsuario frmpbuscar){
           medico= new Medicos();
         medico.setNombre(frmpbuscar.getTxtBuscar().getText());
@@ -300,7 +353,10 @@ public class ControladorUsuarios {
             }
         } while (obj!=null);
        }
-       
+       /**
+        * busca filtrando segun el nombre de la secretaria
+        * @param frmpbuscar 
+        */
        public void buscarSecretariaNom(FrmBuscarUsuario frmpbuscar){
           secretaria= new Secretaria();
         secretaria.setNombre(frmpbuscar.getTxtBuscar().getText());
@@ -317,9 +373,14 @@ public class ControladorUsuarios {
             }
         } while (obj!=null);
        }
-       
-       public boolean contarUsuarios(){
-           int cont;
+    /**
+     * cuenta los medicos para saber si se pueden eliminar por que debe de haber 1 almenos
+     * @param frmUsuarios
+     * @return retonar un estado booleano
+     */
+       public boolean contarUsuariosDeMedico(Usuarios frmUsuarios){
+           if (frmUsuarios.getCombotipo().getSelectedItem()=="Medico") {
+               int cont;
            BD bd= new BD("Select count(*) FROM `medicos` WHERE Cedula=Cedula");
            bd.ejectuar();
            obj=bd.getObject();
@@ -329,18 +390,56 @@ public class ControladorUsuarios {
            }else{
                return false;
            }
+           }
+           
+           return false;
        }
+       /**
+        * cuenta las secretarias para saber si se pueden eliminar por que debe de haber 1 almenos
+        * @param frmUsuarios
+        * @return retorna un estado booleano
+        */
+       public boolean contarUsuariosDeSecre(Usuarios frmUsuarios){
+       if (frmUsuarios.getCombotipo().getSelectedItem()=="Secretaria") {
+                    int cont;
+           BD bd= new BD("Select count(*) FROM `secretarias` WHERE Cedula=Cedula");
+           bd.ejectuar();
+           obj=bd.getObject();
+           cont=Integer.parseInt(obj[0].toString());
+           if (cont>0) {
+               return true;
+           }else{
+               return false;
+           }
+           }
+       return false;
+       }
+       /**
+        * calcula el salario neto del medico
+        * @param frmUsuarios
+        * @return retorna su salario neto
+        */
        public String salarioNeto(Usuarios frmUsuarios){
            this.medico= new Medicos();
            this.medico.setSalario(Double.parseDouble(frmUsuarios.getTxtSalario().getText()));
            return this.medico.calcularSalarioNeto();
        }
+       /**
+        * calcula el salario neto del medico cuando se busca en la base de datos
+        * @param frmbuscar
+        * @param salario
+        * @return retorna su salario
+        */
        public String salarioNeto2(FrmBuscarUsuario frmbuscar, String salario){
            this.medico= new Medicos();
            this.medico.setSalario(Double.parseDouble(salario));
            return this.medico.calcularSalarioNeto();
        }
-       
+       /**
+        * actualiza el usuario segun su tipo(medico o secretaria) en la base de datos
+        * @param frmUsuarios
+        * @return retorna un estado booleano
+        */
        public boolean actualizar(Usuarios frmUsuarios){
         if (frmUsuarios.combotipo.getSelectedItem().equals("Secretaria")) {
               BD bd = new BD("DELETE FROM secretarias WHERE Cedula=?");
@@ -358,8 +457,12 @@ public class ControladorUsuarios {
           }
           return false;
        }
-       
-       public boolean iniciarSeccion(FrmSesion frmsesion){
+       /**
+        * inicia sesion el medico para poder atender la cita y hacer el expendite
+        * @param frmsesion
+        * @return retorna un estado booleano
+        */
+       public boolean iniciarSesion(FrmSesion frmsesion){
           BD bd = new BD("SELECT `Usuario`,`Contraseña` FROM `medicos` WHERE Usuario=? and Contraseña=?");
           this.medico=new Medicos();
           this.medico.setUsuario(frmsesion.getTxtUsuario().getText());
@@ -375,6 +478,5 @@ public class ControladorUsuarios {
            }
           return false;
        }
-       
        
 }

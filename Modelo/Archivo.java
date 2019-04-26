@@ -8,10 +8,12 @@ import javax.swing.JOptionPane;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -63,45 +65,43 @@ public class Archivo {
      * @param ruta
      * @param tipo 
      */
-    public Archivo(String nombre, String ruta, String tipo) {
-        this.nombre = nombre;
-        this.ruta = ruta;
-        this.tipo = tipo;
-        this.abrir();
-    }
-   
+//    public Archivo(String nombre, String ruta, String tipo) {
+//        this.nombre = nombre;
+//        this.ruta = ruta;
+//        this.tipo = tipo;
+//        this.abrir();
+//    }
+//   
        public Archivo(String ruta) {
        
         this.ruta = ruta;
    
-        this.abrirXML();
+        this.abrir();
     }
    
-       public void abrirXML(){
-        try {
-            archivo= new File(this.ruta);
-        if (!existe()) {
-            this.crear();
-        }
-             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder construdocumenento = dbf.newDocumentBuilder();
-            Document documento = construdocumenento.parse(archivo);
-            documento.getDocumentElement().normalize();
-            listaCaracteristicas = documento.getElementsByTagName("Cita");
-           
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-    }
+//       public void abrirXML(){
+//        try {
+//            archivo= new File(this.ruta);
+//        if (!existe()) {
+//            this.crear();
+//        }
+//            
+//           
+//            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//    }
     public void abrir(){
         try {
-            archivo= new File(this.ruta+"\\"+this.nombre+this.tipo);
+            archivo= new File(ruta);
         if (!existe()) {
             this.crear();
               lector = new BufferedReader(new FileReader(archivo));
             escritor= new BufferedWriter(new FileWriter(archivo,true));
+        this.limpiar();
+            escribir("<Expediente>");
        escribir("<Cita>");
        escribir("<FechaDeLaCita>"+"</FechaDeLaCita>");
        escribir("<HoraDeLaCita>"+"</HoraDeLaCita>");
@@ -113,13 +113,20 @@ public class Archivo {
        escribir("<FechaNacimientoPaciente>"+"</FechaNacimientoPaciente>");
        escribir("<Comentario>"+"</Comentario>");
        escribir("</Cita>");
+            escribir("</Expediente>");
             guardar();     
         }
-         this.ruta=this.ruta+"\\"+this.nombre+this.tipo;
-          abrirXML();
-       
-         
+//         this.ruta=this.ruta+"\\"+this.nombre+this.tipo;
+          DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder construdocumenento = dbf.newDocumentBuilder();
+            Document documento = construdocumenento.parse(archivo);
+            documento.getDocumentElement().normalize();
+            listaCaracteristicas = documento.getElementsByTagName("Expediente");
         }catch (IOException ex) {
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
             Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

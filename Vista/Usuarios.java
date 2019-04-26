@@ -393,8 +393,8 @@ public class Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_combotipoItemStateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (cusuarios.buscarcitamedico(this)==false) {
-            if (cusuarios.contarUsuarios()==true) {
+        if (cusuarios.buscarCitaMedico(this)==false) {
+            if (cusuarios.contarUsuariosDeMedico(this)==true) {
                 if (cusuarios.eliminar(this)==true) {
             JOptionPane.showMessageDialog(null, "Se elimino el usuario de la base de datos");
         }else{
@@ -406,7 +406,16 @@ public class Usuarios extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(null, "El medico no puede ser eliminado por que tiene una o mas citas que antender");
         }
-        
+
+        if (cusuarios.contarUsuariosDeSecre(this)==true) {
+            if (cusuarios.eliminar(this)==true) {
+                JOptionPane.showMessageDialog(null, "Se elimino el usuario de la base de datos");
+            }else{
+            JOptionPane.showMessageDialog(null, "Seleccione el tipo de usuario que desea eliminar");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No se puede eliminar usuario por que no hay nada para eliminar");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed

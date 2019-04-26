@@ -38,8 +38,6 @@ public class ControladorCitas {
    
   public void guardarCita(Citas frmcitas){
       int cont;
-      int cont2;
-      int cont3;
        Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
      cita= new MoCitas(0, Integer.parseInt(frmcitas.getHoras().getSelectedItem().toString()),paciente,medico, fecha);
      cita.getPaciente().setCedula(frmcitas.getTxtCedulaPaciente().getText());
@@ -52,19 +50,9 @@ public class ControladorCitas {
             if (cont>=1) {
                 JOptionPane.showMessageDialog(null,"El paciente ya tiene una cita en ese dia y a esa misma hora");
             }else{
-                BD bd4= new BD("Select count(*) from citas join pacientes on citas.Paciente= pacientes.cedula WHERE  Paciente=? and citas.fecha=? and citas.hora!=? and Medico=?");
-             bd4.ejecutar(new Object[]{this.paciente.getCedula(),cita.getFecha(),cita.getHora(), this.medico.getCedula()});
-             obj=bd4.getObject();
-             cont3=Integer.parseInt(obj[0].toString());
-                if(cont3>=1) {
-                    JOptionPane.showMessageDialog(null,"El medico ya atendio ese paciente");
-                }else{
                 BD bd= new BD("INSERT INTO `citas` VALUES (null,?,?,?,?)");
                    bd.ejecutar(new Object[]{cita.getFecha(),cita.getHora(),cita.getPaciente().getCedula(),cita.getMedico().getCedula()});
                 }
-                
-            }
-     
         }
     } 
     

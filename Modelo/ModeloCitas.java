@@ -50,6 +50,8 @@ public class ModeloCitas {
         return medico;
     }
 
+   
+
     public ModeloCitas(String hora, String fecha) {
         this.hora = hora;
         this.fecha = fecha;

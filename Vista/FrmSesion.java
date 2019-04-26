@@ -104,7 +104,7 @@ public class FrmSesion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (cUsuario.iniciarSeccion(this)==true) {
+        if (cUsuario.iniciarSesion(this)==true) {
             JOptionPane.showMessageDialog(null, "Se inicio sesión");
             ExpedienteSensillo expendie= new ExpedienteSensillo();
             FrmConsultorio.Escritorio.add(expendie);
