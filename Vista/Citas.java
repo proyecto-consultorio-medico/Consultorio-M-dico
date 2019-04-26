@@ -492,9 +492,12 @@ public synchronized void eliminar(){
     }//GEN-LAST:event_horasItemStateChanged
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-     
+      actualizar();
     }//GEN-LAST:event_jButton5ActionPerformed
-
+public synchronized void actualizar(){
+  cCitas.actualizarCita(this);
+  notify();
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaCitas;
     private javax.swing.JButton btneliminar;

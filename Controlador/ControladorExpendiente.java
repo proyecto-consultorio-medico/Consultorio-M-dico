@@ -38,7 +38,10 @@ public class ControladorExpendiente {
         medico=null;
         pacientes=null;
     }
-    
+    /**
+     * busca datos del paciente para que se muestren
+     * @param exp 
+     */
    public void buscarpaciente(ExpedienteSensillo exp) {
         if (!"".equals(exp.getTxtCedulaPaciente().getText())) {
             this.pacientes = new Pacientes();
@@ -51,7 +54,11 @@ public class ControladorExpendiente {
             exp.setTxtFechaPaciente(fechas.format(obj[1]));
         }
    }
-   
+   /**
+    * carga datos del medico cuando inicie sesion al expediente 
+    * @param frmsesion
+    * @param exp 
+    */
    public void cargarMedico(FrmSesion frmsesion,ExpedienteSensillo exp){
        BD bd = new BD("SELECT `NombreCompleto`,`Cedula`,`Especialidad` FROM `medicos` WHERE Usuario=?" );
        this.medico=new Medicos();
@@ -62,7 +69,11 @@ public class ControladorExpendiente {
           exp.setTxtEspecialidad(obj[2].toString());
           exp.setTxtCedulaMedic(obj[1].toString());
        }
-   
+   /**
+    * busca las citas del dia, del medico que esta atendido mediante la fecha 
+    * @param frmsesion
+    * @param exp 
+    */
    public void buscarFecha(FrmSesion frmsesion,ExpedienteSensillo exp){
          BD bd=new BD("SELECT Cedula FROM `medicos` WHERE Usuario=?");
          this.medico=new Medicos();
@@ -84,6 +95,11 @@ public class ControladorExpendiente {
             }
         } while (obj2!=null);
      }
+  /**
+   * verifica la existencia de un expendiente 
+   * @param exp
+   * @return 
+   */
    public boolean verificarExistenciaDeExpediente(ExpedienteSensillo exp){
         try {
             int cont;
@@ -113,7 +129,10 @@ public class ControladorExpendiente {
         }
         return false;
    }
-   
+  /**
+   * guarda el expediente en la base de datos
+   * @param exp 
+   */ 
    public void exportarDatos(ExpedienteSensillo exp){
         try {
             BD bd= new BD("INSERT INTO expediente VALUES (?,?,?,?,?)");
@@ -130,7 +149,10 @@ public class ControladorExpendiente {
             Logger.getLogger(ControladorExpendiente.class.getName()).log(Level.SEVERE, null, ex);
         }
    }
-   
+   /**
+    * guarda y acutaliza el expediente en un archivo XML
+    * @param exp 
+    */
    public void exportarXML(ExpedienteSensillo exp){
    BD bd= new BD("Select expediente.Fecha,Hora,Medico,medicos.NombreCompleto,medicos.Especialidad,Paciente,pacientes.Nombre,pacientes.Fecha,Descripcion FROM `expediente` JOIN pacientes on expediente.Paciente=pacientes.Cedula JOIN medicos ON expediente.Medico=medicos.Cedula WHERE Paciente=?");
    this.modelo= new Modeloexpediente();
@@ -162,7 +184,10 @@ this.arch.escribir("<Expediente>");
   this.arch.escribir("</Expediente>");
       this.arch.guardar(); 
    }
-   
+  /**
+   * busca las observaciones que ha tenido anteriormente el paciente que esta atendiendo
+   * @param exp 
+   */ 
    public void buscarObservaciones(ExpedienteSensillo exp){
        BD bd= new BD("SELECT Fecha,Descripcion FROM `expediente` WHERE Paciente=?");
        this.modelo=new Modeloexpediente();
@@ -179,7 +204,10 @@ this.arch.escribir("<Expediente>");
              }
        } while (obj!=null);
    }
-   
+   /**
+    * actualiza el expendiente en la base de datos
+    * @param exp 
+    */
    public void acutalizarExpediente(ExpedienteSensillo exp){
         try {
             BD bd= new BD("UPDATE `expediente` SET `Descripcion`=?  WHERE Medico=? and Fecha=? AND Hora=? AND Paciente=?");

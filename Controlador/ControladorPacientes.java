@@ -25,7 +25,10 @@ public class ControladorPacientes {
         this.frmpacientes = frmpacientes;
         pacientes = null;
     }
-
+/**
+ * guarda un paciente en la base de datos
+ * @return retorna un estado booleano
+ */
     public boolean guardarPaciente() {
         if (!"".equals(frmpacientes.getTxtcedula().getText())) {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())
@@ -104,7 +107,9 @@ public class ControladorPacientes {
         }
         return false;
     }
-
+/**
+ * busca un paciente en la base de datos
+ */
     public void buscarpaciente() {
         if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
             pacientes = new Pacientes();
@@ -116,12 +121,18 @@ public class ControladorPacientes {
         }
 
     }
-
+/**
+ * proceso para saber que edad tiene el paciente
+ * @return retorna su edad actual
+ */
     public String edad() {
                Date fecha = new Date(frmpacientes.getTxtFecha().getDate().getTime());
         return pacientes.calcularedad(fecha);
     }
-
+/**
+ * elimina un paciente de la base de datos
+ * @return retorna un estado booleano
+ */
     public boolean eliminar() {
         if (!"".equals(frmpacientes.getTxtBuscar().getText())) {
             BD bd = new BD("DELETE FROM pacientes WHERE Cedula=?");
@@ -132,7 +143,10 @@ public class ControladorPacientes {
         }
         return false;
     }
-
+/**
+ * actualiza un paciente en la base de datos
+ * @return retonar un estado booleano
+ */
     public boolean actualizarPaciente() {
         if (!"".equals(frmpacientes.getTxtcedula().getText())) {
             if (!"".equals(frmpacientes.getTxtcedula().getText()) && !"".equals(frmpacientes.getTxtnombre().getText())

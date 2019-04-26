@@ -32,7 +32,10 @@ public class ControladorCitas {
         medico=null;
         paciente=null;
     }
-   
+   /**
+    * guarda la cita en la base de datos
+    * @param frmcitas 
+    */
   public void guardarCita(Citas frmcitas){
       int cont;
        Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
@@ -52,7 +55,11 @@ public class ControladorCitas {
                 }
         }
     } 
-    
+    /**
+     * busca el medico para saber si existe
+     * @param frmcitas
+     * @return retorna un estado booleano
+     */
     public boolean buscarMedico(Citas frmcitas){
         BD bd = new BD("SELECT `Cedula` FROM `medicos` WHERE Cedula=?"); 
         medico= new Medicos();
@@ -70,7 +77,11 @@ public class ControladorCitas {
         }
        return false;
     }
-   
+   /**
+    * busca el paciente para saber si existe
+    * @param frmcitas
+    * @return retorna un estado booleano
+    */
      public boolean buscarPaciente(Citas frmcitas){
         BD bd = new BD("SELECT `Cedula` FROM `pacientes` WHERE Cedula=?"); 
         paciente= new Pacientes();
@@ -88,7 +99,11 @@ public class ControladorCitas {
         }
        return false;
     }
-     
+     /**
+      * limita la citas a los medicos a 4 por fecha y hora
+      * @param frmcitas
+      * @return retorna un estado booleano
+      */
      public boolean limitarCitas(Citas frmcitas){
      int cont;
   
@@ -113,7 +128,10 @@ public class ControladorCitas {
      return true;
      }
 }
-
+/**
+ * extra: agrega datos del medico para saber a quien le peretece la cedula que se busco
+ * @param frmcitas 
+ */
      public void agregarDatosMedico(Citas frmcitas){
       BD bd = new BD("SELECT NombreCompleto,Especialidad FROM `medicos` WHERE Cedula=?"); 
         medico= new Medicos();
@@ -123,7 +141,10 @@ public class ControladorCitas {
             frmcitas.setTxtNombreMedico((String) obj[0]);
             frmcitas.setTxtEspecialidad((String) obj[1]);
      }
-     
+     /**
+      * extra:  agrega datos del paciente para saber a quien le peretece la cedula que se busco
+      * @param frmcitas 
+      */
      public void agregarDatosPaciente(Citas frmcitas){
       BD bd = new BD("SELECT Nombre,Fecha FROM `pacientes` WHERE Cedula=?"); 
         paciente= new Pacientes();
@@ -133,7 +154,10 @@ public class ControladorCitas {
           frmcitas.setTxtNombrePaciente((String) obj[0]);
           frmcitas.setTxtFechaPaciente((Date) obj[1]);
      }
-     
+     /**
+      * busca todas las citas en la base de datos
+      * @param frmcitas 
+      */
      public void buscarTodasLasCitas(Citas frmcitas){
          BD bd= new BD("SELECT citas.ID,citas.Fecha,citas.Hora,citas.Paciente,citas.Medico FROM `citas` JOIN medicos on citas.Medico = medicos.Cedula JOIN pacientes on citas.Paciente = pacientes.Cedula");
          bd.ejectuar();
@@ -146,7 +170,10 @@ public class ControladorCitas {
             }
         } while (obj!=null);   
      }
-     
+     /**
+      * busca cita por fecha en la base de datos
+      * @param frmcitas 
+      */
      public void buscarCitaPorFecha(Citas frmcitas){
         BD bd=new BD("SELECT * FROM `citas` WHERE Fecha=?");
         Date fecha = new Date(frmcitas.getTxtFecha2().getDate().getTime());
@@ -163,15 +190,28 @@ public class ControladorCitas {
             }
         } while (obj!=null);
      }
-     
+     /**
+      * elimina un cita en la base de datos
+      * @param frmcitas 
+      */
      public void eliminar(Citas frmcitas){
      BD bd=new BD("Delete FROM citas where ID=?");
      cita=new MoCitas();
      cita.setID(frmcitas.getId());
      bd.ejecutar(new Object[]{cita.getID()});
      }
-  
-     public void actualizarCita(){
-     BD bd= new BD();
+  /**
+   * actualiza una cita en la base de datos
+   * @param frmcitas 
+   */
+     public void actualizarCita(Citas frmcitas){
+     BD bd= new BD("UPDATE `citas` SET `Fecha`=?,`Hora`=?,`Paciente`=?,`Medico`=? WHERE ID=?");
+     Date fecha = new Date(frmcitas.getTxtFecha().getDate().getTime());
+     this.medico=new Medicos();
+     this.paciente=new Pacientes();
+     cita= new MoCitas(frmcitas.getId(), Integer.parseInt(frmcitas.getHoras().getSelectedItem().toString()), paciente, medico, fecha);
+     cita.getMedico().setCedula(frmcitas.getTxtCedulaMedic().getText());
+     cita.getPaciente().setCedula(frmcitas.getTxtCedulaPaciente().getText());
+     bd.ejecutar(new Object[]{cita.getFecha(),cita.getHora(),cita.getPaciente().getCedula(),cita.getMedico().getCedula(),cita.getID()});
      }
 }

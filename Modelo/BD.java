@@ -78,7 +78,10 @@ public class BD{
     this.conectar();
     this.setSentencia(sql);
     }
-    
+    /**
+     * se conecta a la base de datos mediante archivo ini
+     * @return retorna un string verificador de casos: conecto,existe o fallo
+     */
     private String conectar(){         
         if (this.conexion==null) {
              try {
@@ -149,7 +152,10 @@ public class BD{
     }
    return true;
     }
-     
+     /**
+      * proceso para obtener un array de objetos con los resultados del resulset
+      * @return retrona un array de objetos
+      */
       public Object[] getObject(){
         try {
             if (this.datos.next()) {
@@ -180,14 +186,20 @@ public class BD{
         }
         return false;
    }
-      
+      /**
+       * metodo para comprobar la conexion
+       * @return retorna un string verificador: encendido o apagado
+       */
       public String comprobar(){
             if (this.conectar()=="Existe") {
                 return "Encendido";
             }     
          return "Apagado";
       }
-      
+      /**
+       * metodo para apagar el servidor
+       * @return retorna un estado booleano
+       */
      public boolean apagarservidor(){
         try {
             conexion.close();
@@ -198,7 +210,10 @@ public class BD{
         }
         return false;
       }
-      
+      /**
+       * metodo en enciende de nuevo el servidor
+       * @return retorna un estado booleano
+       */
      public Boolean encender(){
         this.ini = new ArchivoIniC(this.ruta);
          System.out.println(ruta);
